@@ -25,6 +25,8 @@
 // ----	Project Headers -------------------------
 #include "cwsw_arch.h"
 
+#include "cwsw_evqueue.h"
+
 
 // ============================================================================
 // ----	Constants -------------------------------------------------------------
@@ -81,11 +83,24 @@ main(void)
 	}
 
 	(void)Init(Cwsw_Arch);		// Cwsw_Arch__Init()
+	(void)Init(Cwsw_EvQ);
 
 	/* contrived example, not recommended, to exercise other features of the component */
 	cwsw_assert(1 == Cwsw_Critical_Protect(0), "Confirm critical section nesting count");
 	cwsw_assert(Cwsw_Critical_Release(0) == 0, "Confirm balanced critical region usage");
 	cwsw_assert(Init(Cwsw_Lib) == 2, "Confirm reinitialization return code");
+
+	do {
+		tEvQueueCtrl evqCtrl = {0};
+		tEvQ_Event evqueue[5] = {0};
+		tEvQ_Event thisevent = evNoEvent;
+
+		tEvQ_EvQueue pQ = evqueue;
+		Cwsw_EvQ__InitEvQ(&evqCtrl, pQ, sizeof evqueue);
+
+		Cwsw_EvQ__PostEvent(&evqCtrl, evNotInit);
+		Cwsw_EvQ__GetEvent(&evqCtrl, &thisevent);
+	} while(0);
 
 	Task(Cwsw_Lib);
 

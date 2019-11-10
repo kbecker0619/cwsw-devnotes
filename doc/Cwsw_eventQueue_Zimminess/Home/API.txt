@@ -8,3 +8,12 @@ Created Sunday 10 November 2019
 [[SendEvent]] - directed to a specific object queue
 [[PostEvent]] - put into the general event queue, will be handled by 1st registered handler
 
+tEventQueue: 
+* intended to be ROM-based
+* one top-level queue, perhaps a queue for each reactive system (e.g., state machine)
+* global list of events, not domain-specific list of events (not sure this will work)
+* general event
+	* domain event, 0 for non-directed
+
+the original concept for the queues, was that there was a RAM-based control structure that pointed to the actual RAM-based queue, contained meta 
+
