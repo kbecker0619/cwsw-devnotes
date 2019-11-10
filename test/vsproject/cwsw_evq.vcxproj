@@ -44,7 +44,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>C:\_Projects\PersonalExploration\evq\app\cfg;C:\_Projects\PersonalExploration\evq\app\cfg\vs2010;C:\_Projects\PersonalExploration\evq\bsw\svc\cwsw_lib\inc;C:\_Projects\PersonalExploration\evq\bsw\ecu\cwsw_arch\inc\i386;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\_Projects\PersonalExploration\evq\app\cfg;C:\_Projects\PersonalExploration\evq\app\cfg\vs2010;C:\_Projects\PersonalExploration\evq\bsw\svc\cwsw_lib\inc;C:\_Projects\PersonalExploration\evq\bsw\ecu\cwsw_arch\inc\i386;C:\_Projects\PersonalExploration\evq\bsw\evq;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;XPRJ_Win_MSVC_$(Configuration)=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -86,6 +86,8 @@
     <ClInclude Include="..\..\app\cfg\vs2010\stdbool.h" />
     <ClInclude Include="..\..\bsw\ecu\cwsw_arch\inc\cwsw_arch_common.h" />
     <ClInclude Include="..\..\bsw\ecu\cwsw_arch\inc\i386\cwsw_arch.h" />
+    <ClInclude Include="..\..\bsw\evq\cwsw_evqueue.h" />
+    <ClInclude Include="..\..\bsw\evq\cwsw_evq_proj.h" />
     <ClInclude Include="..\..\bsw\svc\cwsw_lib\inc\ctassert.h" />
     <ClInclude Include="..\..\bsw\svc\cwsw_lib\inc\cwsw_eventsim.h" />
     <ClInclude Include="..\..\bsw\svc\cwsw_lib\inc\cwsw_lib.h" />
@@ -94,6 +96,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\app\main.c" />
     <ClCompile Include="..\..\bsw\ecu\cwsw_arch\src\i386\cwsw_arch.c" />
+    <ClCompile Include="..\..\bsw\evq\cwsw_evqueue.c" />
     <ClCompile Include="..\..\bsw\svc\cwsw_lib\src\cwsw_lib.c" />
     <ClCompile Include="..\..\bsw\svc\cwsw_lib_prj\CritSect.c" />
   </ItemGroup>

@@ -138,7 +138,7 @@ tEvQ_ErrorCodes
 Cwsw_EvQ__PostEvent(tEvQueueCtrl *pEvQueueCtrl, tEvQ_Event ev)
 {
 	bool isthereroom;
-	ssize_t writerange;
+	size_t writerange;
 
 	// check preconditions, in order of priority
 	if(!initialized)							{ return kEvQ_Err_NotInitialized; }
