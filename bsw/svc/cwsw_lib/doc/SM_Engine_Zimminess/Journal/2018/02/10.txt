@@ -1,0 +1,13 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2018-02-10T08:03:19-05:00
+
+====== Saturday 10 Feb 2018 ======
+
+continuing Calpyso experiment begun [[Journal:2018:01:31|Wednesday 31 Jan 2018]]
+
+ok, i was hoping to put off this decision for a while, but in the sequential (as executed, not as found in NXP sources) buildup of support for MCP5748G, i now need to add ISR support, and this ISR support is of necessity board specific.
+
+I think i'm going to make the arch component use a project-specific ISR table, located in the UT folder, with weak bindings to default handlers. in the update to the Board component, there will be standardized targets, that can themselves be deferred to the project.
+
+#include "intc_SW_mode_isr_vectors_MPC5748G.h"		/* isr handler prototypes */

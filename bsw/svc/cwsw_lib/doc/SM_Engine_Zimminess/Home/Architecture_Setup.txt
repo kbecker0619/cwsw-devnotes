@@ -1,0 +1,27 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2017-12-21T18:58:12-05:00
+
+====== Architecture Setup ======
+Created Thursday 21 December 2017
+
+see daily notes - current idea changed enough relative to original idea, that it's not worth redoing here
+[[Journal:2017:12:21|original: 21-dec-2017]]
+[[Journal:2018:01:06|update: 06-jan-2018]]
+
+Microchip target:
+Debug_Win_MZ2048EFM : Development and debugging on Windows, using Microchip XC Build Tools
+new env-vars:
+	''PIC32_XC_HOME=G:\_Programs\Microchip\xc32\v1.44\pic32mx\bin''
+		on 2nd test installation: E:\_Programs\Microchip\xc32\v1.44\pic32mx
+	''PIC32_XC_INCLUDE=G:\_Programs\Microchip\xc32\v1.44\pic32mx\include''
+
+Cross prefix: (nil)
+Cross path:	''${PIC32_XC_HOME}''
+Include path:	${''PIC32_XC_INCLUDE}''
+	[ ] 09-jan: manually added this into Eclipse' workspace on Linux; didn't bother exporting it to the main PATH statement.
+
+to refresh, for MinGW, the two main env-vars:
+	''MINGW_HOME=C:\MinGW''		(or wherever you installed MinGW)
+	''MSYS_HOME=C:\MinGW\msys\1.0''	(again, verify this is the correct location)
+

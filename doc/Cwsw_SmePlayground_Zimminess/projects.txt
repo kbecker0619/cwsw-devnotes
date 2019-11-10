@@ -1,0 +1,12 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2019-10-01T06:03:52-04:00
+
+====== projects ======
+Created Tuesday 01 October 2019
+
+[[+blinky|blinky]]
+
+[[+state machine engine|state machine engine]]
+	beckersoft libs
+

@@ -1,0 +1,10 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2017-12-13T08:43:23-05:00
+
+====== Cygwin Home Folder ======
+Created Wednesday 13 December 2017
+
+1. New Windows environment variable, HOME, equated to your Windows user folder. Warning against this is that it doesn't work in all cases for all tools, though I mysefl haven't yet seen this.
+2. One of several config settings in [[/etc.]]
+3. remove (or rename) your Cygwin home folder, then set up a symlink to your Windows user folder. This is what I tried before I found the tip about the HOME env-var.

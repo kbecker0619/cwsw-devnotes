@@ -1,0 +1,13 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2019-10-01T06:04:12-04:00
+
+====== blinky ======
+Created Tuesday 01 October 2019
+
+document included as part of S32DS install:
+* file "''HOWTO_Create_a_Blinking_LED_Project_MPC5748G.pdf''"
+* found at ''D:\_Programs\nxp\S32DS_Power_v2.1\S32DS\help\resources\howto\''
+
+Web version of same document:
+https://community.nxp.com/docs/DOC-335526

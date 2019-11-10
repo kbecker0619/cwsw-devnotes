@@ -1,0 +1,18 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2019-10-15T07:58:29-04:00
+
+====== Tuesday 15 Oct 2019 ======
+
+begin working on my host computer (work laptop), my SME playground
+* intended to be a self-contained repo, used to play with my architecture.
+* have decided that the multiple subrepos i used until now, is WAY too complicated. now envision each component (what used to be the container repo for that component) to have everything in it
+
+install "cevelop", as it has built-in support for "includator" and "CUTE"
+* as much as i like CUnit w/ NetBeans, it's worth exploring something new
+* begin w/ a CDT hello world, to confirm that both [[MinGW]] and Cygwin build & debug
+* wanted to begin w/ highest level i've developed since 2017, but after floundering a bit, decided to work from the ends towards the middle, stubbing / mocking along the way.
+* on GH public, renamed one of my currently-unused repos to "cwsw_sme_playground"
+* pushed HW to it
+
+* pulled in cwsw_lib, and refactored it in place

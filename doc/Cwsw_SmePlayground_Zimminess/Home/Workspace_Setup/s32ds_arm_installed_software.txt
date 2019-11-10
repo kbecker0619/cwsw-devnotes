@@ -1,0 +1,48 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2018-02-07T07:56:26-05:00
+
+====== S32DS ARM Installed Software Report ======
+Created Wednesday 07 February 2018
+
+[*] C/C++ Development Tools	9.2.1.201703062208	org.eclipse.cdt.feature.group	Eclipse CDT
+[*] C/C++ GCC Cross Compiler Support	9.2.1.201703062208	org.eclipse.cdt.build.crossgcc.feature.group	Eclipse CDT
+[*] C/C++ GDB Hardware Debugging	9.2.1.201703062208	org.eclipse.cdt.debug.gdbjtag.feature.group	Eclipse CDT
+[*] C/C++ Memory View Enhancements	9.2.1.201703062208	org.eclipse.cdt.debug.ui.memory.feature.group	Eclipse CDT
+  C/C++ Multicore Visualizer	9.2.1.201703062208	org.eclipse.cdt.gnu.multicorevisualizer.feature.group	Eclipse CDT
+  C/C++ Visual C++ Support	9.1.0.201609121658	org.eclipse.cdt.msw.feature.group	Eclipse CDT
+[*] CDT GNU Debug Patch	1.0.0	com.nxp.cdt.gnu.debug.patch.feature.group	NXP Semiconductors, Inc.
+[*] CDT Platform Patch	1.0.1	com.nxp.cdt.platfrom.patch.feature.group	NXP Semiconductors, Inc.
+[*] Eclipse Git Team Provider	4.4.1.201607150455-r	org.eclipse.egit.feature.group	Eclipse EGit
+[*] Eclipse Platform	4.6.3.M20170301-0400	org.eclipse.platform.ide	Eclipse.org
+[*] Eclipse XML Editors and Tools	3.8.2.v201702270442	org.eclipse.wst.xml_ui.feature.feature.group	Eclipse Web Tools Platform
+[*] Embedded Systems Register View (SFR)	1.0.0.201707191349	org.eclipse.cdt.embsysregview.feature.feature.group	EmbSysRegView Project
+[*] Extended Editing Framework - Runtime	1.5.1.201601141612	org.eclipse.emf.eef.runtime-feature.feature.group	Eclipse Modeling Project
+  FreeRTOS Task Aware Debugger for GDB	1.0.1.201610061345	com.nxp.freertos.gdb.tad.feature.feature.group	NXP Semiconductors, Inc.
+[*] FSL Eclipse Updater Custom Actions Feature for Eclipse 4.4.x	2.0.12.FSL_150303	com.freescale.updater.customActions.feature.feature.group	Freescale Semiconductor, Inc
+[*] GNU E200 PEMicro Interface Debugging Support	1.7.2.201709281658	com.pemicro.debug.gdbjtag.ppc.feature.feature.group	P&E Microcomputer Systems Inc.
+  Git integration for Eclipse	4.6.1.201703071140-r	org.eclipse.egit.feature.group	Eclipse EGit
+  GNU ARM PEMicro Interface Debugging Support	3.1.1.201708081924	com.pemicro.debug.gdbjtag.pne.feature.feature.group	P&E Microcomputer Systems Inc.
+[*] Java implementation of Git	4.6.1.201703071140-r	org.eclipse.jgit.feature.group	Eclipse JGit
+  Marketplace Client	1.5.4.v20170222-1941	org.eclipse.epp.mpc.feature.group	Eclipse Marketplace Client
+  MQX RTOS Task Aware Debugger for GDB	1.0.9.201707031831	com.freescale.mqx.gdb.tad.eclipse.feature.group	Freescale Semiconductor, Inc.
+[*] Processor Expert for S32 Design Studio	1.1.0.RT7_b1743-0713	com.freescale.processorexpert.s32.feature.feature.group	Freescale Semiconductor, Inc.
+  S32 Design Studio ARM Cortex-A Toolchain	1.0.0.201708101436	com.nxp.s32ds.cross.arm.cortexa.feature.feature.group	Freescale Semiconductor, Inc.
+  S32 Design Studio ARM Cortex-M Toolchain	1.0.0.201708101436	com.nxp.s32ds.cross.arm.cortexm.feature.feature.group	Freescale Semiconductor, Inc.
+[*] S32 Design Studio Example Projects	1.0.0.201709280936	com.nxp.s32ds.arm.examples.feature.feature.group	Freescale Semiconductor, Inc.
+  S32 Design Studio Examples	1.0.0.201707191435	com.nxp.s32ds.ide.extensions.cdt.examples.feature.feature.group	Freescale Semiconductor, Inc.
+  S32 Design Studio for ARM	1.0.0.201708101436	com.nxp.s32ds.arm.feature.feature.group	Freescale Semiconductor, Inc.
+  S32 Design Studio for ARM Win32 Update	0.0.1	com.freescale.s32ds.UpdateArmWin32.feature.group	Freescale Semiconductor, Inc.
+  S32 Design Studio for ARM, Version 2.0. Documentation	2.0.0.201708091545	com.freescale.s32ds.doc.arm.feature.group	Freescale Semiconductor, Inc.
+  S32 Design Studio FreeMASTER SDK	1.0.0.201708101254	com.freescale.s32ds.cross.sdk.FreeMASTER.feature.group	Freescale Semiconductor, Inc.
+  S32 Design Studio GNU	1.0.0.201708101433	com.nxp.s32ds.cross.tools.gnu.feature.feature.group	Freescale Semiconductor, Inc.
+  S32 Design Studio KEAx AMMCLIB SDK	1.0.0.201708101254	com.freescale.s32ds.cross.sdk.KEAx_AMMCLIB.feature.group	Freescale Semiconductor, Inc.
+  S32 Design Studio MAC57D5xx support	1.0.0.201708101436	com.nxp.s32ds.cross.arm.mac.feature.feature.group	Freescale Semiconductor, Inc.
+  S32 Design Studio OS Awareness for ARM architecture	1.0.0.201707191351	com.nxp.s32ds.osawareness.debug.ka.arm.feature.group	Freescale Semiconductor, Inc.
+[*] S32 Design Studio Platform	1.0.0.201707191435	com.nxp.s32ds.ide.extensions.cdt.feature.feature.group	Freescale Semiconductor, Inc.
+  S32 Design Studio S32K14x EAR SDK	1.0.0.201708101254	com.freescale.s32ds.cross.sdk.s32k14x_0.8.4.feature.group	NXP Semiconductors, Inc.
+  S32 Design Studio S32K14x_AMMCLIB SDK	1.0.0.201708101254	com.freescale.s32ds.cross.sdk.S32K14x_AMMCLIB.feature.group	Freescale Semiconductor, Inc.
+  S32 Design Studio S32V common support	1.0.0.201708101436	com.nxp.s32ds.cross.arm.s32v.common.feature.feature.group	Freescale Semiconductor, Inc.
+  S32 Design Studio S32V support	1.0.0.201708101436	com.nxp.s32ds.cross.arm.s32v.feature.feature.group	Freescale Semiconductor, Inc.
+[*] S32 Design Studio SDK extension	1.0.0.201708101436	com.nxp.s32ds.arm.sdkext.feature.feature.group	Freescale Semiconductor, Inc.
+  S32 KEAx SDK 1.0.0	1.0.0.201708101254	com.freescale.s32ds.cross.sdk.KEAx.feature.group	Freescale Semiconductor, Inc.

@@ -1,0 +1,9 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2018-02-21T09:36:43-05:00
+
+====== Wednesday 21 Feb 2018 ======
+
+new workspace in s32ds created with defective PATH statement. again. copied from a working workspace, and ability to compile .S files reappeared.
+
+upon moving to other Windows VM, which has different drive mapping, build broke again.

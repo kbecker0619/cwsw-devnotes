@@ -1,0 +1,87 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2017-12-13T06:30:40-05:00
+
+====== Home ======
+Created Wednesday 13 December 2017
+
+This documentation package is created by the [[http://www.zim-wiki.org|Zim personal wiki]]. It is eminently usable in both Linux and Windows incarnations.
+
+===== Workplace Setup =====
+[[+Workspace Setup|Workspace Setup]]
+
+===== Architecture Setup =====
+[[+Architecture Setup|Architecture Setup]]
+
+
+===== GIT Repo Setup =====
+[[+GIT Repo Setup|GIT Repo Setup]]
+
+===== Supporting Libraries =====
+
+==== Lib ====
+[ ] very little actual behavior; 
+[ ] provides the basis of our pseudo-event-posting system, but UT environ doesn't test nor does it demonstrate.
+
+
+==== GPIO ====
+[ ] UT is apps-level code, showing abstractions from app ↔ driver, with tasking services
+[ ] this is where we begin to abstract generalized I/O from the board, and the architecture.
+
+
+==== Clock ====
+[ ] uses Lib, GPIO support libs
+
+
+===== Design of State Machine Engine =====
+For each state, you define that state's properties by
+1. Declare the events recognized by the state, by defining a table of type ''STATE_EVENT_TYPE[]'', with one row in the table for each exit event.
+Excerpt from our Coin-Operated Coffee Vending machine example:
+{{{code: lang="c" linenumbers="True"
+/**
+ * State transition table for the Idle state.
+ */
+PRIVATE tFsmStateEvent STATE_STARTUP_DELAY_EVENTS[] =
+{   // exit event           exit guard                  transition action           destination state
+    {EV_PS_FALLING_EDGE,    NULL_GUARD_FUNC,            Wffe_EndOfRotationActions,  PS_STATE_WAIT_FOR_RISING_EDGE},
+    {EV_PS_NO_EVENT,        NULL_GUARD_FUNC,            NULL_TRANSITION_ACTION,     kCVendSnsr_State_Uninit}                    // End of list
+};
+
+
+TODO: UPDATE FROM FINAL VERSION OF THE EXAMPLE
+}}}
+
+
+2. Describe the actions (entry, do, and exit) and tie the events declared for each state (step 1 above), to that state, by defining a table of type ''tFsmStateTable[]'', with one row for each state.
+{{{code: lang="c" linenumbers="True"
+/**	Main Position Sensor state machine state table.
+ *	\note Because of the way it's typed, this table must follow all of the
+ *	individual state-definition arrays. It is not possible to create a forward
+ *	reference (i.e., a prototype or declaration) to a const table; const tables
+ *	(such as the Exit Event Arrays) must be initialized at point of definition.
+ */
+PRIVATE tFsmStateTable Clsa_Ps_States[PS_NUM_OP_STATES] =
+{   //{State,                           {Entry,                             Do,                             Exit},                          Exit_Events_Array}
+    {kCVendSnsr_State_StartupDelay,		{State_StartupDelay_Entry,          State_StartupDelay_Do,          State_StartupDelay_Exit},       STATE_STARTUP_DELAY_EVENTS},
+    {PS_STATE_WAIT_FOR_RISING_EDGE,     {State_WaitRisingEdge_Entry,        State_WaitRisingEdge_Do,        State_WaitRisingEdge_Exit},     STATE_WAIT_FOR_RISING_EDGE_EVENTS},
+    {PS_STATE_WAIT_FOR_FALLING_EDGE,    {State_WaitForFallingEdge_Entry,    State_WaitForFallingEdge_Do,    State_WaitFallingEdge_Exit},    STATE_WAIT_FOR_FALLING_EDGE_EVENTS}
+};
+
+
+TODO: UPDATE FROM FINAL VERSION OF THE EXAMPLE
+
+}}}
+
+
+Then, you tie the states together, with the paths from each state to the others, by defining a control structure of type ''tFsmStateControl''
+{{{code: lang="c" linenumbers="True"
+//! SME Control structure.
+PRIVATE tFsmStateControl CVendSnsr_SmControl;
+}}}
+
+
+
+===== Design of Unit Test sample code. =====
+* not really a UT environment, per se, but more of a simple sample application to support developer testing.
+* uses Eclipse symlinks to achieve component reuse. for a **real** application, you should use [[+Workspace Setup|real symlinks]].
+* {{../state_machine-1.jpg}}

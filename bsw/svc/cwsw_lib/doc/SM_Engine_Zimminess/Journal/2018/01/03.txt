@@ -1,0 +1,14 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2018-01-03T12:33:37-05:00
+
+====== Wednesday 03 Jan 2018 ======
+
+continuing w/ microchip, but decided i needed a DIO library implemented before my clock lib, because, i want to use the DIO in the UT for my clock lib
+also, dug out an old STM project, which turned out to have an ARM 7, so hey, i'm now golden - ATMEL SAMV71, and now, STR730-SK.
+
+Microchip's new project wizard **REALLY** wants to be given a virgin workspace - refuses to create a configuration if the folder isn't empty. so,
+[ ] created cwsw_dio_mhc, as sister to existing cwsw_dio_prj
+[ ] copied 'firmware' folder carte blanch into existing cwsw_dio_prj
+[ ] renamed all instances of 'cwsw_dio_mhc' in all files, to 'cwsw_dio'
+	[ ] except: file "cwsw_dio_mhc.hconfig" is now "cwsw_dio.hconfig"

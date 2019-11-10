@@ -1,0 +1,15 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2018-01-09T08:52:54-05:00
+
+====== Tuesday 09 Jan 2018 ======
+
+continued yesterday's exploration of DIO buildup, in office, on personal Win7 VM. gave up on Linux VM; it's far too slow this morning, not sure why
+
+decided that i would now use the embedded MPLAB project to explore the Eclipse implementation; in other words, I'm going to add in the same files from the same locations as used in the Eclipse project. To generate the reference project, which i use to develop the Eclipse version, I'm going to create another embedded MPLAB project, "cwsw_dio_ref", configuration name "''pic32mz_ef_sk''"
+
+
+
+
+
+

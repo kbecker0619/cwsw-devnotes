@@ -1,0 +1,10 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2019-11-10T08:04:00-05:00
+
+====== API ======
+Created Sunday 10 November 2019
+
+[[SendEvent]] - directed to a specific object queue
+[[PostEvent]] - put into the general event queue, will be handled by 1st registered handler
+

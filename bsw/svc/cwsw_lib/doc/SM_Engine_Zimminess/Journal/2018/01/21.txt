@@ -1,0 +1,11 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2018-01-21T17:09:16-05:00
+
+====== Sunday 21 Jan 2018 ======
+
+continued DIO buildup, in office, on personal Win7 VM. 
+
+while i haven't updated this journal recently, i have been working, most recently on adding an "optional daughterboard" to the virtual "none" board used by [[MinGW]] and Linux desktops. this "optional daughterboard" will be the LabWIndows/CVI panel that has the same number of switches and LEDs as does the MZ EZ board.
+
+as i've been working on this, i have agreed with myself (earlier suspicions) that my present concept of using MHC's generated structure is just not going to be workable. the combo of bsp, cwsw_bsp, and cwsw_board is too many levels. i'm going to flatten it, distributing what is now in MHC's bsp module into both app-level (unit test, in this case) and cwsw_bsp

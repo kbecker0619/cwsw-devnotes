@@ -1,0 +1,5 @@
+doxygen
+*.log
+*.ini
+html
+/~$cwsw_lib_srs.xlsm

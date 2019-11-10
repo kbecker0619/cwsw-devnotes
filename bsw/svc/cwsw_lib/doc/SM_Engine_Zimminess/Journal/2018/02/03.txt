@@ -1,0 +1,9 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2018-02-03T10:41:11-05:00
+
+====== Saturday 03 Feb 2018 ======
+
+[ ] [[Journal:2018:02:02|Update on Friday's activity]]
+[ ] as part of Friday, Matt had me demonstrated how I used Doxygen at Whirlpool. as part of //that//, began setting up the Arch project to contain the things I like about our WP method. this is independent of actual code work.
+

@@ -1,0 +1,39 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2019-09-30T06:57:12-04:00
+
+====== QEMU on Windows 10 ======
+Created Monday 30 September 2019
+
+===== INSTALLING =====
+https://gnu-mcu-eclipse.github.io/qemu/install/
+
+1. Install Node.js https://nodejs.org/en/
+2. All of the following are from DOS command line; I couldn't get it to work from Cygwin on my work laptop, I presume from firewall settings.
+3. install XPM (https://www.npmjs.com/package/xpm)
+4. install QEMU (https://gnu-mcu-eclipse.github.io/qemu/install/)
+5. install eclipse for ARM from "GNU MCU eclipse" web site.
+6. install Windows build tools.
+7. install CMSIS library pack
+{{{code: lang="dosbatch" linenumbers="True"
+#3. C:\> npm install --global xpm
+#4. C:\> xpm install --global @gnu-mcu-eclipse/qemu
+#5. C:\> xpm install --global @gnu-mcu-eclipse/arm-none-eabi-gcc
+#6. C:\> xpm install --global @gnu-mcu-eclipse/windows-build-tools
+}}}
+
+7. [[https://gnu-mcu-eclipse.github.io/install/#jumper-virtual-lab|Jumper Virtual Lab]]
+	a. Note: it demands to install Python 2.7!
+	b. and the Jumper installer failed to run correctly
+	c. rebooted and reinstalled
+8. [[https://gnu-mcu-eclipse.github.io/plugins/install/#win-xp---a-word-of-caution|GNU ARM Eclipse]] (from [[https://github.com/gnu-mcu-eclipse/org.eclipse.epp.packages/releases/|here]])
+
+===== UNINSTALLING =====
+https://github.com/gnu-mcu-eclipse/windows-build-tools-xpack#easy_install
+{{{code: lang="dosbatch" linenumbers="True"
+#6. C:\> xpm uninstall --global @gnu-mcu-eclipse/windows-build-tools
+#5. C:\> xpm uninstall --global @gnu-mcu-eclipse/arm-none-eabi-gcc
+#4. C:\> xpm uninstall --global @gnu-mcu-eclipse/qemu
+#3. C:\> npm uninstall --global xpm
+}}}
+

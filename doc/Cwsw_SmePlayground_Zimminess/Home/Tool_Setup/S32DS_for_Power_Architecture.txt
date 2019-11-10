@@ -1,0 +1,46 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2019-10-03T14:49:43-04:00
+
+====== S32DS for Power Architecture ======
+Created Thursday 03 October 2019
+
+Previously, on this machine before installing Win10 on top of my wasn't-broken-working-just-spiffy WIn7 install, had v2017.R1 installed, and last I knew, it worked.
+
+per https://community.nxp.com/docs/DOC-343864, there's a new version i should use.
+* uninstall stalled, abort & manually delete, then run ccleaner (even Task Manager couldn't kill the uninstall task, which was a java app)
+* installed S32DS v3.2, evidently that's for ARM. uninstalled, run ccleaner. still worried that it "polluted" my machine.
+* installed [[https://nxp.flexnetoperations.com/control/frse/download?agree=Accept&element=10944607|S32 Design Studio for Power Architecture]] (S32DS-PA_v2.1)
+{{{code: lang="ini" linenumbers="True"
+License Quantity:
+1
+Fulfillment ID:
+166663337
+Expiration Date:
+Oct 1, 2023
+Product:
+S32DS-PA_v2.1
+Machine:
+6341498EB193F71799C7FD23F0BEC4327DA6FAF4
+Activation Code:
+A0AE-7CEB-D4DD-8D06
+}}}
+
+
+[[https://www.nxp.com/docs/en/user-guide/DEVKIT-MPC5748G-SWIG.pdf|installation instructions]]
+
+[[https://www.nxp.com/docs/en/fact-sheet/AUTOMCUDEVKITFS.pdf|mc5748G devkit one-pager]]
+	[[https://www.nxp.com/document/guide/get-started-with-the-devkit-mpc5748g:NGS-DEVKIT-MPC5748G|getting started]]
+
+When opening the Blinky project begun w/ the previous install (2017.R1), Processor Expert crapped out because it couldn't find the EAR folder. 
+I found it 
+
+---
+
+03-oct.
+* frustrated w/ above, gave up. uninstalled and tried again.
+* followed NSP's [[https://www.nxp.com/docs/en/user-guide/DEVKIT-MPC5748G-SWIG.pdf|SWIG]]
+* IDE's installation location: ''D:\_Programs\nxp\S32DS_Power_v2.1''
+* and again, the uninstaller crapped during execution
+* manually delete folders & clean thoroughly, reboot, clean, then run S32DS installer
+	* install EVERYTHING to default folders, EXCEPT that those defaults were symlinks to the D: locations where i wanted them

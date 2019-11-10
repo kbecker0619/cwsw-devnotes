@@ -1,0 +1,88 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2017-12-13T12:48:50-05:00
+
+====== GIT Repo Setup ======
+Created Wednesday 13 December 2017
+
+1.	container repo
+2.	container_doc repo
+3.	container_code repo
+4.	container_ut repo
+5.	submodule insert doc/doc_this
+6.	submodule insert doc/doc_other_components
+7.	submodule insert ut/ut_this
+8.	submodule insert ut/ut_other_components
+9.	submodule insert code_this per arch layout
+10.	submodule insert code_other_components per integration arch layout
+
+
+In my main personal dev environment, I have a Windows 7 VM, w/ Drive E: as the main location for all software projects.
+
+Within that, I had begun developing my basic library:
+{{{code: lang="sh" linenumbers="True"
+$ tree PersonalDev -d
+PersonalDev
+├── components
+│   ├── cwsw_clock_prj
+│   │   ├── cwsw_clock
+│   │   │   ├── include
+│   │   │   └── src
+│   │   ├── Debug_Win_MinGW
+│   │   │   ├── cwsw_clock
+│   │   │   │   └── src
+│   │   │   ├── cwsw_lib
+│   │   │   │   └── src
+│   │   │   └── ut
+│   │   ├── doc
+│   │   └── ut
+│   ├── cwsw_lib_prj
+│   │   ├── cwsw_lib
+│   │   │   ├── include
+│   │   │   └── src
+│   │   ├── Debug_Win_MinGW
+│   │   │   ├── cwsw_lib
+│   │   │   │   └── src
+│   │   │   ├── ut
+│   │   │   └── wsCwsw_Lib_W7
+│   │   ├── doc
+│   │   └── ut
+│   ├── smeng_c_prj
+│   │   ├── cwsw_smeng_c
+│   │   │   ├── include
+│   │   │   └── src
+│   │   ├── Debug_Win_MinGW
+│   │   │   ├── cwsw_clock
+│   │   │   │   └── src
+│   │   │   ├── cwsw_lib
+│   │   │   │   └── src
+│   │   │   ├── cwsw_smeng_c
+│   │   │   │   └── src
+│   │   │   └── ut
+│   │   ├── doc
+│   │   │   └── SM_Engine_Zimminess
+│   │   │       └── Home
+│   │   │           └── Workspace_Setup
+│   │   ├── ut
+│   │   └── wsSmEngine_W7
+│   └── wsCwsw_Lib_W7
+│       └── RemoteSystemsTempFiles
+└── sm_ws
+    └── RemoteSystemsTempFiles
+
+}}}
+
+
+The working projects were created using Eclipse Neon ("neon 3", per the splash screen), and component reuse was achieved using Eclipse' internal symlinks, rather than file symlinks.
+The 1st commit was based on this setup:
+
+
+While I have instructions elsewhere ("SQSP Notes" Zim Wiki, p. Home/Git Repos), instead, i created a new repo @ [[https://github.com/kbecker0619/StateMachineEngine|github,]] cloned it into a new folder on my HD, then moved my existing code into it.
+{{{code: lang="sh" linenumbers="True"
+$ git clone git@github.com:kbecker0619/StateMachineEngine.git
+Cloning into 'StateMachineEngine'...
+
+}}}
+
+
+Note: I didn't do this here, but my preferred practice is to append .git to the folder that holds the .git folder.

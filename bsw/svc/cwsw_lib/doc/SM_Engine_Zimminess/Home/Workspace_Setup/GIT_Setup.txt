@@ -1,0 +1,32 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2017-12-13T08:06:06-05:00
+
+====== GIT Setup ======
+Created Wednesday 13 December 2017
+
+as of this writing, I am using GIT 2.15.1.2, [[TortoiseGit]] 2.5.0, and Cycligent Git Tool
+
+===== Symbolic Links =====
+My workspace architecture requires symlinks, which i've had relatively good experience with in cross-platform (i.e., Linux and Windows 7 & Windows 10) environments.
+
+I use this so much, I make it a global setting so I don't have to remember to do it with each repo.
+https://stackoverflow.com/questions/5917249/git-symlinks-in-windows, answer 26
+
+===== General =====
+* GIT within Cygwin works fine, **provided** you don't use any enhancement such as TortoiseGit. If you do, then you need to take extra measures to make Tortoise (or other) work. I've seen the [[https://gitlab.com/tortoisegit/tortoisegit/issues/2275|helps]] (and MANY other places), but haven't made a serious effort to make it work, because of ...
+* Personally, I really like [[https://www.cycligent.com/git-tool|Cycligent Git Tool]] (works in both Linux and Windows), but it doesn't seem to work at all with Cygin's GIT. Also, Eclipse doesn't really know about GIT if its only incarnation is within Cygwin.
+* conversely, if you install GIT after Cygwin, it seems that Cygwin knows about GIT
+Now, if you follow one of the [[Cygwin Home Folder|several methods available]] to make Cygwin's home folder to be your Windows user folder, then the .ssh folders will be shared, and Cygwin GIT works well with "official" GIT.
+
+reference:
+{{{code: lang="sh" linenumbers="True"
+$ git config -l
+core.symlinks=true
+...
+core.editor=nano.exe
+...
+user.name=Kevin Becker
+user.email=Kevin.L.Becker@Live.com
+
+}}}

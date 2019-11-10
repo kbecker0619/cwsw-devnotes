@@ -1,0 +1,89 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2017-12-13T06:44:31-05:00
+
+====== Workspace Setup ======
+Created Wednesday 13 December 2017
+
+===== GIT =====
+[[+GIT Setup|git setup]]
+
+===== SVN =====
+svn setup
+
+===== CYGWIN =====
+[[+Cygwin Setup|cygwin setup]]
+env-var:
+{{{code: lang="sh" linenumbers="True"
+HOME=%HOMEDRIVE%%HOMEPATH%
+
+CYGWIN=winsymlinks:native
+}}}
+
+symlinks: http://bit.ly/2ABHFo0
+
+===== GIT BASH =====
+git bash setup
+env-var:
+{{{code: lang="sh" linenumbers="True"
+MSYS=winsymlinks:native
+}}}
+
+
+===== Doxygen =====
+
+===== Dot (GraphViz) =====
+
+
+===== PlantUML =====
+
+===== Eclipse =====
+Neon / s32ds / 
+
+as i did [[Home:Architecture Setup|here]] with NetBeans, recommend to add an env-var, 
+	''MPC57xx_XC_HOME=G:\_Programs\NXP\S32DS_Power_v2017.R1''
+	(or wherever)
+
+at the time of this implementation (today, 12:30 PM), Eclipse' PATH statement was
+	''G:\_Programs\NXP\S32DS_Power_v2017.R1\Cross_Tools\powerpc-eabivle-4_9\bin;G:\_Programs\NXP\S32DS_Power_v2017.R1\utils\msys32\usr\bin;G:\_Programs\NXP\S32DS_Power_v2017.R1\eclipse\..\S32DS\SPT\bin; G:/_Programs/NXP/S32DS_Power_v2017.R1/eclipse/jre/bin/client;G:/_Programs/NXP/S32DS_Power_v2017.R1/eclipse/jre/bin; G:/_Programs/NXP/S32DS_Power_v2017.R1/eclipse/jre/lib/i386; C:\Program Files\Common Files\Microsoft Shared\Windows Live;C:\Program Files (x86)\Common Files\Microsoft Shared\Windows Live;C:\ProgramData\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;G:\_Programs\doxygen\bin;G:\_Programs\CodeBlocks\MinGW\bin;G:\_Programs\Sophos\Sophos SSL VPN Client\bin;G:\_Programs\Expat 2.2.0;C:\_Programs\Graphviz2.38\bin;G:\_Programs\TortoiseGit\bin;G:\_Programs\Git\cmd;G:\_Programs\Microchip\xc32\v1.44\bin;C:\Users\kbecker\AppData\Roaming\Dashlane\5.6.0.15520\bin\Firefox_Extension\{442718d9-475e-452a-b3e1-fb1ee16b8e9f}\components;C:\Users\kbecker\AppData\Roaming\Dashlane\5.6.0.15520\ucrt;G:\_Programs\NXP\S32DS_Power_v2017.R1\eclipse''
+
+After correction, Eclipse' PATH statement was
+	''${MPC57xx_XC_HOME}\Cross_Tools\powerpc-eabivle-4_9\bin;${MPC57xx_XC_HOME}\utils\msys32\usr\bin;${MPC57xx_XC_HOME}\S32DS\SPT\bin;${MPC57xx_XC_HOME}/eclipse/jre/bin/client;${MPC57xx_XC_HOME}/eclipse/jre/bin;${MPC57xx_XC_HOME}/eclipse/jre/lib/i386;C:\Program Files\Common Files\Microsoft Shared\Windows Live;C:\Program Files (x86)\Common Files\Microsoft Shared\Windows Live;C:\ProgramData\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;G:\_Programs\doxygen\bin;G:\_Programs\CodeBlocks\MinGW\bin;G:\_Programs\Sophos\Sophos SSL VPN Client\bin;G:\_Programs\Expat 2.2.0;C:\_Programs\Graphviz2.38\bin;G:\_Programs\TortoiseGit\bin;G:\_Programs\Git\cmd;G:\_Programs\Microchip\xc32\v1.44\bin;C:\Users\kbecker\AppData\Roaming\Dashlane\5.6.0.15520\bin\Firefox_Extension\{442718d9-475e-452a-b3e1-fb1ee16b8e9f}\components;C:\Users\kbecker\AppData\Roaming\Dashlane\5.6.0.15520\ucrt;${MPC57xx_XC_HOME}\eclipse''
+
+To all configurations, add command-line define ''XPRJ_${ConfigName}''
+
+
+===== MPLab / NetBeans =====
+NB 8.1, even when 8.2 was available
+MPLAB X 4.05, w/ Harmony v2.04 + the current version of the free XC gcc compiler
+
+Out of the box, MPLAB (not NB) defines command-line define of ''XPRJ_<config>''
+MPLAB's Harmony has a requirement that the Harmony install must reside on the same drive letter as your project, which to me makes little sense, and didn't match my install. so, i created a symlink on my projects drive that pointed to my actual installation.
+
+* [[file:///G:/_Programs/Microchip/harmony/v2_05/doc/html/frames.html%3Ffrmname%3Dtopic%26frmfile%3Dindex.html|MPLAB Mutexes:]] MPLAB Harmony Help:  Volume IV: MPLAB Harmony Development > MPLAB Harmony Compatibility Guide > 3: Modularity Guidelines > 3.3: Protect Owned Resources > 3.3.2: Protect Owned Resources From Accesses by Multiple Threads
+
+===== Visual Studio =====
+VS2008, simply because I want [[LabWindows]] compatibility.
+
+Because this isn't my main dev environment, and because this is a very old version of VS, I didn't spend a lot of time searching the predefined macros to discover the one that tells you the current configuration. I just added the XPRJ_xxx macro to the project configuration dialog.
+
+1. 1st problem, errors out on ''#include <stdint.h>''
+https://stackoverflow.com/questions/126279/c99-stdint-h-header-and-ms-visual-studio ⇒ https://github.com/mattn/gntp-send/blob/master/include/msinttypes/stdint.h
+copied to my install folder, which was ''E:\_Programs\Microsoft Visual Studio 9.0\VC\include'' 
+
+2. next problem: no ''<stdbool.h>''
+that same location didn't have a version of ''<stdbool.h>''. found some other version somewhere
+
+3. because the C compiler for VS2008 is definitely not up to C11 standards, had to change a few of the macros that i normally use. (e.g., dprintf)
+
+===== LabWindows/CVI =====
+v7.1 (very, very old - 11 years @ this writing in Dec 2017)
+
+Environment really only understands Debug and Release modes, isn't easy (at least I haven't found it to be so) to add new or change names of those two build targets. To compensate, in my project configuration header (''projcfg.h''), I manually add XPRJ  defines.
+
+1. 1st problem, no'' <stdint.h>''
+copied from my VS2008 install (E:\_Programs\Microsoft Visual Studio 9.0\VC\include), to my LW71 install (E:\_Programs\National Instruments\CVI71\include)
+2. no <wchar.h>					: ditto
+3. next problem: no <stdbool.h>	: remediation: ditto
+4. the stdint.h file i copied over, had checks specifically for MSVC. remediation: edit the heck out of it. it is MOST DEFINITELY not compliant!! this removed the "need" for wchar.h
+
