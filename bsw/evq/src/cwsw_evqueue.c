@@ -138,7 +138,7 @@ tEvQ_ErrorCodes
 Cwsw_EvQ__PostEvent(tEvQueueCtrl *pEvQueueCtrl, tEvQ_Event ev)
 {
 	bool isthereroom;
-	size_t writerange;
+	int64_t writerange;
 
 	// check preconditions, in order of priority
 	if(!initialized)							{ return kEvQ_Err_NotInitialized; }
@@ -180,14 +180,15 @@ Cwsw_EvQ__PostEvent(tEvQueueCtrl *pEvQueueCtrl, tEvQ_Event ev)
 tEvQ_ErrorCodes
 Cwsw_EvQ__GetEvent(tEvQueueCtrl *pEvQueueCtrl, tEvQ_Event *pEv)
 {
-	tEvQ_Event ev = kEvQ_Ev_None;
+	tEvQ_ErrorCodes rc = kEvQ_Ev_None;
 
 	// check preconditions, in order of priority
 	if(!initialized)							{ return kEvQ_Err_NotInitialized; }
-	if(!pEvQueueCtrl)							{ return kEvQ_Err_BadCtrl; }
-	if(!pEvQueueCtrl->Event_Queue_Ptr)			{ return kEvQ_Err_BadQueue; }
-	if(!pEvQueueCtrl->Queue_Size)				{ return kEvQ_Err_BadQueue; }
-	if(!pEvQueueCtrl->Read_Ptr)					{ return kEvQ_Err_BadCtrl; }
+	if(NULL == pEvQueueCtrl)					{ return kEvQ_Err_BadCtrl; }
+	if(NULL == pEvQueueCtrl->Event_Queue_Ptr)	{ return kEvQ_Err_BadQueue; }
+	if(NULL == pEvQueueCtrl->Queue_Size)		{ return kEvQ_Err_BadQueue; }
+	if(NULL == pEvQueueCtrl->Read_Ptr)			{ return kEvQ_Err_BadCtrl; }
+	if(NULL == pEv)								{ return kEvQ_Err_BadParm; }
 
 	// are there any entries
 	if(pEvQueueCtrl->Queue_Count != 0)
@@ -198,9 +199,9 @@ Cwsw_EvQ__GetEvent(tEvQueueCtrl *pEvQueueCtrl, tEvQ_Event *pEv)
 		pEvQueueCtrl->Queue_Count--;
 
 		// get the event/increment the pointer
-		ev = *(pEvQueueCtrl->Read_Ptr++);
+		*pEv = *(pEvQueueCtrl->Read_Ptr++);
 
-		// check for overflow
+		// check for buffer wraparound
 		if(pEvQueueCtrl->Read_Ptr > (pEvQueueCtrl->Event_Queue_Ptr + pEvQueueCtrl->Queue_Size))
 		{
 			// reset it to beginning
@@ -210,7 +211,7 @@ Cwsw_EvQ__GetEvent(tEvQueueCtrl *pEvQueueCtrl, tEvQ_Event *pEv)
 	}
 
 	// return the event
-	return ev;
+	return rc;
 }
 
 
