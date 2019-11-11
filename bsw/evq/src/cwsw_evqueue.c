@@ -186,7 +186,7 @@ Cwsw_EvQ__GetEvent(tEvQueueCtrl *pEvQueueCtrl, tEvQ_Event *pEv)
 	if(!initialized)							{ return kEvQ_Err_NotInitialized; }
 	if(NULL == pEvQueueCtrl)					{ return kEvQ_Err_BadCtrl; }
 	if(NULL == pEvQueueCtrl->Event_Queue_Ptr)	{ return kEvQ_Err_BadQueue; }
-	if(NULL == pEvQueueCtrl->Queue_Size)		{ return kEvQ_Err_BadQueue; }
+	if(0 == pEvQueueCtrl->Queue_Size)			{ return kEvQ_Err_BadQueue; }
 	if(NULL == pEvQueueCtrl->Read_Ptr)			{ return kEvQ_Err_BadCtrl; }
 	if(NULL == pEv)								{ return kEvQ_Err_BadParm; }
 
