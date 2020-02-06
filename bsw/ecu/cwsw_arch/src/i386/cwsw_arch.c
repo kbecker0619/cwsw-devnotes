@@ -3,7 +3,7 @@
  *
  *	This module is not intended to stand alone; it depends on some parts of the CWSW Lib component.
  *
- *	Copyright (c) 2019 Kevin L. Becker. All rights reserved.
+ *	Copyright (c) 2020 Kevin L. Becker. All rights reserved.
  *
  *	Created on: Jan 3, 2018
  *	@author kbecker
@@ -27,10 +27,10 @@
 #include <stdbool.h>
 
 // ----	Project Headers -------------------------
-#include "../../../../svc/cwsw_lib/inc/cwsw_lib.h"
+#include "cwsw_lib.h"
 
 // ----	Module Headers --------------------------
-#include "../../inc/i386/cwsw_arch.h"
+#include "cwsw_arch.h"
 
 
 // ============================================================================

@@ -30,7 +30,7 @@
 #include <stdbool.h>	/* bool */
 
 // ----	Project Headers -------------------------
-//#include "cwsw_lib.h"
+#include "cwsw_lib.h"
 
 // ----	Module Headers --------------------------
 
@@ -69,8 +69,8 @@ typedef enum {
     PORTS_BIT_POS_12 = 12,
     PORTS_BIT_POS_13 = 13,
     PORTS_BIT_POS_14 = 14,
-    PORTS_BIT_POS_15 = 15
-
+    PORTS_BIT_POS_15 = 15,
+	kNumPortBits
 } PORTS_BIT_POS;
 
 /** Port channel enumeration, ala Microchip PIC32 MZ */
@@ -85,9 +85,9 @@ typedef enum {
     PORT_CHANNEL_G = 0x06,
     PORT_CHANNEL_H = 0x07,
     PORT_CHANNEL_J = 0x08,
-    PORT_CHANNEL_K = 0x09
-
-} PORTS_CHANNEL;
+    PORT_CHANNEL_K = 0x09,
+	kNumPortsChannels
+} tPORTS_CHANNEL;
 
 
 // ============================================================================
@@ -114,7 +114,7 @@ typedef enum {
 // ============================================================================
 
 /* Function:
-    void PLIB_PORTS_PinWrite( PORTS_MODULE_ID index, PORTS_CHANNEL channel,
+    void PLIB_PORTS_PinWrite( PORTS_MODULE_ID index, tPORTS_CHANNEL channel,
                               PORTS_BIT_POS       bitPos,
                               bool            value )
 
@@ -153,12 +153,12 @@ typedef enum {
 	this feature is available.
 */
 extern void PLIB_PORTS_PinWrite(
-		PORTS_MODULE_ID	index, 	PORTS_CHANNEL	channel,
+		PORTS_MODULE_ID	index, 	tPORTS_CHANNEL	channel,
 		PORTS_BIT_POS   bitPos,	bool            value );
 
 
 extern bool PLIB_PORTS_PinGet(
-		PORTS_MODULE_ID index, PORTS_CHANNEL channel,
+		PORTS_MODULE_ID index, tPORTS_CHANNEL channel,
 		PORTS_BIT_POS bitPos);
 
 #ifdef	__cplusplus

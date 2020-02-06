@@ -6,7 +6,7 @@
  *	API file in one of the supported architectures, located immediately below this file's location.
  *
  *
- *	Copyright (c) 2019 Kevin L. Becker. All rights reserved.
+ *	Copyright (c) 2020 Kevin L. Becker. All rights reserved.
  *
  *	Created on: Jan 3, 2018
  *	@author kbecker

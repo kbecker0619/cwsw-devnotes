@@ -1,0 +1,4 @@
+[submodule "bsw/svc/cwsw_lib"]
+	path = bsw/svc/cwsw_lib
+	url = git@github.com:kbecker0619/cwsw_lib.git
+	branch = development

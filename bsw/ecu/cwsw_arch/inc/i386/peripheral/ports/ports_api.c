@@ -11,15 +11,15 @@
 // ----	Include Files ---------------------------------------------------------
 // ============================================================================
 
-#include "../../../../inc/i386/peripheral/ports/ports_api.h"
-
 #include "projcfg.h"
 
 // ----	System Headers --------------------------
+#include <limits.h>		/* CHAR_BIT */
 
 // ----	Project Headers -------------------------
 
 // ----	Module Headers --------------------------
+#include "ports_api.h"
 
 
 // ============================================================================
@@ -38,9 +38,39 @@
 // ----	Module-level Variables ------------------------------------------------
 // ============================================================================
 
+/* mvp for this build: one "channel" of 8 bits, we'll call it channel a */
+// implementation note: we're intentionally not complying w/ C90 (by use of `bool`, in addition to other things)
+bool channel_stat[kNumPortsChannels][kNumPortBits] = {0};
+
+
 // ============================================================================
-// ----	Private Prototypes ----------------------------------------------------
+// ----	Private Functions -----------------------------------------------------
 // ============================================================================
+
+static void
+ShowDoStatus(void)
+{
+	int rowidx, colidx;
+
+	#if defined(DEMO_APP)
+	// show header line
+	(void)puts("\nDigital Output status:");
+	(void)puts("\n       Bit: [F][E][D][C][B][A][9][8][7][6][5][4][3][2][1][0]");
+
+	// show port status
+	for(rowidx = 0; rowidx < kNumPortsChannels; rowidx++)
+	{
+		(void)printf("\nChannel: %C: ", rowidx + 'A');
+		colidx = kNumPortBits;
+		while(colidx--)
+		{
+			(void)printf("[%c]", channel_stat[rowidx][colidx] ? '+' : '-');
+		}
+	}
+	(void)puts("\n");
+	#endif
+}
+
 
 // ============================================================================
 // ----	Public Functions ------------------------------------------------------
@@ -65,18 +95,21 @@
 #include "cwsw_dio_uir.h"
 #endif
 void
-PLIB_PORTS_PinWrite(PORTS_MODULE_ID index, PORTS_CHANNEL channel, PORTS_BIT_POS bitPos, bool value)
+PLIB_PORTS_PinWrite(PORTS_MODULE_ID index, tPORTS_CHANNEL channel, PORTS_BIT_POS bitPos, bool value)
 {
 	(void)(index);
 	(void)(channel);
 	(void)(bitPos);
 	(void)(value);
 
-#if defined(DEMO_APP)
-	dbg_printf(
-		"\tDO Write, Idx: %i, Channel: %i, Bit: %i, Value: %s\n",
-		index, channel, bitPos, value ? "On" : "Off");
-#endif
+	if( (channel < kNumPortsChannels) && (bitPos < kNumPortBits) )
+	{
+		channel_stat[channel][bitPos] = !!value;	// convert any non-binary value to bool
+	}
+
+	#if defined(DEMO_APP)
+	ShowDoStatus();
+	#endif
 
 	#if (XPRJ_Debug_CVI)
 	{
@@ -87,7 +120,7 @@ PLIB_PORTS_PinWrite(PORTS_MODULE_ID index, PORTS_CHANNEL channel, PORTS_BIT_POS 
 }
 
 bool
-PLIB_PORTS_PinGet(PORTS_MODULE_ID index, PORTS_CHANNEL channel, PORTS_BIT_POS bitPos)
+PLIB_PORTS_PinGet(PORTS_MODULE_ID index, tPORTS_CHANNEL channel, PORTS_BIT_POS bitPos)
 {
 	(void)(index);
 	(void)(bitPos);

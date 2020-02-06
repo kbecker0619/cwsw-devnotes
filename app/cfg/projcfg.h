@@ -107,6 +107,15 @@ extern "C" {
 	#define	XPRJ_CVI_Debug				0
 	#define XPRJ_Debug_Linux_GCC		0
 
+#elif defined(XPRJ_Win_MinGW_Release)
+	/* This is (at the time of this writing) intended to be a temporary configuration for Windows */
+	#define XPRJ_Win_MinGW_Debug		0x01	/* FAKE OUT. PSYC. */
+	#define XPRJ_Win_Cygwin_Debug_UT	0
+	#define XPRJ_Win_MSVC_Debug			0
+	#define XPRJ_NB_Debug				0
+	#define	XPRJ_CVI_Debug				0
+	#define XPRJ_Debug_Linux_GCC		0
+
 #elif defined(XPRJ_Win_Cygwin_Debug_UT)
 	/* This is the configuration intended for unit test development on Windows, using GCOV */
 	#define XPRJ_Win_MinGW_Debug		0

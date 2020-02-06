@@ -1,7 +1,7 @@
 /** @file
  *	@brief	Primary Unit Test file for the CWSW Lib component.
  *
- *	Copyright (c) 2019 Kevin L. Becker. All rights reserved.
+ *	Copyright (c) 2020 Kevin L. Becker. All rights reserved.
  *
  *	Created on: Oct 15, 2019
  *	@author kbecker
@@ -20,11 +20,12 @@
 
 // ----	Project Headers -------------------------
 #include "cwsw_lib.h"
+#include "cwsw_arch.h"
+#include "cwsw_board.h"
 #include "cwsw_eventsim.h"
 
-// ----	Project Headers -------------------------
-#include "cwsw_arch.h"
-
+// ----	Module Headers --------------------------
+// the point of this project
 #include "cwsw_evqueue.h"
 
 
@@ -82,13 +83,14 @@ main(void)
 		cwsw_assert(Get(Cwsw_Lib, Initialized), "Confirm initialization");
 	}
 
-	(void)Init(Cwsw_Arch);		// Cwsw_Arch__Init()
-	(void)Init(Cwsw_EvQ);
+	(void)Init(Cwsw_Arch);	// Cwsw_Arch__Init()
+	(void)Init(Cwsw_Board);	// Cwsw_Board__Init()
+	(void)Init(Cwsw_EvQ);	// Cwsw_EvQ__Init()
 
 	/* contrived example, not recommended, to exercise other features of the component */
 	cwsw_assert(1 == Cwsw_Critical_Protect(0), "Confirm critical section nesting count");
-	cwsw_assert(Cwsw_Critical_Release(0) == 0, "Confirm balanced critical region usage");
-	cwsw_assert(Init(Cwsw_Lib) == 2, "Confirm reinitialization return code");
+	cwsw_assert(0 == Cwsw_Critical_Release(0), "Confirm balanced critical region usage");
+	cwsw_assert(2 == Init(Cwsw_Lib), "Confirm reinitialization return code");
 
 	do {
 		tEvQueueCtrl evqCtrl = {0};
@@ -96,10 +98,13 @@ main(void)
 		tEvQ_Event thisevent = evNoEvent;
 
 		tEvQ_EvQueue pQ = evqueue;
-		Cwsw_EvQ__InitEvQ(&evqCtrl, pQ, sizeof evqueue);
+		if(kEvQ_Err_NoError == Cwsw_EvQ__InitEvQ(&evqCtrl, pQ, sizeof evqueue))
+		{
+			Cwsw_EvQ__PostEvent(&evqCtrl, evNotInit);
+			Cwsw_EvQ__GetEvent(&evqCtrl, &thisevent);
 
-		Cwsw_EvQ__PostEvent(&evqCtrl, evNotInit);
-		Cwsw_EvQ__GetEvent(&evqCtrl, &thisevent);
+		}
+
 	} while(0);
 
 	Task(Cwsw_Lib);
