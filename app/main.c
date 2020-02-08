@@ -11,14 +11,13 @@
 // ----	Include Files ---------------------------------------------------------
 // ============================================================================
 
-#include "projcfg.h"
-
 // ----	System Headers --------------------------
 #include <stdio.h>
 #include <stdlib.h>			/* EXIT_SUCCESS */
 #include <limits.h>			/* INT_MAX */
 
 // ----	Project Headers -------------------------
+#include "projcfg.h"
 #include "cwsw_lib.h"
 #include "cwsw_arch.h"
 #include "cwsw_board.h"
@@ -27,6 +26,7 @@
 // ----	Module Headers --------------------------
 // the point of this project
 #include "cwsw_evqueue.h"
+#include "cwsw_evhandler.h"
 
 
 // ============================================================================
@@ -71,6 +71,58 @@ EventHandler__evTerminateRequested(tEventPayload EventData)
 #define Cwsw_Lib__Task()	do { } while(0)
 
 
+static void
+handle_not_init(tEvQ_Event ev, uint32_t evInt)
+{
+
+}
+
+tEvQ_QueueCtrl	evqCtrl = {0};
+
+/* for this trial, simply load the event queue with a bunch of events. at the moment, i'm not worried
+ * about their semantic meanings.
+ * note that initializing them this way does NOT properly initialize the write pointer, so the 1st
+ * <n> PostEvent() calls will overwrite the existing events.
+ */
+tEvQ_Event		evqueue[10] = {1, 2, 3, 4, 5, 6};
+
+
+#include "evq_events.h"
+static void
+do_evdispatch(void)
+{
+	tEvQ_EvQueue pQ = evqueue;
+	tEvH_EvHandler evhandlers[kNumProjectEvqEvents] = { { 0 } };
+	pEvH_EvHandlerFunc pf = NULL;
+
+	if(kEvQ_Err_NoError != Cwsw_EvQ__InitEvQ(&evqCtrl, pQ, TABLE_SIZE(evqueue)))	return;
+	evqCtrl.Queue_Count = 6;	// preload w/ the values already initialized (in the definition statement)
+
+	(void)Cwsw_EvQ__RegisterHandler(evhandlers, TABLE_SIZE(evhandlers), evBtnCommit, handle_not_init);
+	pf = Cwsw_EvQ__GetHandler(evhandlers, TABLE_SIZE(evhandlers), evBtnCommit);
+	if(pf)
+	{
+		pf(evBtnCommit, 0);	/* todo: launch this in an independent thread (e.g., protothread) */
+	}
+
+//	(void)Cwsw_EvQ
+//	tEvQ_Event thisevent = evNoEvent;
+
+//		(void)Cwsw_EvQ__PostEvent(&evqCtrl, evButtonCommit);
+//
+//		do
+//		{
+//			Cwsw_EvQ__PostEvent(&evqCtrl, evNotInit);
+//			Cwsw_EvQ__GetEvent(&evqCtrl, &thisevent);
+//			pf = Cwsw_EvQ__GetHandler(&evhandlers, thisevent, TABLE_SIZE(evhandlers));
+//			if(pf)
+//			{
+//				pf(thisevent, 0);	/* todo: launch this in an independent thread (e.g., protothread) */
+//			}
+//		} while(evTerminateRequested != thisevent);
+}
+
+
 int
 main(void)
 {
@@ -92,20 +144,7 @@ main(void)
 	cwsw_assert(0 == Cwsw_Critical_Release(0), "Confirm balanced critical region usage");
 	cwsw_assert(2 == Init(Cwsw_Lib), "Confirm reinitialization return code");
 
-	do {
-		tEvQueueCtrl evqCtrl = {0};
-		tEvQ_Event evqueue[5] = {0};
-		tEvQ_Event thisevent = evNoEvent;
-
-		tEvQ_EvQueue pQ = evqueue;
-		if(kEvQ_Err_NoError == Cwsw_EvQ__InitEvQ(&evqCtrl, pQ, sizeof evqueue))
-		{
-			Cwsw_EvQ__PostEvent(&evqCtrl, evNotInit);
-			Cwsw_EvQ__GetEvent(&evqCtrl, &thisevent);
-
-		}
-
-	} while(0);
+	do_evdispatch();
 
 	Task(Cwsw_Lib);
 

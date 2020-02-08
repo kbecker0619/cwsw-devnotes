@@ -1,7 +1,7 @@
 /** @file
  *	@brief	Project-specific event enumerations for simulated events.
  *
- *	Copyright (c) 2019 Kevin L. Becker. All rights reserved.
+ *	Copyright (c) 2020 Kevin L. Becker. All rights reserved.
  *
  *	Created on: Jan 20, 2018
  *	@author kbecker
@@ -32,9 +32,13 @@ extern "C" {
 #define UT_PROJEVTNAMES_H__REVSTRING "$Revision: 0123 $"
 
 /** Project-specific list of events.
- * This list must be contained inside the enumeration; the name of the enumeration tag is
- * significant, and it is highly recommended the 1st enum (value of 0) should be reserved for No
- * Event. Other than that,
+ * 	This list must be contained inside the enumeration; the name of the enumeration tag is
+ * 	significant, and it is highly recommended the 1st enum (value of 0) should be reserved for No
+ * 	Event.
+ *
+ * 	Note that while an event is tightly coupled to an event handler in the vast majority of cases,
+ * 	still, for maximum flexibility and ease of maintenance, we make this association in "member"
+ * 	functions and in supplementary tables, rather than in foundational-level structs.
  */
 enum eProjectEvents {
 	evNoEvent,				/**< reserved value, used for initialization */
@@ -44,7 +48,8 @@ enum eProjectEvents {
 	evButtonCommit,
 	evButtonReleased,
 	evUpdateUi,
-	evTerminateRequested
+	evTerminateRequested,
+	kNumProjectEvents
 };
 
 

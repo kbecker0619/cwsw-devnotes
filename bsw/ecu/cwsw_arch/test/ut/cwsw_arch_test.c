@@ -1,7 +1,7 @@
 /** @file
  *	@brief	Primary Unit Test file for the CWSW Arch[itecture] component.
  *
- *	Copyright (c) 2019 Kevin L. Becker. All rights reserved.
+ *	Copyright (c) 2020 Kevin L. Becker. All rights reserved.
  *
  *	Created on: Nov 11, 2018
  *	@author kbecker
@@ -12,7 +12,6 @@
 // ============================================================================
 
 // ----	System Headers --------------------------
-#include "../../inc/i386/cwsw_arch.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -22,6 +21,7 @@
 #include <CUnit/Basic.h>
 
 // ----	Module Headers --------------------------
+#include "../../inc/i386/cwsw_arch.h"
 #include "cwsw_arch_test_op_states.h"
 
 

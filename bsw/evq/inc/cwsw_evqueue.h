@@ -66,7 +66,7 @@ enum { kEvQ_Ev_None };
 // ============================================================================
 
 /** Error codes returned by Event Queue API. */
-typedef enum eEvQ_ErrorCodes tEvQ_ErrorCodes;
+typedef enum eEvQ_ErrorCodes tEvQ_ErrorCode;
 
 /**	Event queue buffer for projects that use the CWSW Event Queue.
  *	By design, this buffer must be an independent entity from the control
@@ -84,7 +84,7 @@ typedef struct sEvQueue {
 	unsigned char	Queue_Count;		//!< number of items in the queue
 	tEvQ_Event      *Write_Ptr;			//!< queue write pointer. Defined as a pointer-to-event, rather than an index, to ease reading/writing API, letting complexity fall into queue management code.
 	tEvQ_Event      *Read_Ptr;			//!< queue read pointer. Defined as a pointer-to-event, rather than an index, to ease reading/writing API, letting complexity fall into queue management code.
-} tEvQueueCtrl;
+} tEvQ_QueueCtrl;
 
 
 // ============================================================================
@@ -115,12 +115,12 @@ extern uint16_t Cwsw_EvQ__Init(void);
  *	@param[in]		pEvQueue	The location of the event buffer. The pointer is
  * 								constant, though of course the buffer itself is not.
  * 	@param[in]		EvQueueSz	The size of the event buffer.
- *	@returns Error code, enumeration of type tEvQ_ErrorCodes.
+ *	@returns Error code, enumeration of type tEvQ_ErrorCode.
  *
  *	It is the responsibility of the caller to ensure the validity of the buffer
  *	and control struct.
  */
-extern tEvQ_ErrorCodes Cwsw_EvQ__InitEvQ(tEvQueueCtrl *EvQueueCtrl, tEvQ_EvQueue const pEvQueue, uint8_t const EvQueueSz);
+extern tEvQ_ErrorCode Cwsw_EvQ__InitEvQ(tEvQ_QueueCtrl *EvQueueCtrl, tEvQ_EvQueue const pEvQueue, uint8_t const EvQueueSz);
 
 /** Target for Get(Cwsw_EvQueue, Initialized) interface. */
 extern bool Cwsw_EvQ__Get_Initialized(void);
@@ -132,27 +132,27 @@ extern bool Cwsw_EvQ__Get_Initialized(void);
  *  at module initialization.
  *
  *  @param[in,out]	pEvQueueCtrl	Pointer to the current event buffer control structure
- *	@returns		Error code, enumeration of type tEvQ_ErrorCodes.
+ *	@returns		Error code, enumeration of type tEvQ_ErrorCode.
  */
-extern tEvQ_ErrorCodes Cwsw_EvQ__FlushEvents(tEvQueueCtrl * const pEvQueueCtrl);
+extern tEvQ_ErrorCode Cwsw_EvQ__FlushEvents(tEvQ_QueueCtrl * const pEvQueueCtrl);
 
 /**	Posts an event into the queue.
  *
  *	@param[in,out]	pEvQueueCtrl Pointer to the current control structure.
  *	@param[in]		ev Event to add to the queue.
- *	@returns Error code, enumeration of type tEvQ_ErrorCodes.
+ *	@returns Error code, enumeration of type tEvQ_ErrorCode.
  */
-extern tEvQ_ErrorCodes Cwsw_EvQ__PostEvent(tEvQueueCtrl *pEvQueueCtrl, tEvQ_Event ev);
+extern tEvQ_ErrorCode Cwsw_EvQ__PostEvent(tEvQ_QueueCtrl *pEvQueueCtrl, tEvQ_Event ev);
 
 /** Retrieve the current event.
  *	Depletes the event count in the queue by one event.
  *
  *	@param pEvQueueCtrl[in,out]	Pointer to the current event buffer control structure.
  *	@param ev[out]				Pointer to the event returned.
- *	@returns Error code, enumeration of type tEvQ_ErrorCodes. For an empty queue,
+ *	@returns Error code, enumeration of type tEvQ_ErrorCode. For an empty queue,
  *			no error is returned.
  */
-extern tEvQ_ErrorCodes Cwsw_EvQ__GetEvent(tEvQueueCtrl *pEvQueueCtrl, tEvQ_Event *pEv);
+extern tEvQ_ErrorCode Cwsw_EvQ__GetEvent(tEvQ_QueueCtrl *pEvQueueCtrl, tEvQ_Event *pEv);
 
 
 // ==== /Discrete Functions ================================================= }

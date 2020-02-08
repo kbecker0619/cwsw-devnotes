@@ -1,11 +1,11 @@
-/** @file cwsw_evq_proj.h
+/** @file
  *	@brief	Project-specific definitions related to event queues.
  *
  *	Note:
  *	To configure the Event Queue component, copy this file to the application-specific configuration
  *	folder, and remove the ".template" portion of the file name.
  *
- *	Copyright (c) 2019 Kevin L. Becker. All rights reserved.
+ *	Copyright (c) 2020 Kevin L. Becker. All rights reserved.
  *
  *	Original:
  *	Created on: Mar 2, 2018

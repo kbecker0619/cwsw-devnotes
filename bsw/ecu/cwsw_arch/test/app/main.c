@@ -1,6 +1,6 @@
 /** @file
  *
- *	Copyright (c) 2019 Kevin L. Becker. All rights reserved.
+ *	Copyright (c) 2020 Kevin L. Becker. All rights reserved.
  *
  *	Created on: Jan 27, 2018
  *	@author	kbecker
@@ -10,12 +10,11 @@
 // ----	Include Files ---------------------------------------------------------
 // ============================================================================
 
-#include "projcfg.h"
-
 // ----	System Headers --------------------------
 #include <stdlib.h>     	/* EXIT_SUCCESS */
 
 // ----	Project Headers -------------------------
+#include "projcfg.h"
 #include "cwsw_lib.h"
 #include "cwsw_eventsim.h"
 

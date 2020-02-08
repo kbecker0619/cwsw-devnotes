@@ -1,8 +1,8 @@
 /** @file cwsw_eventsim.h
  *	@brief	Stubbed version of "real" header, sufficient to support cwsw_arch development & unit test.
- *	
- *	Copyright (c) 2019 Kevin L. Becker. All rights reserved.
- *	
+ *
+ *	Copyright (c) 2020 Kevin L. Becker. All rights reserved.
+ *
  *	Original:
  *	Created on: Oct 17, 2019
  *	Author: KBECKE35
@@ -15,13 +15,12 @@
 // ----	Include Files ---------------------------------------------------------
 // ============================================================================
 
-#include "projcfg.h"
-
 // ----	System Headers --------------------------
 #include <stdint.h>		/* uint16_t and others */
 #include <stdbool.h>
 
 // ----	Project Headers -------------------------
+#include "projcfg.h"
 
 // ----	Module Headers --------------------------
 

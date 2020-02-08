@@ -1,13 +1,17 @@
-/** @file
+/** @file evq_events.h
+ *	@brief	One-sentence short description of file.
+ *
+ *	Description:
  *
  *	Copyright (c) 2020 Kevin L. Becker. All rights reserved.
  *
- *	Created on: Apr 21, 2019
- *	@author KBECKE35
+ *	Original:
+ *	Created on: Feb 8, 2020
+ *	Author: KBECKE35
  */
 
-#ifndef UT_CWSW_LIB_TEST_OP_STATES_H_
-#define UT_CWSW_LIB_TEST_OP_STATES_H_
+#ifndef PRJ_EVQ_EVENTS_H
+#define PRJ_EVQ_EVENTS_H
 
 // ============================================================================
 // ----	Include Files ---------------------------------------------------------
@@ -29,6 +33,22 @@ extern "C" {
 // ----	Constants -------------------------------------------------------------
 // ============================================================================
 
+/** Global list of events for the event queue.
+ *	Note that this implementation assumes a contiguous list with no gaps in numeric values. This
+ *	implementation uses the event value as an index into a table, and sizes all tables according to
+ *	the value of kNumProjectEvqEvents.
+ */
+enum eTestProjectEvents {
+	evNullEvent = kEvQ_Ev_None,	/**< reserved value, used for initialization */
+	evBtnPressed,				/**< debounced press event */
+	evBtnCommit,
+	evBtReleased,
+	evUiUpdate,
+	evQuitRqst,
+	kNumProjectEvqEvents
+};
+
+
 // ============================================================================
 // ----	Type Definitions ------------------------------------------------------
 // ============================================================================
@@ -41,18 +61,9 @@ extern "C" {
 // ----	Public API ------------------------------------------------------------
 // ============================================================================
 
-extern int init_suite_arch_op_states(void);
-extern int clean_suite_arch_op_states(void);
-
-extern void test_sr_arch_0000(void);
-extern void test_sr_arch_0001(void);
-extern void test_sr_arch_0002(void);
-extern void test_sr_arch_0003(void);
-extern void test_sr_arch_0004(void);
-
 
 #ifdef	__cplusplus
 }
 #endif
 
-#endif /* UT_CWSW_LIB_TEST_OP_STATES_H_ */
+#endif /* EVQ_EVENTS_H_ */

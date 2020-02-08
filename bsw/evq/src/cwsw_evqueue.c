@@ -95,9 +95,17 @@ Cwsw_EvQ__Get_Initialized(void)
 }
 
 
-tEvQ_ErrorCodes
+/** Initialize the control structure for an event queue.
+ *
+ * 	@param pEvQueueCtrl	Pointer to the control structure.
+ *	@param pEvQueue		Pointer to the event queue. This is an independent structure, not embedded
+ *						into the control structure.
+ * 	@param EvQueueSz	Size of the event queue, in number of elements, not bytes.
+ * @return				Error code, where 0 (#kEvQ_Err_NoError) is no error.
+ */
+tEvQ_ErrorCode
 Cwsw_EvQ__InitEvQ(
-	tEvQueueCtrl *pEvQueueCtrl,
+	tEvQ_QueueCtrl *pEvQueueCtrl,
 	tEvQ_EvQueue const pEvQueue,
 	uint8_t const EvQueueSz)
 {
@@ -117,8 +125,8 @@ Cwsw_EvQ__InitEvQ(
 }
 
 
-tEvQ_ErrorCodes
-Cwsw_EvQ__FlushEvents(tEvQueueCtrl * const pEvQueueCtrl)
+tEvQ_ErrorCode
+Cwsw_EvQ__FlushEvents(tEvQ_QueueCtrl * const pEvQueueCtrl)
 {
 	// check preconditions, in order of priority
 	if(!initialized)					{ return kEvQ_Err_NotInitialized; }
@@ -134,8 +142,8 @@ Cwsw_EvQ__FlushEvents(tEvQueueCtrl * const pEvQueueCtrl)
 }
 
 
-tEvQ_ErrorCodes
-Cwsw_EvQ__PostEvent(tEvQueueCtrl *pEvQueueCtrl, tEvQ_Event ev)
+tEvQ_ErrorCode
+Cwsw_EvQ__PostEvent(tEvQ_QueueCtrl *pEvQueueCtrl, tEvQ_Event ev)
 {
 	bool isthereroom;
 	int64_t writerange;
@@ -162,7 +170,7 @@ Cwsw_EvQ__PostEvent(tEvQueueCtrl *pEvQueueCtrl, tEvQ_Event ev)
 		*( pEvQueueCtrl->Write_Ptr++ ) = ev;
 
 		// adjust the count
-		pEvQueueCtrl->Queue_Count++;
+		++pEvQueueCtrl->Queue_Count;
 
 		// check for overflow
 		if ( pEvQueueCtrl->Write_Ptr > ( pEvQueueCtrl->Event_Queue_Ptr + pEvQueueCtrl->Queue_Size ))
@@ -177,10 +185,10 @@ Cwsw_EvQ__PostEvent(tEvQueueCtrl *pEvQueueCtrl, tEvQ_Event ev)
 }
 
 
-tEvQ_ErrorCodes
-Cwsw_EvQ__GetEvent(tEvQueueCtrl *pEvQueueCtrl, tEvQ_Event *pEv)
+tEvQ_ErrorCode
+Cwsw_EvQ__GetEvent(tEvQ_QueueCtrl *pEvQueueCtrl, tEvQ_Event *pEv)
 {
-	tEvQ_ErrorCodes rc = kEvQ_Ev_None;
+	tEvQ_ErrorCode rc = kEvQ_Ev_None;
 
 	// check preconditions, in order of priority
 	if(!initialized)							{ return kEvQ_Err_NotInitialized; }

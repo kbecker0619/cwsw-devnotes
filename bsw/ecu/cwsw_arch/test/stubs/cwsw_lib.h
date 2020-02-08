@@ -1,7 +1,7 @@
 /** @file cwsw_lib.h
  *	@brief	Stubbed version of "real" header, sufficient to support cwsw_arch development & unit test.
  *
- *	Copyright (c) 2019 Kevin L. Becker. All rights reserved.
+ *	Copyright (c) 2020 Kevin L. Becker. All rights reserved.
  *
  *	Original:
  *	Created on: Oct 17, 2019

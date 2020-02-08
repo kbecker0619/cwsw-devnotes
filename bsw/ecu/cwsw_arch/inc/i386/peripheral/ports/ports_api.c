@@ -1,7 +1,7 @@
 /** @file
  *	@brief	One-sentence short description of file.
  *
- *	Copyright (c) 2019 Kevin L. Becker. All rights reserved.
+ *	Copyright (c) 2020 Kevin L. Becker. All rights reserved.
  *
  *	Created on: Jan 5, 2018
  *	@author kbecker
@@ -11,12 +11,11 @@
 // ----	Include Files ---------------------------------------------------------
 // ============================================================================
 
-#include "projcfg.h"
-
 // ----	System Headers --------------------------
 #include <limits.h>		/* CHAR_BIT */
 
 // ----	Project Headers -------------------------
+#include "projcfg.h"
 
 // ----	Module Headers --------------------------
 #include "ports_api.h"
@@ -60,7 +59,7 @@ ShowDoStatus(void)
 	// show port status
 	for(rowidx = 0; rowidx < kNumPortsChannels; rowidx++)
 	{
-		(void)printf("\nChannel: %C: ", rowidx + 'A');
+		(void)printf("\nChannel: %c: ", rowidx + 'A');
 		colidx = kNumPortBits;
 		while(colidx--)
 		{
