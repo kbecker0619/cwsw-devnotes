@@ -1,4 +1,5 @@
 /** @file evq_events.h
+ *	@brief	events for tedlos
  *
  *	Description:
  *
@@ -35,22 +36,26 @@ extern "C" {
 /** Global list of events for the event queue.
  *	Note that this implementation assumes a contiguous list with no gaps in numeric values. This
  *	implementation uses the event value as an index into a table, and sizes all tables according to
- *	the value of kNumProjectEvqEvents.
+ *	the value of kNumOsEvqEvents.
  */
-enum eTestProjectEvents {
-	evNullEvent = kEvQ_Ev_None,	/**< reserved value, used for initialization */
-	evBtnPressed,				/**< debounced press event */
-	evBtnCommit,
-	evBtReleased,
+enum eOsEvqEvents {
+	evOsNullEvent = kEvQ_Ev_None,	/**< reserved value, used for initialization */
+	evGarbageEvent1,
+	evGarbageEvent2,
+	evGarbateEvent3,
+	evTmrHeartbeat,
 	evUiUpdate,
 	evQuitRqst,
-	kNumProjectEvqEvents
+	kNumOsEvqEvents
 };
 
 
 // ============================================================================
 // ----	Type Definitions ------------------------------------------------------
 // ============================================================================
+
+typedef enum eOsEvqEvents tOsEvqEvents, *pOsEvqEvents;
+
 
 // ============================================================================
 // ----	Public Variables ------------------------------------------------------

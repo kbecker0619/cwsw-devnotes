@@ -1,10 +1,13 @@
-/** @file
- *	@brief	Primary Unit Test file for the CWSW Lib component.
+/** @file cwsw_svc.c
+ *	@brief	One-sentence short description of file.
+ *
+ *	Description:
  *
  *	Copyright (c) 2020 Kevin L. Becker. All rights reserved.
  *
- *	Created on: Oct 15, 2019
- *	@author kbecker
+ *	Original:
+ *	Created on: Feb 19, 2020
+ *	Author: KBECKE35
  */
 
 // ============================================================================
@@ -12,20 +15,13 @@
 // ============================================================================
 
 // ----	System Headers --------------------------
-#include <stdio.h>
-#include <stdlib.h>			/* EXIT_SUCCESS */
-#include <limits.h>			/* INT_MAX */
+#include <stdbool.h>
 
 // ----	Project Headers -------------------------
-#include "projcfg.h"
-#include "cwsw_lib.h"
-#include "cwsw_svc.h"
-#include "cwsw_eventsim.h"
+#include "cwsw_board.h"
 
 // ----	Module Headers --------------------------
-// the point of this project
-#include "cwsw_evhandler.h"
-#include "tedlos.h"
+#include "cwsw_svc.h"
 
 
 // ============================================================================
@@ -44,65 +40,51 @@
 // ----	Module-level Variables ------------------------------------------------
 // ============================================================================
 
+static bool initialized = false;
+
+
 // ============================================================================
-// ----	Private Prototypes ----------------------------------------------------
+// ----	Private Functions -----------------------------------------------------
 // ============================================================================
 
 // ============================================================================
 // ----	Public Functions ------------------------------------------------------
 // ============================================================================
 
-void
-EventHandler__evNotInit(tEventPayload EventData)
+uint16_t
+Cwsw_Services__Init(void)
 {
-	UNUSED(EventData);
-}
-
-void
-EventHandler__evTerminateRequested(tEventPayload EventData)
-{
-	UNUSED(EventData);
-	(void)puts("Goodbye Cruel World!");
-}
-
-
-static void
-handle_not_init(tEvQ_Event ev, uint32_t evInt)
-{
-
-}
-
-
-#include "evq_events.h"
-static void
-do_evdispatch(void)
-{
-	tedlos_init();
-	tedlos_do();
-}
-
-int
-main(void)
-{
-	tEventPayload ev = { 0 };
-
-	if(!Get(Cwsw_Lib, Initialized))	// totally unnecessary test, simply to demonstrate Get() API
+	if(!Get(Cwsw_Lib, Initialized))
 	{
-		PostEvent(evNotInit, ev);
-		(void)Init(Cwsw_Lib);		// since the CWSW lib can be called by any module, initialize it 1st
-		cwsw_assert(Get(Cwsw_Lib, Initialized), "Confirm initialization");
+		if(!Init(Cwsw_Lib))		{ return Cwsw_Lib; }
 	}
 
-	(void)Init(Cwsw_Services);
-	(void)Init(Cwsw_EvQ);		// Cwsw_EvQ__Init()
+	// cwsw_board does not make assumptions about the MCU architecture; initialize it ourselves
+	if(!Get(Cwsw_Arch, Initialized))
+	{
+		if(!Init(Cwsw_Arch))	{return Cwsw_Arch; }
+	}
 
-	/* contrived example, not recommended, to exercise other features of the component */
-	cwsw_assert(1 == Cwsw_Critical_Protect(0), "Confirm critical section nesting count");
-	cwsw_assert(0 == Cwsw_Critical_Release(0), "Confirm balanced critical region usage");
-	cwsw_assert(2 == Init(Cwsw_Lib), "Confirm reinitialization return code");
+	if(!Get(Cwsw_Board, Initialized))	// because some services may depend on the BSP, initialize it
+	{
+		if(!Init(Cwsw_Board))	{ return Cwsw_Board; }
+	}
 
-	do_evdispatch();
+	#if defined(__GNUC__)	/* --- GNU Environment ------------------------------ */
+	#pragma GCC diagnostic push
+	#pragma GCC diagnostic ignored "-Wpedantic"
+	#endif
 
-	PostEvent(evTerminateRequested, ev);
-    return (EXIT_SUCCESS);
+	dbg_printf(
+			"\tModule ID %i\t%s\t\n"
+			"\tEntering %s()\n\n",
+			Cwsw_Services, __FILE__,
+			__FUNCTION__);
+
+	#if defined(__GNUC__)	/* --- GNU Environment ------------------------------ */
+	#pragma GCC diagnostic pop
+	#endif
+
+	initialized = true;
+	return 0;
 }

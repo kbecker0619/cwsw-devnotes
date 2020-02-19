@@ -49,7 +49,6 @@
 // ============================================================================
 // ----	Module-level Variables ------------------------------------------------
 // ============================================================================
-static char const * const bsp_RevString = "$Revision: 0123 $";
 
 static bool initialized = false;
 
@@ -82,14 +81,8 @@ Cwsw_Board__UsbVbusSwitchStateSet(tDO_LogicalValues state)
 /** Initialize the board.
  * This function "connects" the board to the CPU.
  * It knows nothing about the application; sitting just above this file, would be the "bsp" (to
- * slightly abuse that term), which connects the application to the board.
+ * slightly abuse that term), which connects the application [framework] to the board.
  * @return error code, where 0 means no problem.
- *
- * i'm on the fence about embedding a dependency here into the architecture - on the one hand, the
- * BSP (next layer up) should manage this, but on the other hand, the board depends so much upon
- * the capabilities of the MCU on that board, that it doesn't make much sense to execute software
- * to initialize the board, when the micro responsible for executing that very self-same software
- * hasn't yet been initialized.
  */
 uint16_t
 Cwsw_Board__Init(void)
@@ -108,9 +101,9 @@ Cwsw_Board__Init(void)
 	#endif
 
 	dbg_printf(
-			"\tModule ID %i\t%s\t%s\n"
+			"\tModule ID %i\t%s\t\n"
 			"\tEntering %s()\n\n",
-			Cwsw_Board, __FILE__, bsp_RevString,
+			Cwsw_Board, __FILE__,
 			__FUNCTION__);
 
 	#if defined(__GNUC__)	/* --- GNU Environment ------------------------------ */

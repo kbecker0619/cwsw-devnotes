@@ -46,7 +46,6 @@ typedef signed int ssize_t;
 // ============================================================================
 // ----	Module-level Variables ------------------------------------------------
 // ============================================================================
-static char const * const cwsw_evqueue_RevString = "$Revision: 0123 $";
 
 static bool initialized = false;
 
@@ -70,9 +69,9 @@ Cwsw_EvQ__Init(void)
 		#endif
 
 		dbg_printf(
-				"\tModule ID %i\t%s\t%s\n"
+				"\tModule ID %i\t%s\t\n"
 				"\tEntering %s()\n\n",
-				Cwsw_EvQ, __FILE__, cwsw_evqueue_RevString,
+				Cwsw_EvQ, __FILE__,
 				__FUNCTION__);
 
 		#if defined(__GNUC__)	/* --- GNU Environment ------------------------------ */
@@ -81,7 +80,6 @@ Cwsw_EvQ__Init(void)
 	}
 	else
 	{
-		UNUSED(cwsw_evqueue_RevString);
 	}
 
 	initialized = true;

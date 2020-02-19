@@ -48,9 +48,6 @@
  * 	match to the specified event. This algorithm works best if the lower-priority events are placed
  * 	at the beginning of the table.
  *
- * 	Note this could be radically optimized, if you assume that the given event is the index into the
- * 	event-dispatcher table.
- *
  * @param pEvHndlr		Pointer to the event-handler table (presumed to be index 0, or at least as much room left in the table as specified size).
  * @param evtblsz		Size of event-handler table.
  * @param ev			Event to search for.
@@ -60,10 +57,10 @@ static tEvH_EvtHandle
 get_ev_handle(tEvH_EvHandler *pEvHndlr, size_t evtblsz, tEvQ_Event ev)
 {
 	ssize_t handle = 0;
-	if(!pEvHndlr)					return -1;
-	if(evtblsz == 0)				return -1;
-	if(ev < 1)						return -1;
-	if(ev >= kNumProjectEvqEvents)	return -1;
+	if(!pEvHndlr)		return -1;	// no table specified
+	if(evtblsz == 0)	return -1;	// table has no size
+	if(ev < 1)			return -1;	// invalid event
+	if(ev >= evtblsz)	return -1;	// invalid event
 
 	// for this edition, we're using the event as an index into our table, rather than any sort of
 	//	more sophisticated means.
@@ -106,10 +103,10 @@ Cwsw_EvQ__RegisterHandler(tEvH_EvHandler *pEvHndlr, size_t evtblsz, tEvQ_Event e
 	if(!pEvHndlr) 					return kEvQ_Err_BadParm;
 	if(!evtblsz)	  				return kEvQ_Err_BadParm;
 
+	// since the container type for enums can be signed int on some systems, make sure the
+	//	minimum value is 0 or higher.
 	// in our system, event value `0` is a special event, and so we don't want to allow for it to
 	//	be associated with a handler.
-	// also, since the container type for enums can be signed int on some systems, make sure the
-	//	minimum value is 0 or higher.
 	if(ev < 1)		  				return kEvQ_Err_BadParm;
 	if(ev >= kNumProjectEvqEvents)	return kEvQ_Err_BadParm;
 
@@ -178,16 +175,26 @@ Cwsw_EvQ_ResgisterHandlers(tEvH_EvHandler *pEvHndlr, size_t evhndlrtblsz,
 }
 
 
+/**	Get the current event handler.
+ *
+ * @param pEvHndlr
+ * @param evtblsz
+ * @param ev
+ * @return	address of handler; NULL if non or disabled.
+ *
+ * @todo: implement "enabled/disabled" status.
+ */
 pEvH_EvHandlerFunc
 Cwsw_EvQ__GetHandler(tEvH_EvHandler *pEvHndlr, size_t evtblsz, tEvQ_Event ev)
 {
 	ssize_t idx = 0;
 
-	if(!pEvHndlr)					return NULL;
-	if(!evtblsz)					return NULL;
-	if(ev < 1)						return NULL;
-	if(ev >= kNumProjectEvqEvents)	return NULL;
+	if(!pEvHndlr)		return NULL;
+	if(!evtblsz)		return NULL;
+	if(ev < 1)			return NULL;
+	if(ev >= evtblsz)	return NULL;
 
+	// todo: get enabled/disabled status; if disabled, return NULL
 	idx = get_ev_handle(pEvHndlr, evtblsz, ev);
 	if(idx < 1)						return NULL;
 

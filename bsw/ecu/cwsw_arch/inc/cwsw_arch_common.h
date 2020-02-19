@@ -38,8 +38,6 @@ extern "C" {
 // ============================================================================
 // ----	Constants -------------------------------------------------------------
 // ============================================================================
-#define CWSW_ARCH_COMMON_H__REVSTRING "$Revision: 0.2.0 $"
-
 
 // ============================================================================
 // ----	Type Definitions ------------------------------------------------------
@@ -106,13 +104,13 @@ extern uint16_t Cwsw_Arch__Init(void);
  *	the Module argument in your IDE (e.g, Eclipse, NetBeans, etc.), and select
  *	Go To Definition.
  */
-enum { Cwsw_Arch = 1 };	/* Generic architecture for all MCU architectures */
+enum { Cwsw_Arch = 1 };				/* all supported MCU architectures have the same "chapter designator" */
 
 /** Target symbol for Get(Cwsw_Arch, xxx) interface */
-#define Cwsw_Arch__Get(a)		Cwsw_Arch__Get_ ## a()
+#define Cwsw_Arch__Get(attribute)	Cwsw_Arch__Get_ ## attribute()
 
 /** Target for Get(Cwsw_Arch, Initialized) interface */
-extern bool 					Cwsw_Arch__Get_Initialized(void);
+extern bool 						Cwsw_Arch__Get_Initialized(void);
 
 // ==== /Targets for Get/Set APIs =========================================== }
 

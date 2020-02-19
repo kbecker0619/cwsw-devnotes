@@ -1,5 +1,4 @@
 /** @file cwsw_evhandler.h
- *	@brief	One-sentence short description of file.
  *
  *	Description:
  *
@@ -8,10 +7,6 @@
  *	Original:
  *	Created on: Feb 8, 2020
  *	Author: KBECKE35
- *
- *	Current:
- *	$Revision: $
- *	$Date: $
  */
 
 #ifndef BSW_EVQ_INC_CWSW_EVHANDLER_H_
@@ -38,8 +33,6 @@ extern "C" {
 // ============================================================================
 // ----	Constants -------------------------------------------------------------
 // ============================================================================
-#define BSW_EVQ_INC_CWSW_EVHANDLER_H__REVSTRING "$Revision: 0123 $"
-
 
 // ============================================================================
 // ----	Type Definitions ------------------------------------------------------

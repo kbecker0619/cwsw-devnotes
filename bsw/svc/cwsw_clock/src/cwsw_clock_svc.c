@@ -1,10 +1,14 @@
 /** @file
- *	@brief	Primary Unit Test file for the CWSW Lib component.
+ *	@brief	CWSW Clock Module
+ *
+ *	Description:
+ *	Requires support of a hardware time module.
  *
  *	Copyright (c) 2020 Kevin L. Becker. All rights reserved.
  *
- *	Created on: Oct 15, 2019
- *	@author kbecker
+ *	Original:
+ *	Created on: Sep 1, 2016
+ *	Author: Kevin L. Becker
  */
 
 // ============================================================================
@@ -12,20 +16,11 @@
 // ============================================================================
 
 // ----	System Headers --------------------------
-#include <stdio.h>
-#include <stdlib.h>			/* EXIT_SUCCESS */
-#include <limits.h>			/* INT_MAX */
 
 // ----	Project Headers -------------------------
-#include "projcfg.h"
-#include "cwsw_lib.h"
-#include "cwsw_svc.h"
-#include "cwsw_eventsim.h"
 
 // ----	Module Headers --------------------------
-// the point of this project
-#include "cwsw_evhandler.h"
-#include "tedlos.h"
+#include "cwsw_clock.h"
 
 
 // ============================================================================
@@ -52,57 +47,19 @@
 // ----	Public Functions ------------------------------------------------------
 // ============================================================================
 
-void
-EventHandler__evNotInit(tEventPayload EventData)
+#if (!XPRJ_Debug)
+/**	Clock tic.
+ *	In this UT environment, the sole purpose for this function is to allow the
+ *	project to build when you're doing a test build in the Debug build target
+ *	from within Eclipse.
+ *
+ *	In a real live system, it would return the number of milliseconds since a
+ *	system reset.
+ */
+tCwswClockTics Cwsw_Clock(void)
 {
-	UNUSED(EventData);
+	static tCwswClockTics count = 0;
+	return ++count;
 }
 
-void
-EventHandler__evTerminateRequested(tEventPayload EventData)
-{
-	UNUSED(EventData);
-	(void)puts("Goodbye Cruel World!");
-}
-
-
-static void
-handle_not_init(tEvQ_Event ev, uint32_t evInt)
-{
-
-}
-
-
-#include "evq_events.h"
-static void
-do_evdispatch(void)
-{
-	tedlos_init();
-	tedlos_do();
-}
-
-int
-main(void)
-{
-	tEventPayload ev = { 0 };
-
-	if(!Get(Cwsw_Lib, Initialized))	// totally unnecessary test, simply to demonstrate Get() API
-	{
-		PostEvent(evNotInit, ev);
-		(void)Init(Cwsw_Lib);		// since the CWSW lib can be called by any module, initialize it 1st
-		cwsw_assert(Get(Cwsw_Lib, Initialized), "Confirm initialization");
-	}
-
-	(void)Init(Cwsw_Services);
-	(void)Init(Cwsw_EvQ);		// Cwsw_EvQ__Init()
-
-	/* contrived example, not recommended, to exercise other features of the component */
-	cwsw_assert(1 == Cwsw_Critical_Protect(0), "Confirm critical section nesting count");
-	cwsw_assert(0 == Cwsw_Critical_Release(0), "Confirm balanced critical region usage");
-	cwsw_assert(2 == Init(Cwsw_Lib), "Confirm reinitialization return code");
-
-	do_evdispatch();
-
-	PostEvent(evTerminateRequested, ev);
-    return (EXIT_SUCCESS);
-}
+#endif

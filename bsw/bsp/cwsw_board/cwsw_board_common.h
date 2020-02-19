@@ -64,6 +64,8 @@ typedef enum eDO_Logical_Values		tDO_LogicalValues;
 
 // ==== Discrete Functions ================================================== {
 /** Initialization for the Board Support component.
+ * 	Target for `Init(Cwsw_Board)` API.
+ *
  *	This function's responsibility is to set up the local vars, and manage the
  *	necessary HW, to prepare for the task function's 1st call (once the
  *	scheduler has been started).
@@ -88,7 +90,7 @@ typedef enum eDO_Logical_Values		tDO_LogicalValues;
 extern uint16_t Cwsw_Board__Init(void);
 
 /** Target for Get(Cwsw_Board, Initialized) interface */
-extern bool 							Cwsw_Board__Get_Initialized(void);
+extern bool 	Cwsw_Board__Get_Initialized(void);
 
 
 // ==== /Discrete Functions ================================================= }
@@ -100,23 +102,24 @@ extern bool 							Cwsw_Board__Get_Initialized(void);
  *	the Module argument in your IDE (e.g, Eclipse, NetBeans, etc.), and select
  *	Go To Definition.
  */
-enum { Cwsw_Board = 2 };	/* Generic architecture for all supported boards */
+enum { Cwsw_Board = 2 };	/* All supported boards have the same "chapter designator" */
+
 
 /** Target symbol for Get(Cwsw_Board, xxx) interface */
-#define Cwsw_Board__Get(resource)		Cwsw_Board__Get_ ## resource()
+#define Cwsw_Board__Get(resource)			Cwsw_Board__Get_ ## resource()
 
 
 
 /* "short cut" targets for resources considered to be Global (shared) Resources.
  *	Simply redirect them to the actual public interface.
  */
-#define SET_kBoardLed1(onoff)					Set(Cwsw_Board, kBoardLed1, onoff)
-#define SET_kBoardLed2(onoff)					Set(Cwsw_Board, kBoardLed2, onoff)
-#define SET_kBoardLed3(onoff)					Set(Cwsw_Board, kBoardLed3, onoff)
+#define SET_kBoardLed1(onoff)				Set(Cwsw_Board, kBoardLed1, onoff)
+#define SET_kBoardLed2(onoff)				Set(Cwsw_Board, kBoardLed2, onoff)
+#define SET_kBoardLed3(onoff)				Set(Cwsw_Board, kBoardLed3, onoff)
 
 
 /** Target symbol for Set(Cwsw_Board, Resource, xxx) interface */
-#define Cwsw_Board__Set(resource, value)		Cwsw_Board__Set_ ## resource(value)
+#define Cwsw_Board__Set(resource, value)	Cwsw_Board__Set_ ## resource(value)
 
 // ==== /Targets for Get/Set APIs =========================================== }
 

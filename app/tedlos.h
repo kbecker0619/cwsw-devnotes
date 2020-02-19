@@ -1,16 +1,17 @@
-/** @file evq_events.h
+/** @file tedlos.h
+ *	@brief	The Event-Dispatching Loop OS.
  *
  *	Description:
  *
  *	Copyright (c) 2020 Kevin L. Becker. All rights reserved.
  *
  *	Original:
- *	Created on: Feb 8, 2020
+ *	Created on: Feb 19, 2020
  *	Author: KBECKE35
  */
 
-#ifndef PRJ_EVQ_EVENTS_H
-#define PRJ_EVQ_EVENTS_H
+#ifndef APP_TEDLOS_H_
+#define APP_TEDLOS_H_
 
 // ============================================================================
 // ----	Include Files ---------------------------------------------------------
@@ -19,6 +20,8 @@
 // ----	System Headers --------------------------
 
 // ----	Project Headers -------------------------
+#include "tedlosevents.h"
+#include "projcfg.h"
 
 // ----	Module Headers --------------------------
 
@@ -31,21 +34,7 @@ extern "C" {
 // ============================================================================
 // ----	Constants -------------------------------------------------------------
 // ============================================================================
-
-/** Global list of events for the event queue.
- *	Note that this implementation assumes a contiguous list with no gaps in numeric values. This
- *	implementation uses the event value as an index into a table, and sizes all tables according to
- *	the value of kNumProjectEvqEvents.
- */
-enum eTestProjectEvents {
-	evNullEvent = kEvQ_Ev_None,	/**< reserved value, used for initialization */
-	evBtnPressed,				/**< debounced press event */
-	evBtnCommit,
-	evBtReleased,
-	evUiUpdate,
-	evQuitRqst,
-	kNumProjectEvqEvents
-};
+#define APP_TEDLOS_H__REVSTRING "$Revision: 0123 $"
 
 
 // ============================================================================
@@ -60,9 +49,12 @@ enum eTestProjectEvents {
 // ----	Public API ------------------------------------------------------------
 // ============================================================================
 
+extern void tedlos_init(void);
+
+extern void tedlos_do(void);
 
 #ifdef	__cplusplus
 }
 #endif
 
-#endif /* EVQ_EVENTS_H_ */
+#endif /* APP_TEDLOS_H_ */

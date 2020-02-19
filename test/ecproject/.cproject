@@ -25,6 +25,8 @@
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../../bsw/evq/inc&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../../bsw/bsp/cwsw_board/none&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../../bsw/evq_prj&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../../bsw/svc/inc&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../../bsw/svc/cwsw_clock/inc&quot;"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.1072749620" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
 							</tool>
@@ -39,6 +41,8 @@
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../../bsw/evq/inc&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../../bsw/bsp/cwsw_board/none&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../../bsw/evq_prj&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../../bsw/svc/inc&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../../bsw/svc/cwsw_clock/inc&quot;"/>
 								</option>
 								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="gnu.cpp.compiler.option.preprocessor.def.1797760866" name="Defined symbols (-D)" superClass="gnu.cpp.compiler.option.preprocessor.def" useByScannerDiscovery="false" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="&quot;XPRJ_Win_MinGW_${ConfigName}=1&quot;"/>
@@ -62,6 +66,8 @@
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../../bsw/evq/inc&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../../bsw/bsp/cwsw_board/none&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../../bsw/evq_prj&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../../bsw/svc/inc&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../../bsw/svc/cwsw_clock/inc&quot;"/>
 								</option>
 								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="gnu.c.compiler.option.preprocessor.def.symbols.841831710" name="Defined symbols (-D)" superClass="gnu.c.compiler.option.preprocessor.def.symbols" useByScannerDiscovery="false" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="&quot;XPRJ_Win_MinGW_${ConfigName}=1&quot;"/>
@@ -80,7 +86,7 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry excluding="bsw/ecu/cwsw_arch/test|bsw/svc/cwsw_lib/test" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+						<entry excluding="src|bsw/svc/cwsw_lib/test|bsw/ecu/cwsw_arch/test" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -110,6 +116,8 @@
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../../bsw/evq/inc&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../../bsw/bsp/cwsw_board/none&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../../bsw/evq_prj&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../../svc/inc&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/bsw/svc/cwsw_clock/inc&quot;"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.1548234592" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
 							</tool>
@@ -124,6 +132,8 @@
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../../bsw/evq/inc&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../../bsw/bsp/cwsw_board/none&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../../bsw/evq_prj&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../../svc/inc&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/bsw/svc/cwsw_clock/inc&quot;"/>
 								</option>
 								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="gnu.cpp.compiler.option.preprocessor.def.2018516928" name="Defined symbols (-D)" superClass="gnu.cpp.compiler.option.preprocessor.def" useByScannerDiscovery="false" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="&quot;XPRJ_Win_MinGW_${ConfigName}=1&quot;"/>
@@ -142,6 +152,8 @@
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../../bsw/evq/inc&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../../bsw/bsp/cwsw_board/none&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../../bsw/evq_prj&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../../svc/inc&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/bsw/svc/cwsw_clock/inc&quot;"/>
 								</option>
 								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="gnu.c.compiler.option.preprocessor.def.symbols.1305110222" name="Defined symbols (-D)" superClass="gnu.c.compiler.option.preprocessor.def.symbols" useByScannerDiscovery="false" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="&quot;XPRJ_Win_MinGW_${ConfigName}=1&quot;"/>
@@ -159,6 +171,9 @@
 							</tool>
 						</toolChain>
 					</folderInfo>
+					<sourceEntries>
+						<entry excluding="bsw/svc/src|src" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+					</sourceEntries>
 				</configuration>
 			</storageModule>
 			<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
@@ -184,5 +199,12 @@
 	</storageModule>
 	<storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>
 	<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets"/>
-	<storageModule moduleId="refreshScope"/>
+	<storageModule moduleId="refreshScope" versionNumber="2">
+		<configuration configurationName="Debug">
+			<resource resourceType="PROJECT" workspacePath="/EventQueue"/>
+		</configuration>
+		<configuration configurationName="Release">
+			<resource resourceType="PROJECT" workspacePath="/EventQueue"/>
+		</configuration>
+	</storageModule>
 </cproject>

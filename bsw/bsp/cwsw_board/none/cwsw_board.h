@@ -59,7 +59,6 @@ extern "C" {
 // ============================================================================
 // ----	Constants -------------------------------------------------------------
 // ============================================================================
-#define CWSW_BOARD_H_REVSTRING "$Revision: 0123 $"
 
 /** USB VBUS Switch State.
  * Summary:
@@ -161,7 +160,7 @@ typedef enum eBoardLeds				tBoardLed;
 // ----	Public API ------------------------------------------------------------
 // ============================================================================
 
-// --- discrete functions -----------------------------------------------------
+// --- discrete functions --------------------------------------------------- {
 
 /* Function:
 	void Cwsw_Board__UsbVbusSwitchStateSet(tBrdUsbVbusSwitchState state);
@@ -238,8 +237,9 @@ extern void Cwsw_Board__UsbVbusSwitchStateSet(tDO_LogicalValues state);
 */
 //extern tBrdUserSwitchState BSP_SwitchStateGet(tBrdUserSwitch bspSwitch);
 
+// --- /discrete functions -------------------------------------------------- }
 
-// --- targets for get/set/etc macros -----------------------------------------
+// --- targets for Get/Set APIS --------------------------------------------- {
 
 /* Target for some of the expansions to the Set(Cwsw_Board, Resource, xxx) interface */
 #define Cwsw_Board__Set_UsbVbus(value)			Cwsw_Board__UsbVbusSwitchStateSet(value)
@@ -254,6 +254,8 @@ extern void Cwsw_Board__UsbVbusSwitchStateSet(tDO_LogicalValues state);
 /* Target for some of the expansions to the Get(Cwsw_Board, Resource) interface. */
 #define Cwsw_Board__Get_kBrdSwitch1()			PLIB_PORTS_PinGet(PORTS_ID_0, PORT_CHANNEL_B, PORTS_BIT_POS_3)
 #define Cwsw_Board__Get_kBoardLed1()			PLIB_PORTS_PinGet(PORTS_ID_0, PORT_CHANNEL_B, PORTS_BIT_POS_0)
+
+// --- /targets for Get/Set APIS -------------------------------------------- }
 
 
 #ifdef	__cplusplus
