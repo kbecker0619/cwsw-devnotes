@@ -68,7 +68,12 @@ extern void Cwsw_ClockSvc__Init(tEvQ_QueueCtrl	*pevq, int16_t evhb);
  *	@param timer - a reference to the specified timer.
  *	@param duration - the duration of the timer. Negative values are not possible.
  */
-#define Cwsw_SetTimerVal(ptimer, duration)		do { *ptimer = Cwsw_ClockSvc() + (duration); } while(0)
+extern int16_t Cwsw_ClockSvc__SetTimer(pCwswClockTics pTimer, tCwswClockTics duration);
+
+
+
+
+
 
 /**	Return the number of ms between start and stop times.
  * 	@note We are assuming here that there is 1 clock tic per ms; this is what is
@@ -104,7 +109,7 @@ enum { Cwsw_Clock = 5 };	/* Component ID for Clock Services */
 
 /**	Target for Set(Cwsw_Clock, timer, duration) API
  */
-#define Cwsw_Clock__Set(timer, timeout)		Cwsw_SetTimerVal(&timer, timeout)
+#define Cwsw_Clock__Set(timer, timeout)		Cwsw_ClockSvc__SetTimer(&timer, timeout)
 
 /** Target for Get(Cwsw_Clock, timer) API
  */

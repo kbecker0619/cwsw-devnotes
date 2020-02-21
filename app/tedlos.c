@@ -71,9 +71,6 @@ static tEvH_EvHandler evhandlers[kNumOsEvqEvents] = {
 static tCwswClockTics timeleft = 0;
 // reload value
 enum {app_duration = 5000 };	/* roughly 5 seconds */
-// retrieval method
-/**	Target for TM(app_duration) API */
-#define GET_timeleft()	Get(Cwsw_Clock, timeleft)
 
 //	}
 
@@ -142,15 +139,34 @@ timer_state_set(pCwswSwTimer pTimer, tSwTimerState newstate)
 }
 
 
+void swtmr_manage(pCwswSwTimer pTimer)
+{
+	if(pTimer)
+	{
+		if(Get(Cwsw_Clock, pTimer->tm) <= 0)
+		{
+			// save target value to pass as argument to reaction task
+			tCwswClockTics exptm = pTimer->tm;
+			// rearm timer
+			if(pTimer->reloadtm > 0)
+			{
+				Cwsw_ClockSvc__SetTimer(&pTimer->tm, pTimer->reloadtm);
+			}
+		}
+	}
+}
+
+
 void HandleTimerTic(tEvQ_Event ev, uint32_t evInt)
 {
 	if(!timeleft)
 	{
 		Set(Cwsw_Clock, timeleft, app_duration);
 	}
-	if(TM(timeleft))
+	if(Get(Cwsw_Clock, timeleft))
 	{
 		// update all SW timers
+		swtmr_manage(&tmrHb);
 
 		// do whatever else should be done in the OS scheduling loop
 
@@ -193,16 +209,12 @@ void tedlos_do(void)
 
 	do {
 		// execute clock pump. only required (?) for Lin/dows.
-		tCwswClockTics tmrtic = Cwsw_ClockSvc(); UNUSED(tmrtic);
+		tCwswClockTics tmrtic = Cwsw_ClockSvc();
 
 		// retrieve event. if one exists, and if it has a handler, dispatch
 		(void)Cwsw_EvQ__GetEvent(&evqCtrl, &thisevent);
 		if(thisevent)
 		{
-			if(thisevent != evOsTmrHeartbeat)
-			{
-				printf("%d", thisevent);
-			}
 			pf = Cwsw_EvQ__GetHandler(evhandlers, TABLE_SIZE(evhandlers), thisevent);
 			if(pf)
 			{

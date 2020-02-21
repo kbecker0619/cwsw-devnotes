@@ -107,3 +107,19 @@ Cwsw_ClockSvc__Init(tEvQ_QueueCtrl	*pevq, int16_t evhb)
 	posevq = pevq;				// remember the address of the OS event queue
 	ev_os_heartbeat = evhb;		// and also remember the event we're to post.
 }
+
+
+int16_t
+Cwsw_ClockSvc__SetTimer(pCwswClockTics pTimer, tCwswClockTics duration)
+{
+	if(pTimer)
+	{
+		if(duration > 0)
+		{
+			*pTimer = clock() + duration;	// raw clock reading, rather than ClockSvc(), 'cuzza
+			return 0;
+		}
+		return 2;	// todo: use cwsw_err type
+	}
+	return 1;		// todo: use cwsw_err type
+}
