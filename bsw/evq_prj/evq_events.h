@@ -43,7 +43,6 @@ enum eTestProjectEvents {
 	evBtnCommit,
 	evBtReleased,
 	evUiUpdate,
-	evQuitRqst,
 	kNumProjectEvqEvents
 };
 

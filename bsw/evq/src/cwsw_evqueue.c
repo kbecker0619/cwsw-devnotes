@@ -171,7 +171,7 @@ Cwsw_EvQ__PostEvent(tEvQ_QueueCtrl *pEvQueueCtrl, tEvQ_Event ev)
 		++pEvQueueCtrl->Queue_Count;
 
 		// check for overflow
-		if ( pEvQueueCtrl->Write_Ptr > ( pEvQueueCtrl->Event_Queue_Ptr + pEvQueueCtrl->Queue_Size ))
+		if(pEvQueueCtrl->Write_Ptr > (pEvQueueCtrl->Event_Queue_Ptr + pEvQueueCtrl->Queue_Size))
 		{
 			// reset it to beginning
 			pEvQueueCtrl->Write_Ptr = pEvQueueCtrl->Event_Queue_Ptr;

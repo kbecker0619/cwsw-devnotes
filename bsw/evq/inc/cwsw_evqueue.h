@@ -95,7 +95,7 @@ typedef struct sEvQueue {
 // ----	Public API ------------------------------------------------------------
 // ============================================================================
 
-// ==== Discrete Functions ================================================== {
+// ---- Discrete Functions -------------------------------------------------- {
 
 /**	Static initialization of the Event Queue.
  *
@@ -155,9 +155,9 @@ extern tEvQ_ErrorCode Cwsw_EvQ__PostEvent(tEvQ_QueueCtrl *pEvQueueCtrl, tEvQ_Eve
 extern tEvQ_ErrorCode Cwsw_EvQ__GetEvent(tEvQ_QueueCtrl *pEvQueueCtrl, tEvQ_Event *pEv);
 
 
-// ==== /Discrete Functions ================================================= }
+// ---- /Discrete Functions ------------------------------------------------- }
 
-// ==== Targets for Get/Set APIs ============================================ {
+// ---- Targets for Get/Set APIs -------------------------------------------- {
 
 /** "Chapter Designator" for Get/Set API.
  *	Intentionally unused symbol, designed to get you to the correct starting
@@ -170,7 +170,7 @@ enum { Cwsw_EvQ = 4 };	/* Component ID for Event Queue */
 /** Target symbol for Get(Cwsw_Board, xxx) interface */
 #define Cwsw_EvQ__Get(resource)		Cwsw_EvQ__Get_ ## resource()
 
-// ==== /Targets for Get/Set APIs =========================================== }
+// ---- /Targets for Get/Set APIs ------------------------------------------- }
 
 
 #ifdef	__cplusplus

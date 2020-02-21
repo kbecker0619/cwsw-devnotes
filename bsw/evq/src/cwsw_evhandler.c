@@ -100,18 +100,18 @@ Cwsw_EvQ__RegisterHandler(tEvH_EvHandler *pEvHndlr, size_t evtblsz, tEvQ_Event e
 {
 	tEvH_EvtHandle idx;
 
-	if(!pEvHndlr) 					return kEvQ_Err_BadParm;
-	if(!evtblsz)	  				return kEvQ_Err_BadParm;
+	if(!pEvHndlr) 			return kEvQ_Err_BadParm;
+	if(!evtblsz)	  		return kEvQ_Err_BadParm;
 
 	// since the container type for enums can be signed int on some systems, make sure the
 	//	minimum value is 0 or higher.
 	// in our system, event value `0` is a special event, and so we don't want to allow for it to
 	//	be associated with a handler.
-	if(ev < 1)		  				return kEvQ_Err_BadParm;
-	if(ev >= kNumProjectEvqEvents)	return kEvQ_Err_BadParm;
+	if(ev < 1)		  		return kEvQ_Err_BadParm;
+	if(ev >= evtblsz)		return kEvQ_Err_BadParm;
 
 	idx = get_ev_handle(pEvHndlr, evtblsz, ev);
-	if(idx < 1)						return kEvQ_Err_BadEvent;
+	if(idx < 1)				return kEvQ_Err_BadEvent;
 
 //	pEvHndlr += idx * sizeof(tEvH_EvHandler);
 
@@ -196,7 +196,7 @@ Cwsw_EvQ__GetHandler(tEvH_EvHandler *pEvHndlr, size_t evtblsz, tEvQ_Event ev)
 
 	// todo: get enabled/disabled status; if disabled, return NULL
 	idx = get_ev_handle(pEvHndlr, evtblsz, ev);
-	if(idx < 1)						return NULL;
+	if(idx < 1)			return NULL;
 
 	return pEvHndlr[idx].pEvHandler;
 }

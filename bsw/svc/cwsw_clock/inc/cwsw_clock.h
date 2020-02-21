@@ -23,9 +23,11 @@ extern "C" {
 
 // ----	System Headers --------------------------
 #include <time.h>
+#include <stdint.h>
 
 // ----	Project Headers -------------------------
 #include "projcfg.h"
+#include "cwsw_evqueue.h"	/* tEvQ_Event, et. al. */
 
 // ----	Module Headers --------------------------
 
@@ -46,7 +48,7 @@ extern "C" {
 /*	building on windows, for windows, we can take advantage of MinGW's
  *	time.h...
  */
-typedef clock_t tCwswClockTics;
+typedef clock_t tCwswClockTics, *pCwswClockTics;
 
 
 // ============================================================================
@@ -57,13 +59,16 @@ typedef clock_t tCwswClockTics;
 // ----	Public API ------------------------------------------------------------
 // ============================================================================
 
-#if (XPRJ_Debug)
-#define Cwsw_Clock()	(tCwswClockTics)(clock())
+// ---- Discrete Functions -------------------------------------------------- {
 
-#else
-extern tCwswClockTics Cwsw_Clock(void);
+extern tCwswClockTics Cwsw_ClockSvc(void);
+extern void Cwsw_ClockSvc__Init(tEvQ_QueueCtrl	*pevq, int16_t evhb);
 
-#endif
+/**	Set the duration of a timer.
+ *	@param timer - a reference to the specified timer.
+ *	@param duration - the duration of the timer. Negative values are not possible.
+ */
+#define Cwsw_SetTimerVal(ptimer, duration)		do { *ptimer = Cwsw_ClockSvc() + (duration); } while(0)
 
 /**	Return the number of ms between start and stop times.
  * 	@note We are assuming here that there is 1 clock tic per ms; this is what is
@@ -72,21 +77,38 @@ extern tCwswClockTics Cwsw_Clock(void);
  */
 #define Cwsw_ElapsedTimeMs(start, stop)	(tCwswClockTics)(stop - start)
 
-/**	@returns the time left in said timer.
+/**	Get the time left in a specified timer.
+ *
+ *	@param timer - the timer to be inspected.
+ *
+ * 	@returns the time left in said timer.
  *	Negative values indicate expiration of timer.
- *	@param timer - the timer to be looked at.
+ *
  *	@note In usage, do not compare one time directly to another.
  *	Doing this will not properly handle timer tic rollover.
  *	Instead, subtract one time from another, and compare the result to zero.
  */
-#define Cwsw_GetTimeLeft(timer)		Cwsw_ElapsedTimeMs(Cwsw_Clock(), timer)
+#define Cwsw_GetTimeLeft(timer)		Cwsw_ElapsedTimeMs(Cwsw_ClockSvc(), timer)
 
 
-/**	Set the duration of a timer.
- *	@param timer - a reference to the specified timer.
- *	@param duration - the duration of the timer. Negative values are not possible.
+// ---- /Discrete Functions ------------------------------------------------- }
+
+// ---- Targets for Get/Set APIs -------------------------------------------- {
+/** "Chapter Designator" for Get/Set API.
+ *	Intentionally unused symbol, designed to get you to the correct starting
+ *	point, when you want to find macros for the Get/Set API; simply highlight
+ *	the Module argument in your IDE (e.g, Eclipse, NetBeans, etc.), and select
+ *	Go To Definition.
  */
-#define Cwsw_SetTimerVal(ptimer, duration)		do { *ptimer = Cwsw_Clock() + (duration); } while(0)
+enum { Cwsw_Clock = 5 };	/* Component ID for Clock Services */
+
+/**	Target for Set(Cwsw_Clock, timer, duration) API
+ */
+#define Cwsw_Clock__Set(timer, timeout)		Cwsw_SetTimerVal(&timer, timeout)
+
+/** Target for Get(Cwsw_Clock, timer) API
+ */
+#define Cwsw_Clock__Get(timer)				Cwsw_GetTimeLeft(timer)
 
 
 /**	Determine if timer "a" has expired (i.e., matured) or not.
@@ -95,15 +117,16 @@ extern tCwswClockTics Cwsw_Clock(void);
  */
 //  Expansion of HAS_TIMER_EXPIRED(TIMER_NAME)
 //! @{
-#define HAS_TIMER_EXPIRED(a)            _HAS_TIMER_EXPIRED(a)
-#define _HAS_TIMER_EXPIRED(a)           (GET(a) <= 0)
+#define HAS_TIMER_EXPIRED(a)            	_HAS_TIMER_EXPIRED(a)
+#define _HAS_TIMER_EXPIRED(a)           	(GET(a) <= 0)
 //! @}
 
-/**
- * Has a timer expired?
- * This definition provided to accommodate UML notation.
+/**	Has a timer expired?
+ *	This definition provided to accommodate UML notation.
  */
-#define TM(tmr)                         HAS_TIMER_EXPIRED(tmr)
+#define TM(tmr)                         	HAS_TIMER_EXPIRED(tmr)
+
+// ---- /Targets for Get/Set APIs ------------------------------------------- }
 
 
 #ifdef	__cplusplus

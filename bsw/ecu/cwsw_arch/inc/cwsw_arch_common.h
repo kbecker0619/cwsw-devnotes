@@ -104,7 +104,7 @@ extern uint16_t Cwsw_Arch__Init(void);
  *	the Module argument in your IDE (e.g, Eclipse, NetBeans, etc.), and select
  *	Go To Definition.
  */
-enum { Cwsw_Arch = 1 };				/* all supported MCU architectures have the same "chapter designator" */
+enum { Cwsw_Arch = 1 };				/* Component ID for CWSW MCU Architecture component; all supported MCU architectures have the same ID */
 
 /** Target symbol for Get(Cwsw_Arch, xxx) interface */
 #define Cwsw_Arch__Get(attribute)	Cwsw_Arch__Get_ ## attribute()

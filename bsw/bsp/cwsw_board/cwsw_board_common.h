@@ -102,7 +102,7 @@ extern bool 	Cwsw_Board__Get_Initialized(void);
  *	the Module argument in your IDE (e.g, Eclipse, NetBeans, etc.), and select
  *	Go To Definition.
  */
-enum { Cwsw_Board = 2 };	/* All supported boards have the same "chapter designator" */
+enum { Cwsw_Board = 2 };	/* Component ID for boards; all supported boards have the same ID */
 
 
 /** Target symbol for Get(Cwsw_Board, xxx) interface */
