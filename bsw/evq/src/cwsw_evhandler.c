@@ -92,7 +92,7 @@ get_ev_handle(pEvQ_EvHandlerAssoc pEvHndlrTbl, size_t evtblsz, tEvQ_EventID ev)
  * 					as it might be for MISRA analysis).
  *	@param pf	Address of the function to be associated with the event. A "disassociation" can be
  * 				accomplished by passing NULL.
- *	@return		#kEvQ_Err_BadParm if any problem is noticed, #kEvQ_Err_NoError on success.
+ *	@return		#kErr_EvQ_BadParm if any problem is noticed, #kErr_EvQ_NoError on success.
  *
  *	@note 	To accommodate compile-time configuration, it is not required to use this handler
  *			registration at run time; you can set up a table of type tEvQ_EvHandlerAssoc[] and pre-fill
@@ -107,24 +107,24 @@ Cwsw_EvQ__RegisterHandler(
 {
 	tEvQ_EvtHandle idx;
 
-	if(!pEvHndlrTbl) 		return kEvQ_Err_BadParm;
-	if(!evtblsz)	  		return kEvQ_Err_BadParm;
+	if(!pEvHndlrTbl) 		return kErr_EvQ_BadParm;
+	if(!evtblsz)	  		return kErr_EvQ_BadParm;
 
 	// since the container type for enums can be signed int on some systems, make sure the
 	//	minimum value is 0 or higher.
 	// in our system, event value `0` is a special event, and so we don't want to allow for it to
 	//	be associated with a handler.
-	if(evid < 1)		  	return kEvQ_Err_BadParm;
-	if(evid >= evtblsz)		return kEvQ_Err_BadParm;
+	if(evid < 1)		  	return kErr_EvQ_BadParm;
+	if(evid >= evtblsz)		return kErr_EvQ_BadParm;
 
 	idx = get_ev_handle(pEvHndlrTbl, evtblsz, evid);
-	if(idx < 1)				return kEvQ_Err_BadEvent;
+	if(idx < 1)				return kErr_EvQ_BadEvent;
 
 //	pEvHndlr += idx * sizeof(tEvH_EvHandler);
 
 	pEvHndlrTbl[idx].evId = evid;
 	pEvHndlrTbl[idx].pEvHandler = pf;
-	return kEvQ_Err_NoError;
+	return kErr_EvQ_NoError;
 }
 
 

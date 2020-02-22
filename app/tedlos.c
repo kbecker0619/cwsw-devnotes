@@ -74,6 +74,10 @@ static tEvQ_EvHandlerAssoc evhandlers[kNumOsEvqEvents] = {
 		{3, HandleEvent3 }
 	};
 
+// application heartbeat timer; intended for a 1-ms nominal rate, though in this implementation, its monotonicity is suspect
+tCwswSwTimer tmrOsTic = {0};
+
+
 // timer objects	{
 // application lifecycle timer
 static tCwswClockTics timeleft = 0;
@@ -105,40 +109,26 @@ void HandleEvent3(tEvQ_Event ev, uint32_t evInt)
 }
 
 
-// application heartbeat timer; intended for a 1-ms nominal rate, though in this implementation, its monotonicity is suspect
-tCwswSwTimer tmrHb = {0};
+enum eAppStates {
+	// this state machine applies only during the time that the scheduler is active; it does not
+	//	track the earlier stages of initialization, nor the states that will take effect after the
+	//	scheduler has been stopped.
+	kAppState_Init,
+	kAppState_Normal,
+	kAppState_PrepSleep,
+	kAppState_Sleep,
+	kAppState_Awake,
+};
 
 
-void Cwsw_SwTmr__ManageTimer(pCwswSwTimer pTimer)
-{
-	if(pTimer)
-	{
-		if(pTimer->tmrstate == kSwTimerEnabled)
-		{
-			if(Get(Cwsw_Clock, pTimer->tm) <= 0)
-			{
-				// save target value to pass as argument to reaction task
-				tCwswClockTics exptm = pTimer->tm;
-
-				// rearm timer
-				if(pTimer->reloadtm > 0)
-				{
-					Cwsw_ClockSvc__SetTimer(&pTimer->tm, pTimer->reloadtm);
-				}
-
-				// schedule callback
-				if(pTimer->evid)
-				{
-					tEvQ_Event ev = {pTimer->evid, exptm};
-					(void)PostEvQ(evqCtrl, ev);
-				}
-			}
-		}
-	}
-}
-
-
-void HandleTimerTic(tEvQ_Event ev, uint32_t evInt)
+/*	This is the main app-owned message pump, and is called by the Clock Services component.
+ *	This callback should have an absolute minimum of things to do:
+ *	- manage all timers
+ *	- nothing else (because, in this design, we are fully reactive, and nothing happens unless an
+ *	  event prompts it to happen, and our "tasks" are driven by timers
+ */
+void
+Os1msTic(tEvQ_Event ev, uint32_t evInt)
 {
 	if(!timeleft)
 	{
@@ -147,7 +137,7 @@ void HandleTimerTic(tEvQ_Event ev, uint32_t evInt)
 	if(Get(Cwsw_Clock, timeleft) <= 0)
 	{
 		// update all SW timers
-		Cwsw_SwTmr__ManageTimer(&tmrHb);
+		Cwsw_SwTmr__ManageTimer(&tmrOsTic, &evqCtrl);
 
 		// do whatever else should be done in the OS scheduling loop
 
@@ -168,18 +158,17 @@ void tedlos_init(void)
 	Cwsw_ClockSvc__Init(&evqCtrl, evOsTmrHeartbeat);
 
 	// initialize event queue used for tedlos
-	if(kEvQ_Err_NoError != Cwsw_EvQ__InitEvQ(&evqCtrl, evqueue, TABLE_SIZE(evqueue)))	return;
+	if(kErr_EvQ_NoError != Cwsw_EvQ__InitEvQ(&evqCtrl, evqueue, TABLE_SIZE(evqueue)))	return;
 
 	// initialize the handlers.
-	(void)Cwsw_EvQ__RegisterHandler(evhandlers, TABLE_SIZE(evhandlers), evOsTmrHeartbeat, HandleTimerTic);
+	(void)Cwsw_EvQ__RegisterHandler(evhandlers, TABLE_SIZE(evhandlers), evOsTmrHeartbeat, Os1msTic);
 
 	// for this test / build only
 	evqCtrl.Queue_Count = 6;	// preload w/ the values already initialized (in the definition statement)
 
-
 	// initialize HB timer for a 100-ms HB
-	Cwsw_SwTmr__Init(&tmrHb, 100, 0);
-	Cwsw_SwTmr__SetState(&tmrHb, kSwTimerEnabled);
+	Cwsw_SwTmr__Init(&tmrOsTic, 100, 0);
+	Cwsw_SwTmr__SetState(&tmrOsTic, kSwTimerEnabled);
 
 	initialized = true;
 }

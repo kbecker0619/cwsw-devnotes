@@ -42,18 +42,17 @@ extern "C" {
 // ============================================================================
 // ----	Constants -------------------------------------------------------------
 // ============================================================================
-#define CWSW_EVQUEUE_H__REVSTRING "$Revision: 0123 $"
 
 /** Error codes returned by Event Queue API.
  */
-enum eEvQ_ErrorCodes {
-	kEvQ_Err_NoError = kCwsw_Lib_NoError,
-	kEvQ_Err_NotInitialized,	//!< Event Queue component not initialized.
-	kEvQ_Err_BadCtrl,			//!< Bad or invalid control struct.
-	kEvQ_Err_BadQueue,			//!< Bad or invalid event queue.
-	kEvQ_Err_BadEvent,			//!< Bad or invalid event.
-	kEvQ_Err_QueueFull,			//!< Queue full, cannot add new event to queue.
-	kEvQ_Err_BadParm,			//!< Bad Parameter; e.g., NULL pointer-to-event.
+enum eErrorCodes_EvQ {
+	kErr_EvQ_NoError = kErr_Lib_NoError,
+	kErr_EvQ_NotInitialized,	//!< Event Queue component not initialized.
+	kErr_EvQ_BadParm,			//!< Bad Parameter; e.g., NULL pointer-to-event.
+	kErr_EvQ_BadCtrl,			//!< Bad or invalid control struct.
+	kErr_EvQ_BadQueue,			//!< Bad or invalid event queue.
+	kErr_EvQ_BadEvent,			//!< Bad or invalid event.
+	kErr_EvQ_QueueFull,			//!< Queue full, cannot add new event to queue.
 };
 
 
@@ -66,7 +65,7 @@ enum { kEvQ_Ev_None };
 // ============================================================================
 
 /** Error codes returned by Event Queue API. */
-typedef enum eEvQ_ErrorCodes tEvQ_ErrorCode;
+typedef enum eErrorCodes_EvQ tEvQ_ErrorCode;
 
 /** Event object.
  *	Relies on the project-specific definition of a Event ID container type.

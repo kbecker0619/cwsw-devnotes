@@ -36,14 +36,19 @@ extern "C" {
 // ----	Constants -------------------------------------------------------------
 // ============================================================================
 
-#if (BUILD_FOR_UNIT_TEST)
-#define CWSW_CLOCK_H__REVSTRING "$Revision: 09052016 $"
-#endif
+enum eErrorCodes_ClkSvc {
+	kErr_ClkSvc_NoError = kErr_Lib_NoError,
+	kerr_ClkSvc_NotInitialized,
+	kerr_ClkSvc_BadParm,
+};
 
 
 // ============================================================================
 // ----	Type Definitions ------------------------------------------------------
 // ============================================================================
+
+typedef enum eErrorCodes_ClkSvc tClkSvc_ErrorCode;
+
 
 /*	building on windows, for windows, we can take advantage of MinGW's
  *	time.h...
@@ -68,17 +73,14 @@ extern void Cwsw_ClockSvc__Init(pEvQ_QueueCtrl pEvQ, int16_t HeatbeatEvId);
  *	@param timer - a reference to the specified timer.
  *	@param duration - the duration of the timer. Negative values are not possible.
  */
-extern int16_t Cwsw_ClockSvc__SetTimer(pCwswClockTics pTimer, tCwswClockTics duration);
-
-
-
-
-
+extern tClkSvc_ErrorCode Cwsw_ClockSvc__SetTimer(pCwswClockTics pTimer, tCwswClockTics duration);
 
 /**	Return the number of ms between start and stop times.
- * 	@note We are assuming here that there is 1 clock tic per ms; this is what is
- * 	true for MinGW and so of course that means the whole world does it the same
- * 	way.
+ * 	@note Assumptions:
+ * 	- We are assuming there is 1 clock tic per ms; this is what is true for MinGW and so of course
+ * 	  that means the whole world does it the same way.
+ * 	- The math only works for 2s-complement encodings; 1s-complement and sign-magnitude will need to
+ * 	  find another way.
  */
 #define Cwsw_ElapsedTimeMs(start, stop)	(tCwswClockTics)(stop - start)
 
@@ -94,7 +96,6 @@ extern int16_t Cwsw_ClockSvc__SetTimer(pCwswClockTics pTimer, tCwswClockTics dur
  *	Instead, subtract one time from another, and compare the result to zero.
  */
 #define Cwsw_GetTimeLeft(timer)		Cwsw_ElapsedTimeMs(Cwsw_ClockSvc__Task(), timer)
-
 
 // ---- /Discrete Functions ------------------------------------------------- }
 

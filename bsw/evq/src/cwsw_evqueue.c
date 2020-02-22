@@ -83,7 +83,7 @@ Cwsw_EvQ__Init(void)
 	}
 
 	initialized = true;
-	return kEvQ_Err_NoError;
+	return kErr_EvQ_NoError;
 }
 
 bool
@@ -99,7 +99,7 @@ Cwsw_EvQ__Get_Initialized(void)
  *	@param pEvQueue		Pointer to the event queue. This is an independent structure, not embedded
  *						into the control structure.
  * 	@param EvQueueSz	Size of the event queue, in number of elements, not bytes.
- * @return				Error code, where 0 (#kEvQ_Err_NoError) is no error.
+ * @return				Error code, where 0 (#kErr_EvQ_NoError) is no error.
  */
 tEvQ_ErrorCode
 Cwsw_EvQ__InitEvQ(
@@ -108,10 +108,10 @@ Cwsw_EvQ__InitEvQ(
 	uint8_t const EvQueueSz)
 {
 	// check preconditions, in order of priority
-	if(!initialized)				{ return kEvQ_Err_NotInitialized; }		// has component init happened?
-	if(!pEvQueueCtrl)				{ return kEvQ_Err_BadCtrl; }			// is control structure valid?
-	if(!pEvQueue)					{ return kEvQ_Err_BadQueue; }			// is event buffer valid?
-	if(!EvQueueSz)					{ return kEvQ_Err_BadQueue; }			// is event buffer valid?
+	if(!initialized)				{ return kErr_EvQ_NotInitialized; }		// has component init happened?
+	if(!pEvQueueCtrl)				{ return kErr_EvQ_BadCtrl; }			// is control structure valid?
+	if(!pEvQueue)					{ return kErr_EvQ_BadQueue; }			// is event buffer valid?
+	if(!EvQueueSz)					{ return kErr_EvQ_BadQueue; }			// is event buffer valid?
 
 	pEvQueueCtrl->Queue_Size		= EvQueueSz;
 	pEvQueueCtrl->Event_Queue_Ptr	= pEvQueue;
@@ -119,7 +119,7 @@ Cwsw_EvQ__InitEvQ(
 	pEvQueueCtrl->Read_Ptr			= pEvQueue;
 	pEvQueueCtrl->Write_Ptr			= pEvQueue;
 
-	return kEvQ_Err_NoError;
+	return kErr_EvQ_NoError;
 }
 
 
@@ -127,16 +127,16 @@ tEvQ_ErrorCode
 Cwsw_EvQ__FlushEvents(tEvQ_QueueCtrl * const pEvQueueCtrl)
 {
 	// check preconditions, in order of priority
-	if(!initialized)					{ return kEvQ_Err_NotInitialized; }
-	if(!pEvQueueCtrl) 					{ return kEvQ_Err_BadCtrl; }
-	if(!pEvQueueCtrl->Event_Queue_Ptr)	{ return kEvQ_Err_BadQueue; }
-	if(!pEvQueueCtrl->Queue_Size)		{ return kEvQ_Err_BadQueue; }
+	if(!initialized)					{ return kErr_EvQ_NotInitialized; }
+	if(!pEvQueueCtrl) 					{ return kErr_EvQ_BadCtrl; }
+	if(!pEvQueueCtrl->Event_Queue_Ptr)	{ return kErr_EvQ_BadQueue; }
+	if(!pEvQueueCtrl->Queue_Size)		{ return kErr_EvQ_BadQueue; }
 
 	pEvQueueCtrl->Read_Ptr = pEvQueueCtrl->Event_Queue_Ptr;
 	pEvQueueCtrl->Write_Ptr = pEvQueueCtrl->Event_Queue_Ptr;
 	pEvQueueCtrl->Queue_Count = 0;
 
-	return kEvQ_Err_NoError;
+	return kErr_EvQ_NoError;
 }
 
 
@@ -147,20 +147,20 @@ Cwsw_EvQ__PostEvent(tEvQ_QueueCtrl *pEvQueueCtrl, tEvQ_Event ev)
 	int64_t writerange;
 
 	// check preconditions, in order of priority
-	if(!initialized)							{ return kEvQ_Err_NotInitialized; }
-	if(!pEvQueueCtrl)							{ return kEvQ_Err_BadCtrl; }
-	if(!pEvQueueCtrl->Event_Queue_Ptr)			{ return kEvQ_Err_BadQueue; }
-	if(!pEvQueueCtrl->Queue_Size)				{ return kEvQ_Err_BadQueue; }
-	if(!pEvQueueCtrl->Write_Ptr)				{ return kEvQ_Err_BadCtrl; }
+	if(!initialized)							{ return kErr_EvQ_NotInitialized; }
+	if(!pEvQueueCtrl)							{ return kErr_EvQ_BadCtrl; }
+	if(!pEvQueueCtrl->Event_Queue_Ptr)			{ return kErr_EvQ_BadQueue; }
+	if(!pEvQueueCtrl->Queue_Size)				{ return kErr_EvQ_BadQueue; }
+	if(!pEvQueueCtrl->Write_Ptr)				{ return kErr_EvQ_BadCtrl; }
 
 	writerange = pEvQueueCtrl->Write_Ptr - pEvQueueCtrl->Event_Queue_Ptr;
-	if(writerange < 0)							{ return kEvQ_Err_BadCtrl; }
-	if(writerange >= pEvQueueCtrl->Queue_Size)	{ return kEvQ_Err_QueueFull; }
+	if(writerange < 0)							{ return kErr_EvQ_BadCtrl; }
+	if(writerange >= pEvQueueCtrl->Queue_Size)	{ return kErr_EvQ_QueueFull; }
 
 	isthereroom = (pEvQueueCtrl->Queue_Count < pEvQueueCtrl->Queue_Size);
-	if(!isthereroom)							{ return kEvQ_Err_QueueFull; }
+	if(!isthereroom)							{ return kErr_EvQ_QueueFull; }
 
-	if(!ev.evId)								{ return kEvQ_Err_BadEvent; }
+	if(!ev.evId)								{ return kErr_EvQ_BadEvent; }
 
 	do {
 		int crit = Cwsw_Critical_Protect(0);
@@ -179,7 +179,7 @@ Cwsw_EvQ__PostEvent(tEvQ_QueueCtrl *pEvQueueCtrl, tEvQ_Event ev)
 		crit = Cwsw_Critical_Release(crit);
 	} while(0);
 
-	return kEvQ_Err_NoError;
+	return kErr_EvQ_NoError;
 }
 
 
@@ -189,12 +189,12 @@ Cwsw_EvQ__GetEvent(pEvQ_QueueCtrl pEvQueueCtrl, tEvQ_Event *pEv)
 	tEvQ_ErrorCode rc = kEvQ_Ev_None;
 
 	// check preconditions, in order of priority
-	if(!initialized)							{ return kEvQ_Err_NotInitialized; }
-	if(NULL == pEvQueueCtrl)					{ return kEvQ_Err_BadCtrl; }
-	if(NULL == pEvQueueCtrl->Event_Queue_Ptr)	{ return kEvQ_Err_BadQueue; }
-	if(0 == pEvQueueCtrl->Queue_Size)			{ return kEvQ_Err_BadQueue; }
-	if(NULL == pEvQueueCtrl->Read_Ptr)			{ return kEvQ_Err_BadCtrl; }
-	if(NULL == pEv)								{ return kEvQ_Err_BadParm; }
+	if(!initialized)							{ return kErr_EvQ_NotInitialized; }
+	if(NULL == pEvQueueCtrl)					{ return kErr_EvQ_BadCtrl; }
+	if(NULL == pEvQueueCtrl->Event_Queue_Ptr)	{ return kErr_EvQ_BadQueue; }
+	if(0 == pEvQueueCtrl->Queue_Size)			{ return kErr_EvQ_BadQueue; }
+	if(NULL == pEvQueueCtrl->Read_Ptr)			{ return kErr_EvQ_BadCtrl; }
+	if(NULL == pEv)								{ return kErr_EvQ_BadParm; }
 
 	// are there any entries
 	if(pEvQueueCtrl->Queue_Count != 0)

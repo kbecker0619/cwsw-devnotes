@@ -19,7 +19,7 @@
 // ----	System Headers --------------------------
 
 // ----	Project Headers -------------------------
-#include "cwsw_lib.h"		/* kCwsw_Lib_NoError */
+#include "cwsw_lib.h"		/* kErr_Lib_NoError */
 #include "cwsw_clock.h"		/* tCwswClockTics */
 
 
@@ -35,11 +35,10 @@ extern "C" {
 // ----	Constants -------------------------------------------------------------
 // ============================================================================
 
-enum eClkSvc_ErrorCodes {
-	kSwTmr_Err_NoError = kCwsw_Lib_NoError,
-	kSwTmr_Err_NotInitialized,
-	kSwTmr_Err_BadParm,			//!< Bad Parameter; e.g., NULL pointer-to-event.
-
+enum eErrorCodes_SwTmr {
+	kErr_SwTmr_NoError = kErr_Lib_NoError,
+	kErr_SwTmr_NotInitialized,
+	kErr_SwTmr_BadParm,			//!< Bad Parameter; e.g., NULL pointer-to-event.
 };
 
 /**	Enabled/disabled states for CWSW SW Timers.
@@ -55,7 +54,7 @@ enum eSwTimerState {
 // ----	Type Definitions ------------------------------------------------------
 // ============================================================================
 
-typedef enum eClkSvc_ErrorCodes tClkSvc_ErrorCodes;
+typedef enum eErrorCodes_SwTmr tErrorCodes_SwTmr;
 
 /**	Enabled/disabled states for CWSW SW Timers.
  */
@@ -79,9 +78,26 @@ typedef struct sSwTimer {
 // ----	Public API ------------------------------------------------------------
 // ============================================================================
 
-extern tClkSvc_ErrorCodes Cwsw_SwTmr__Init(pCwswSwTimer pTimer, tCwswClockTics armtm, int16_t ev);
-extern void Cwsw_SwTmr__SetState(pCwswSwTimer pTimer, tSwTimerState newstate);
+// ---- Discrete Functions -------------------------------------------------- {
 
+extern tErrorCodes_SwTmr Cwsw_SwTmr__Init(pCwswSwTimer pTimer, tCwswClockTics armtm, int16_t ev);
+extern void Cwsw_SwTmr__SetState(pCwswSwTimer pTimer, tSwTimerState newstate);
+extern void Cwsw_SwTmr__ManageTimer(pCwswSwTimer pTimer, pEvQ_QueueCtrl pEvqCtrl);
+
+// ---- /Discrete Functions ------------------------------------------------- }
+
+// ---- Targets for Get/Set APIs -------------------------------------------- {
+
+/** "Chapter Designator" for Get/Set API.
+ *	Intentionally unused symbol, designed to get you to the correct starting
+ *	point, when you want to find macros for the Get/Set API; simply highlight
+ *	the Module argument in your IDE (e.g, Eclipse, NetBeans, etc.), and select
+ *	Go To Definition.
+ */
+enum { Cwsw_SwTmr = 6 };	/* Component ID for Event Queue */
+
+
+// ---- /Targets for Get/Set APIs ------------------------------------------- }
 
 
 #ifdef	__cplusplus

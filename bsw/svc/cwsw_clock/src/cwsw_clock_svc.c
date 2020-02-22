@@ -43,6 +43,10 @@
 static pEvQ_QueueCtrl	pOsEvQ = NULL;
 static tEvQ_Event		ev_os_heartbeat = {0};
 
+/** Offset between value returned by clock(), and the number of tics since initialization.
+ */
+static tCwswClockTics	clockoffset = 0;
+
 
 // ============================================================================
 // ----	Private Prototypes ----------------------------------------------------
@@ -56,11 +60,10 @@ static tEvQ_Event		ev_os_heartbeat = {0};
  *	Here in Lin/dows, since we're not interrupt-driven, this function requires
  *	being called as absolutely fast as possible.
  *
- *	If the address of of an OS event queue is provided, we post an OS event on
+ *	If a valid OS event queue is referenced, we post an OS event on
  *	every change; we assume this is a 1 ms resolution.
  *
- *	In a real live system, it would return the number of milliseconds since a
- *	system reset.
+ *	@returns Number of clock tics since initialization.
  */
 tCwswClockTics maxct = 0;
 tCwswClockTics
@@ -84,7 +87,7 @@ Cwsw_ClockSvc__Task(void)
 			(void)Cwsw_EvQ__PostEvent(pOsEvQ, ev_os_heartbeat);
 		}
 	}
-	return thistic;
+	return thistic - clockoffset;
 }
 
 
@@ -107,10 +110,12 @@ Cwsw_ClockSvc__Init(pEvQ_QueueCtrl pEvQ, int16_t HeatbeatEvId)
 {
 	pOsEvQ = pEvQ;							// remember the address of the OS event queue.
 	ev_os_heartbeat.evId = HeatbeatEvId;	// and also remember the event we're to post.
+
+	clockoffset = clock();
 }
 
 
-int16_t
+tClkSvc_ErrorCode
 Cwsw_ClockSvc__SetTimer(pCwswClockTics pTimer, tCwswClockTics duration)
 {
 	if(pTimer)
@@ -118,9 +123,9 @@ Cwsw_ClockSvc__SetTimer(pCwswClockTics pTimer, tCwswClockTics duration)
 		if(duration > 0)
 		{
 			*pTimer = clock() + duration;	// raw clock reading, rather than ClockSvc(), 'cuzza
-			return 0;
+			return kErr_ClkSvc_NoError;
 		}
-		return 2;	// todo: use cwsw_err type
+		return kerr_ClkSvc_BadParm;
 	}
-	return 1;		// todo: use cwsw_err type
+	return kerr_ClkSvc_BadParm;
 }
