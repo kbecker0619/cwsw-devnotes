@@ -47,7 +47,7 @@ extern "C" {
 /** Error codes returned by Event Queue API.
  */
 enum eEvQ_ErrorCodes {
-	kEvQ_Err_NoError,
+	kEvQ_Err_NoError = kCwsw_Lib_NoError,
 	kEvQ_Err_BadCtrl,			//!< Bad or invalid control struct.
 	kEvQ_Err_BadQueue,			//!< Bad or invalid event queue.
 	kEvQ_Err_BadEvent,			//!< Bad or invalid event.
@@ -68,6 +68,15 @@ enum { kEvQ_Ev_None };
 /** Error codes returned by Event Queue API. */
 typedef enum eEvQ_ErrorCodes tEvQ_ErrorCode;
 
+/** Event object.
+ *	Relies on the project-specific definition of a Event ID container type.
+ */
+typedef struct sEvQ_Event {
+	tEvQ_EventID	evId;
+	uint32_t		evData;
+} tEvQ_Event, *pEvQ_Event;
+
+
 /**	Event queue buffer for projects that use the CWSW Event Queue.
  *	By design, this buffer must be an independent entity from the control
  *	structure with which it is associated. There needs to be a 1:1 correlation
@@ -82,9 +91,9 @@ typedef struct sEvQueue {
 	tEvQ_EvQueue	Event_Queue_Ptr;	//!< event queue
 	unsigned char	Queue_Size;			//!< queue size
 	unsigned char	Queue_Count;		//!< number of items in the queue
-	tEvQ_Event      *Write_Ptr;			//!< queue write pointer. Defined as a pointer-to-event, rather than an index, to ease reading/writing API, letting complexity fall into queue management code.
-	tEvQ_Event      *Read_Ptr;			//!< queue read pointer. Defined as a pointer-to-event, rather than an index, to ease reading/writing API, letting complexity fall into queue management code.
-} tEvQ_QueueCtrl;
+	pEvQ_Event      Write_Ptr;			//!< queue write pointer. Defined as a pointer-to-event, rather than an index, to ease reading/writing API, letting complexity fall into queue management code.
+	pEvQ_Event      Read_Ptr;			//!< queue read pointer. Defined as a pointer-to-event, rather than an index, to ease reading/writing API, letting complexity fall into queue management code.
+} tEvQ_QueueCtrl, *pEvQ_QueueCtrl;
 
 
 // ============================================================================
@@ -152,7 +161,7 @@ extern tEvQ_ErrorCode Cwsw_EvQ__PostEvent(tEvQ_QueueCtrl *pEvQueueCtrl, tEvQ_Eve
  *	@returns Error code, enumeration of type tEvQ_ErrorCode. For an empty queue,
  *			no error is returned.
  */
-extern tEvQ_ErrorCode Cwsw_EvQ__GetEvent(tEvQ_QueueCtrl *pEvQueueCtrl, tEvQ_Event *pEv);
+extern tEvQ_ErrorCode Cwsw_EvQ__GetEvent(pEvQ_QueueCtrl pEvQueueCtrl, tEvQ_Event *pEv);
 
 
 // ---- /Discrete Functions ------------------------------------------------- }
@@ -169,6 +178,9 @@ enum { Cwsw_EvQ = 4 };	/* Component ID for Event Queue */
 
 /** Target symbol for Get(Cwsw_Board, xxx) interface */
 #define Cwsw_EvQ__Get(resource)		Cwsw_EvQ__Get_ ## resource()
+
+#define PostEvQ(EvQ, ev)			Cwsw_EvQ__Post(EvQ, ev)
+#define Cwsw_EvQ__Post(EvQ, event)	Cwsw_EvQ__PostEvent(&EvQ, event)
 
 // ---- /Targets for Get/Set APIs ------------------------------------------- }
 

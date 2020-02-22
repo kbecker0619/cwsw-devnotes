@@ -160,7 +160,7 @@ Cwsw_EvQ__PostEvent(tEvQ_QueueCtrl *pEvQueueCtrl, tEvQ_Event ev)
 	isthereroom = (pEvQueueCtrl->Queue_Count < pEvQueueCtrl->Queue_Size);
 	if(!isthereroom)							{ return kEvQ_Err_QueueFull; }
 
-	if(!ev)										{ return kEvQ_Err_BadEvent; }
+	if(!ev.evId)								{ return kEvQ_Err_BadEvent; }
 
 	do {
 		int crit = Cwsw_Critical_Protect(0);
@@ -184,7 +184,7 @@ Cwsw_EvQ__PostEvent(tEvQ_QueueCtrl *pEvQueueCtrl, tEvQ_Event ev)
 
 
 tEvQ_ErrorCode
-Cwsw_EvQ__GetEvent(tEvQ_QueueCtrl *pEvQueueCtrl, tEvQ_Event *pEv)
+Cwsw_EvQ__GetEvent(pEvQ_QueueCtrl pEvQueueCtrl, tEvQ_Event *pEv)
 {
 	tEvQ_ErrorCode rc = kEvQ_Ev_None;
 

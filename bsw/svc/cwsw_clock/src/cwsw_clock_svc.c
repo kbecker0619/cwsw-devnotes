@@ -40,8 +40,8 @@
 // ----	Module-level Variables ------------------------------------------------
 // ============================================================================
 
-static tEvQ_QueueCtrl	*posevq = NULL;
-static int16_t			ev_os_heartbeat = 0;
+static pEvQ_QueueCtrl	pOsEvQ = NULL;
+static tEvQ_Event		ev_os_heartbeat = {0};
 
 
 // ============================================================================
@@ -64,7 +64,7 @@ static int16_t			ev_os_heartbeat = 0;
  */
 tCwswClockTics maxct = 0;
 tCwswClockTics
-Cwsw_ClockSvc(void)
+Cwsw_ClockSvc__Task(void)
 {
 	static tCwswClockTics thistic, lasttic = 0;
 	static tCwswClockTics thisct;
@@ -78,9 +78,10 @@ Cwsw_ClockSvc(void)
 			if(thisct > maxct)	{ maxct = thisct; }
 		}
 		lasttic = thistic;
-		if(posevq)
+		if(pOsEvQ)
 		{
-			(void)Cwsw_EvQ__PostEvent(posevq, ev_os_heartbeat);
+			ev_os_heartbeat.evData = thistic;
+			(void)Cwsw_EvQ__PostEvent(pOsEvQ, ev_os_heartbeat);
 		}
 	}
 	return thistic;
@@ -102,10 +103,10 @@ Cwsw_ClockSvc(void)
  *	parameter.
  */
 void
-Cwsw_ClockSvc__Init(tEvQ_QueueCtrl	*pevq, int16_t evhb)
+Cwsw_ClockSvc__Init(pEvQ_QueueCtrl pEvQ, int16_t HeatbeatEvId)
 {
-	posevq = pevq;				// remember the address of the OS event queue
-	ev_os_heartbeat = evhb;		// and also remember the event we're to post.
+	pOsEvQ = pEvQ;							// remember the address of the OS event queue.
+	ev_os_heartbeat.evId = HeatbeatEvId;	// and also remember the event we're to post.
 }
 
 

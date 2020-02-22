@@ -45,24 +45,18 @@ extern "C" {
  * 	@param ev		Event to handle (typically from Event Queue).
  * 	@param evInt	Supplemental information for the event.
  */
-typedef void (*pEvH_EvHandlerFunc)(tEvQ_Event ev, uint32_t evInt);
+typedef void (*pEvQ_EvHandlerFunc)(tEvQ_Event evId, uint32_t extra);
 
 /**	Association of event handler to a specific event.
  */
-struct evhandler {
-	tEvQ_Event			ev;
-	pEvH_EvHandlerFunc	pEvHandler;
-};
-typedef struct evhandler tEvH_EvHandler;
-
-/** Association of event handler to event.
- *	This type is intended to be used against a table of type #tEvH_EvHandler.
- */
-typedef tEvH_EvHandler pEvH_EvHandler;
+typedef struct sEvHandlerAssoc {
+	tEvQ_EventID		evId;
+	pEvQ_EvHandlerFunc	pEvHandler;
+} tEvQ_EvHandlerAssoc, *pEvQ_EvHandlerAssoc;
 
 /** "Handle" for the position of a specific event in the event-handler table.
  */
-typedef int tEvH_EvtHandle;	/* would prefer to use `ssize_t`, but that's a POSIX type, not a C type */
+typedef int32_t	tEvQ_EvtHandle;		/* would prefer to use `ssize_t`, but that's a POSIX type, not a C type */
 
 
 // ============================================================================
@@ -73,8 +67,8 @@ typedef int tEvH_EvtHandle;	/* would prefer to use `ssize_t`, but that's a POSIX
 // ----	Public API ------------------------------------------------------------
 // ============================================================================
 
-tEvQ_ErrorCode 	Cwsw_EvQ__RegisterHandler(tEvH_EvHandler *pEvHndlr, size_t evtblsz, tEvQ_Event ev, pEvH_EvHandlerFunc pf);
-pEvH_EvHandlerFunc	Cwsw_EvQ__GetHandler(tEvH_EvHandler *pEvHndlr, size_t evtblsz, tEvQ_Event ev);
+tEvQ_ErrorCode 		Cwsw_EvQ__RegisterHandler(pEvQ_EvHandlerAssoc pEvHndlrTbl, size_t evtblsz, tEvQ_EventID ev, pEvQ_EvHandlerFunc pf);
+pEvQ_EvHandlerFunc	Cwsw_EvQ__GetHandler(pEvQ_EvHandlerAssoc pEvHndlr, size_t evtblsz, tEvQ_EventID ev);
 
 
 #ifdef	__cplusplus

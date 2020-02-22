@@ -44,9 +44,9 @@ extern "C" {
 // ----	Type Definitions ------------------------------------------------------
 // ============================================================================
 
-/**	The base type for the events used in the Event Queue.
+/**	The base type for the event IDs used in the Event Queue.
  *	With the present container, there can be a maximum of 255 distinct events
- *	per event queue (it is possible for each event queue to have a distinct
+ *	per event queue. It is possible for each event queue to have a distinct
  *	list of events, or, one or more event queues could use the same list of
  *	defined events.
  *
@@ -55,7 +55,7 @@ extern "C" {
  *
  *	If you use a different base type, it should be an unsigned integral type.
  */
-typedef unsigned char tEvQ_Event;
+typedef unsigned char tEvQ_EventID;
 
 
 // ============================================================================

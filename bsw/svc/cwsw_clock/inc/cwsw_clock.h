@@ -61,8 +61,8 @@ typedef clock_t tCwswClockTics, *pCwswClockTics;
 
 // ---- Discrete Functions -------------------------------------------------- {
 
-extern tCwswClockTics Cwsw_ClockSvc(void);
-extern void Cwsw_ClockSvc__Init(tEvQ_QueueCtrl	*pevq, int16_t evhb);
+extern tCwswClockTics Cwsw_ClockSvc__Task(void);
+extern void Cwsw_ClockSvc__Init(pEvQ_QueueCtrl pEvQ, int16_t HeatbeatEvId);
 
 /**	Set the duration of a timer.
  *	@param timer - a reference to the specified timer.
@@ -93,7 +93,7 @@ extern int16_t Cwsw_ClockSvc__SetTimer(pCwswClockTics pTimer, tCwswClockTics dur
  *	Doing this will not properly handle timer tic rollover.
  *	Instead, subtract one time from another, and compare the result to zero.
  */
-#define Cwsw_GetTimeLeft(timer)		Cwsw_ElapsedTimeMs(Cwsw_ClockSvc(), timer)
+#define Cwsw_GetTimeLeft(timer)		Cwsw_ElapsedTimeMs(Cwsw_ClockSvc__Task(), timer)
 
 
 // ---- /Discrete Functions ------------------------------------------------- }
