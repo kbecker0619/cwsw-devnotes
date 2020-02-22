@@ -48,12 +48,12 @@ extern "C" {
  */
 enum eEvQ_ErrorCodes {
 	kEvQ_Err_NoError = kCwsw_Lib_NoError,
+	kEvQ_Err_NotInitialized,	//!< Event Queue component not initialized.
 	kEvQ_Err_BadCtrl,			//!< Bad or invalid control struct.
 	kEvQ_Err_BadQueue,			//!< Bad or invalid event queue.
 	kEvQ_Err_BadEvent,			//!< Bad or invalid event.
 	kEvQ_Err_QueueFull,			//!< Queue full, cannot add new event to queue.
 	kEvQ_Err_BadParm,			//!< Bad Parameter; e.g., NULL pointer-to-event.
-	kEvQ_Err_NotInitialized		//!< Event Queue component not initialized.
 };
 
 

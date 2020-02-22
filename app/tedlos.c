@@ -21,6 +21,7 @@
 // ----	Project Headers -------------------------
 #include "cwsw_clock.h"
 #include "cwsw_evhandler.h"
+#include "cwsw_swtimer.h"
 
 // ----	Module Headers --------------------------
 #include "tedlos.h"
@@ -104,47 +105,8 @@ void HandleEvent3(tEvQ_Event ev, uint32_t evInt)
 }
 
 
-// constant section
-enum eSwTimerState {
-	kSwTimerDisabled,
-	kSwTimerEnabled,
-	kSwTimerPaused
-};
-// type section
-typedef enum eSwTimerState tSwTimerState;
-struct sSwTimer {
-	tCwswClockTics		tm;
-	tCwswClockTics		reloadtm;
-	int16_t				evid;		// generic container so any event class can be used; 0 for no event
-	tSwTimerState		tmrstate;	// allows for a different ev + handler than "normal" event associations
-};
-typedef struct sSwTimer tCwswSwTimer, *pCwswSwTimer;
-
 // application heartbeat timer; intended for a 1-ms nominal rate, though in this implementation, its monotonicity is suspect
 tCwswSwTimer tmrHb = {0};
-
-
-int	/* does not allow for an initial timeout different than rearm time */
-timer__init(pCwswSwTimer pTimer, tCwswClockTics armtm, int16_t ev)
-{
-	if(pTimer)
-	{
-		pTimer->tm = armtm;
-		pTimer->reloadtm = armtm;
-		pTimer->evid = ev;
-		pTimer->tmrstate = kSwTimerDisabled;
-	}
-	return 0;	// todo: return badptr
-}
-
-void
-timer_state_set(pCwswSwTimer pTimer, tSwTimerState newstate)
-{
-	if(pTimer)
-	{
-		pTimer->tmrstate = newstate;
-	}
-}
 
 
 void Cwsw_SwTmr__ManageTimer(pCwswSwTimer pTimer)
@@ -200,21 +162,24 @@ void HandleTimerTic(tEvQ_Event ev, uint32_t evInt)
 
 void tedlos_init(void)
 {
+	// initialize clock services.
+	//	since at present, clk-srv only understands one base-rate event, we'll associate it with
+	//	tedlos' own private queue.
+	Cwsw_ClockSvc__Init(&evqCtrl, evOsTmrHeartbeat);
+
+	// initialize event queue used for tedlos
 	if(kEvQ_Err_NoError != Cwsw_EvQ__InitEvQ(&evqCtrl, evqueue, TABLE_SIZE(evqueue)))	return;
+
+	// initialize the handlers.
+	(void)Cwsw_EvQ__RegisterHandler(evhandlers, TABLE_SIZE(evhandlers), evOsTmrHeartbeat, HandleTimerTic);
 
 	// for this test / build only
 	evqCtrl.Queue_Count = 6;	// preload w/ the values already initialized (in the definition statement)
 
-	// initialize the handlers
-	(void)Cwsw_EvQ__RegisterHandler(evhandlers, TABLE_SIZE(evhandlers), evOsTmrHeartbeat, HandleTimerTic);
-
-	// since nobody's initialized the clock yet, do it here. note it may be significant to do it
-	//	in the module, as we may want to pass the evq control structure of the module.
-	Cwsw_ClockSvc__Init(&evqCtrl, evOsTmrHeartbeat);
 
 	// initialize HB timer for a 100-ms HB
-	timer__init(&tmrHb, 100, 0);
-	timer_state_set(&tmrHb, kSwTimerEnabled);
+	Cwsw_SwTmr__Init(&tmrHb, 100, 0);
+	Cwsw_SwTmr__SetState(&tmrHb, kSwTimerEnabled);
 
 	initialized = true;
 }

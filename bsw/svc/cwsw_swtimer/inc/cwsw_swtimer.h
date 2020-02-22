@@ -1,61 +1,74 @@
-/** @file cwsw_evq_proj.h
- *	@brief	Project-specific definitions related to event queues.
+/** @file cwsw_swtimer.h
+ *
+ *	Description:
  *
  *	Copyright (c) 2020 Kevin L. Becker. All rights reserved.
  *
  *	Original:
- *	Created on: Mar 2, 2018
- *	Author: kbecker
+ *	Created on: Feb 21, 2020
+ *	Author: KBECKE35
  */
 
-#ifndef CWSW_EVQ_PROJ_H_
-#define CWSW_EVQ_PROJ_H_
-
-#ifdef	__cplusplus
-extern "C" {
-#endif
+#ifndef CWSW_SWTIMER_H
+#define CWSW_SWTIMER_H
 
 // ============================================================================
 // ----	Include Files ---------------------------------------------------------
 // ============================================================================
 
 // ----	System Headers --------------------------
-#include <stdint.h>
 
 // ----	Project Headers -------------------------
+#include "cwsw_lib.h"		/* kCwsw_Lib_NoError */
+#include "cwsw_clock.h"		/* tCwswClockTics */
+
 
 // ----	Module Headers --------------------------
+
+
+#ifdef	__cplusplus
+extern "C" {
+#endif
 
 
 // ============================================================================
 // ----	Constants -------------------------------------------------------------
 // ============================================================================
 
-/** Compile-time calibration to enable guards on either side of the Event Queue
- *	buffer. This is a debugging aid used to detect buffer underrun or overrun.
- *
- *	Disable guard band: Default; symbol not defined, or defined as 0 or false.
- *	Enable guard band:	Symbol defined with a value of 1 or true.
+enum eClkSvc_ErrorCodes {
+	kSwTmr_Err_NoError = kCwsw_Lib_NoError,
+	kSwTmr_Err_NotInitialized,
+	kSwTmr_Err_BadParm,			//!< Bad Parameter; e.g., NULL pointer-to-event.
+
+};
+
+/**	Enabled/disabled states for CWSW SW Timers.
  */
-#define ENABLE_EVQ_GUARDS		1
+enum eSwTimerState {
+	kSwTimerDisabled,
+	kSwTimerEnabled,
+	kSwTimerPaused
+};
 
 
 // ============================================================================
 // ----	Type Definitions ------------------------------------------------------
 // ============================================================================
 
-/**	The base type for the event IDs used in the Event Queue.
- *	With the present container, there can be a maximum of 255 distinct event IDs
- *	per event queue. It is possible for each event queue to have a distinct
- *	list of events, or, one or more event queues could use the same list of
- *	defined events.
- *
- *	Value 0 is reserved for queue management (and, because the State Machine
- *	Engine uses this event queue, it also uses value 0 for its own purposes).
- *
- *	If you use a different base type, it should be an unsigned integral type.
+typedef enum eClkSvc_ErrorCodes tClkSvc_ErrorCodes;
+
+/**	Enabled/disabled states for CWSW SW Timers.
  */
-typedef unsigned char tEvQ_EventID;
+typedef enum eSwTimerState tSwTimerState;
+
+/**	CWSW SW Timer.
+ */
+typedef struct sSwTimer {
+	tCwswClockTics		tm;
+	tCwswClockTics		reloadtm;
+	int16_t				evid;		// generic container so any event class can be used; 0 for no event
+	tSwTimerState		tmrstate;	// allows for a different ev + handler than "normal" event associations
+} tCwswSwTimer, *pCwswSwTimer;
 
 
 // ============================================================================
@@ -66,9 +79,13 @@ typedef unsigned char tEvQ_EventID;
 // ----	Public API ------------------------------------------------------------
 // ============================================================================
 
+extern tClkSvc_ErrorCodes Cwsw_SwTmr__Init(pCwswSwTimer pTimer, tCwswClockTics armtm, int16_t ev);
+extern void Cwsw_SwTmr__SetState(pCwswSwTimer pTimer, tSwTimerState newstate);
+
+
 
 #ifdef	__cplusplus
 }
 #endif
 
-#endif /* CWSW_EVQ_PROJ_H_ */
+#endif /* CWSW_SWTIMER_H */
