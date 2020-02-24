@@ -31,9 +31,25 @@
 // ----	Constants -------------------------------------------------------------
 // ============================================================================
 
+enum eAppStates {
+	// this state machine applies only during the time that the scheduler is active; it does not
+	//	track the earlier stages of initialization, nor the states that will take effect after the
+	//	scheduler has been stopped.
+	kAppState_NoState,
+	kAppState_Init,
+	kAppState_Normal,
+	kAppState_PrepSleep,
+	kAppState_Sleep,
+	kAppState_Awake,
+};
+
+
 // ============================================================================
 // ----	Type Definitions ------------------------------------------------------
 // ============================================================================
+
+typedef enum eAppStates tAppState;
+
 
 // ============================================================================
 // ----	Global Variables ------------------------------------------------------
@@ -46,41 +62,25 @@
 static bool initialized = false;
 
 // control structure for the OS event queue
-static tEvQ_QueueCtrl	evqCtrl = {0};
+static tEvQ_QueueCtrl evqcTedlos = {0};
 
 // the event queue itself
-/* for this trial, simply load the event queue with a bunch of events. at the moment, i'm not worried
- * about their semantic meanings.
- * note that initializing them this way does NOT properly initialize the queue-control write pointer,
- * so the 1st <n> PostEvQ() calls will overwrite the existing events.
- */
-static tEvQ_Event		evqueue[10] = {
-	{1, 1},
-	{2, 2},
-	{3, 3},
-	{4, 4},
-	{5, 5},
-	{6, 6}
-};
+static tEvQ_Event evqTedlos[10] = { 0 };
 
 // the handlers for each identified OS event
-void HandleEvent1(tEvQ_Event ev, uint32_t evInt);
-void HandleEvent2(tEvQ_Event ev, uint32_t evInt);
-void HandleEvent3(tEvQ_Event ev, uint32_t evInt);
-static tEvQ_EvHandlerAssoc evhandlers[kNumOsEvqEvents] = {
-		{0, NULL },
-		{1, HandleEvent1 },
-		{2, HandleEvent2 },
-		{3, HandleEvent3 }
-	};
+static tEvQ_EvHandlerAssoc evcbTedlos[kNumOsEvqEvents] = { 0 };
+
 
 // application heartbeat timer; intended for a 1-ms nominal rate, though in this implementation, its monotonicity is suspect
 tCwswSwTimer tmrOsTic = {0};
 
 
+tAppState appstate = kAppState_NoState;
+
+
 // timer objects	{
 // application lifecycle timer
-static tCwswClockTics timeleft = 0;
+//static tCwswClockTics timeleft = 0;
 // reload value
 enum {app_duration = 5000 };	/* roughly 5 seconds */
 
@@ -89,37 +89,6 @@ enum {app_duration = 5000 };	/* roughly 5 seconds */
 // ============================================================================
 // ----	Private Functions -----------------------------------------------------
 // ============================================================================
-
-void HandleEvent1(tEvQ_Event ev, uint32_t evInt)
-{
-	UNUSED(ev);
-	UNUSED(evInt);
-}
-
-void HandleEvent2(tEvQ_Event ev, uint32_t evInt)
-{
-	UNUSED(ev);
-	UNUSED(evInt);
-}
-
-void HandleEvent3(tEvQ_Event ev, uint32_t evInt)
-{
-	UNUSED(ev);
-	UNUSED(evInt);
-}
-
-
-enum eAppStates {
-	// this state machine applies only during the time that the scheduler is active; it does not
-	//	track the earlier stages of initialization, nor the states that will take effect after the
-	//	scheduler has been stopped.
-	kAppState_Init,
-	kAppState_Normal,
-	kAppState_PrepSleep,
-	kAppState_Sleep,
-	kAppState_Awake,
-};
-
 
 /*	This is the main app-owned message pump, and is called by the Clock Services component.
  *	This callback should have an absolute minimum of things to do:
@@ -130,50 +99,84 @@ enum eAppStates {
 void
 Os1msTic(tEvQ_Event ev, uint32_t evInt)
 {
-	if(!timeleft)
-	{
-		Set(Cwsw_Clock, timeleft, app_duration);
-	}
-	if(Get(Cwsw_Clock, timeleft) <= 0)
-	{
-		// update all SW timers
-		Cwsw_SwTmr__ManageTimer(&tmrOsTic, &evqCtrl);
-
-		// do whatever else should be done in the OS scheduling loop
-
-		// rearm timer
-		Set(Cwsw_Clock, timeleft, app_duration);
-	}
+	// update all SW timers
+	Cwsw_SwTmr__ManageTimer(&tmrOsTic);
 }
 
 // ============================================================================
 // ----	Public Functions ------------------------------------------------------
 // ============================================================================
 
+typedef struct eTedlosTaskDescriptor {
+	pCwswSwTimer		pTmrTask;
+	tCwswClockTics		tm_init;
+	tCwswClockTics		tm_rearm;
+	pEvQ_QueueCtrl		pEvqCtrl;	// assume this is always going to be the init task, but we specify it here because it's a project-specific thing
+	int16_t				evid;
+	pEvQ_EvHandlerFunc	pf;			//
+} tTedlosTaskDescriptor, *pTedlosTaskDescriptor;
+
+//	10ms Task, Init	@{
+tCwswSwTimer tmrTask10msInit;
+void
+cb10Ms_Init(tEvQ_Event ev, uint32_t evInt)
+{
+	UNUSED(ev);
+	UNUSED(evInt);
+}
+//	@}
+
+//tTedlosTaskDescriptor TableOfInitTasks;
+tTedlosTaskDescriptor TableOfInitTasks[] = {
+	//		timer			init	reload		evq				evid					evcb
+	{	&tmrTask10msInit,	  10,	  10,	&evqcTedlos,	evOs_Tmr10MsTaskInit,	cb10Ms_Init	},
+};
+
+void
+InitTask(tEvQ_Event ev, uint32_t evInt)
+{
+	// Start all init tasks. they, in turn, will start their respective application-mode tasks
+	size_t ct = TABLE_SIZE(TableOfInitTasks);
+	while(ct--)
+	{
+		pTedlosTaskDescriptor tmp = &TableOfInitTasks[ct];
+		(void)Cwsw_SwTmr__Init(tmp->pTmrTask, tmp->tm_init, tmp->tm_rearm, tmp->pEvqCtrl, 0, tmp->evid);
+//		(void)Cwsw_EvQ__RegisterHandler(tmp->pf, TABLE_SIZE(evcbTedlos), tmp->evid, Os1msTic);
+
+	}
+}
+
 void tedlos_init(void)
 {
 	// initialize clock services.
 	//	since at present, clk-srv only understands one base-rate event, we'll associate it with
 	//	tedlos' own private queue.
-	Cwsw_ClockSvc__Init(&evqCtrl, evOsTmrHeartbeat);
+	Cwsw_ClockSvc__Init(&evqcTedlos, evOsTmrHeartbeat);
 
-	// initialize event queue used for tedlos
-	if(kErr_EvQ_NoError != Cwsw_EvQ__InitEvQ(&evqCtrl, evqueue, TABLE_SIZE(evqueue)))	return;
+	/* initialize the app-specific OS timer tic
+	 *	since we want this timer tic callback to be extremely simple, and not to be involved in mode
+	 *	management or other distractionary things, we will then set up the initialize task
+	 */
+	do {
+		// initialize event queue used for tedlos
+		if(kErr_EvQ_NoError != Cwsw_EvQ__InitEvQ(&evqcTedlos, evqTedlos, TABLE_SIZE(evqTedlos)))	return;
 
-	// initialize the handlers.
-	(void)Cwsw_EvQ__RegisterHandler(evhandlers, TABLE_SIZE(evhandlers), evOsTmrHeartbeat, Os1msTic);
+		// initialize the handlers.
+		(void)Cwsw_EvQ__RegisterHandler(evcbTedlos, TABLE_SIZE(evcbTedlos), evOsTmrHeartbeat, Os1msTic);
 
-	// for this test / build only
-	evqCtrl.Queue_Count = 6;	// preload w/ the values already initialized (in the definition statement)
+		// set up the app-level timer tic task
+//		Cwsw_SwTmr__Init(&tmrOsTic, 10, 10, &evqcTedlos, 0);
+		Cwsw_SwTmr__SetState(&tmrOsTic, kSwTimerEnabled);
+	} while(0);
 
-	// initialize HB timer for a 100-ms HB
-	Cwsw_SwTmr__Init(&tmrOsTic, 100, 0);
-	Cwsw_SwTmr__SetState(&tmrOsTic, kSwTimerEnabled);
+	// set the application state and start the init task
+	appstate = kAppState_Init;
 
 	initialized = true;
 }
 
-void tedlos_do(void)
+void
+tedlos_do(void)
 {
 	tEvQ_Event thisevent = { evOsNullEvent, 0};
 	pEvQ_EvHandlerFunc pf = NULL;
@@ -185,10 +188,10 @@ void tedlos_do(void)
 		tCwswClockTics tmrtic = Cwsw_ClockSvc__Task();
 
 		// retrieve event. if one exists, and if it has a handler, dispatch
-		(void)Cwsw_EvQ__GetEvent(&evqCtrl, &thisevent);
+		(void)Cwsw_EvQ__GetEvent(&evqcTedlos, &thisevent);
 		if(thisevent.evId)
 		{
-			pf = Cwsw_EvQ__GetHandler(evhandlers, TABLE_SIZE(evhandlers), thisevent.evId);
+			pf = Cwsw_EvQ__GetHandler(evcbTedlos, TABLE_SIZE(evcbTedlos), thisevent.evId);
 			if(pf)
 			{
 				pf(thisevent, tmrtic);	/* todo: launch this in an independent thread (e.g., protothread) */

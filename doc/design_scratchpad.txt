@@ -1,0 +1,134 @@
+
+"object" design for cwsw library
+
+this is a scratchpad for ideation, not an official design document.
+	tab chars: 4
+
+udpate: 23-feb-2020
+
+overall background:														{
+*	coded to C99, primarily because
+	*	i want to use the standardized scalar types not available in C90
+	*	i want to be free to use C++-style comments
+}
+
+
+event																	{
++== tEvQ_Event =============+
+| evId:		tEvQ_EventID	|	scalar number, unambiguous identifier for "this" event.
+| evData:	uint32_t		|	supplemental data to augment the context of the event.
++---------------------------+
+| (no methods)				|
++===========================+
+
+discussion																{
+tEvQ_EventID															{
+*	project-specific alias for the underlying container type
+*	recommended to be an unsigned integer type; early demonstration / unit testing code used U8s.
+*	when using this component, be aware of data alignment issues; because the 1st field in the struct is the underlying type of the event ID, alignment may force the actual address of the data field to be located after some level of "gap".
+	*	on some MCU architectures, it may be useful to make the underlying type to be the same as the natural register size; it may not "help" or be of any benefit to use a U8 to try to conserve data space.
+*	recommended container for the list of available IDs is an enumeration; this is often implemented as a signed integer type.
+	*	if the underlying container is an unsigned type, this could provoke some compiler or static analysis warnings
+	*	in this case, make the definition of `tEvQ_EventID` to be the type of the enumeration.
+	*	alternatively, the list of events could be composed of a series of define statements, with each value typecast to `tEvQ_EventID`
+}
+
+evData																	{
+*	intended to be a generic container that will not affect bit patterns
+*	not sized appropriately to pass an address on all architectures.
+}
+}
+}
+
+
+event table																{
++== pEvQ_EvQueue ===============+
+| pEvQ_EvTable: tEvQ_Event[]    |
+| evQ_size: size_t				|	<<== new, yet to be implemented
++-------------------------------+
+| (no methods)					|
++===============================+
+
+discussion																{
+* simple container for a number of individual events.
+* while not tested, in theory this could be a compile-time, ROM-based table.
+}
+}
+
+
+event queue control														{
++== tEvQ_QueueCtrl =============+
+| pEvent_Queue:	pEvQ_EvQueue	|	reference to event queue
+| Queue_Size:	uint8_t			|	queue size. this determines the maximum number of events that can be posted at one time.
+| Queue_Count:	uint8_t			|	number of items in the queue.
+| pWrite:		pEvQ_Event		|	queue write pointer; the address to which the next event posted will be written. Defined as a pointer-to-event, rather than an index, to ease reading/writing API, letting complexity fall into queue management code.
+| pRead:		pEvQ_Event		|	queue read pointer; the address that will be read at the next GetEvent() call. Defined as a pointer-to-event, rather than an index, to ease reading/writing API, letting complexity fall into queue management code.
++-------------------------------+
+| Init()						|	initializes the COMPONENT "event queue", not any specific instance of an event queue.
+| Get_Initialized()				|	return the component's initialization status.
+| InitEvQ()						|	initializes an instance of an event queue. does NOT clear (or otherwise initialize) the table of queued events; only the metadata in the control structure.
+| FlushEvents()					|	clears the current event queue, not by touching the buffer itself, but by resetting the count and read/write pointers.
+| PostEvent()					|	add a new event to the event queue. returns success/failure indication.
+| GetEvent()					|	pulls the oldest event (FIFO) from the queue. destructive read. returns success/failure indication.
++===============================+
+
+discussion																{
+* BASE control structure
+* focused on event-queue management
+
+
+* STRICTLY FIFO. no concept (in this implementation) of priorities
+	* to implement priorities, MVP would be to scan the event queue and select the highest-priority event. this would impact read- and write-pointer algorithms (MVP would be to consolidate events after the selected event, so that writes would still add to the end of the queue.)
+* only enough data and methods to
+	* initialize the queue control.
+	* add an event to the event queue.
+	* remove an event from the event queue.
+	* query the number of elements in the queue.
+}
+}
+
+
+event handler															{
++== pEvQ_EvHandlerFunc =========+
+| 								|
++-------------------------------+
+| pEvQ_EvHandlerFunc()	 		|	Signature for callback associated w/ event queues
++===============================+
+
+}
+
+
+event handler association												{
++== tEvQ_EvHandlerAssoc =========+
+| evId: tEvQ_EventID			 |	ID of the event with which to associate a handler callback.
+| pEvHandler: pEvQ_EvHandlerFunc |	reference of the event handler callback
++--------------------------------+
+| 								 |
++================================+
+
+}
+
+
+event queue control (extended)											{
+extends tEvQ_QueueCtrl
++== tEvQ_QueueCtrlEx ===========+
+| pEvQ_Ctrl:	*tEvQ_QueueCtrl	|	reference to event queue control
+| Queue_Size:	uint8_t			|	queue size. this determines the maximum number of events that can be posted at one time.
+| Queue_Count:	uint8_t			|	number of items in the queue.
+| pWrite:		pEvQ_Event		|	queue write pointer; the address to which the next event posted will be written. Defined as a pointer-to-event, rather than an index, to ease reading/writing API, letting complexity fall into queue management code.
+| pRead:		pEvQ_Event		|	queue read pointer; the address that will be read at the next GetEvent() call. Defined as a pointer-to-event, rather than an index, to ease reading/writing API, letting complexity fall into queue management code.
+| 
++-------------------------------+
+| Init()						|	initializes the COMPONENT "event queue", not any specific instance of an event queue.
+| Get_Initialized()				|	return the component's initialization status.
+| InitEvQ()						|	initializes an instance of an event queue. does NOT clear (or otherwise initialize) the table of queued events; only the metadata in the control structure.
+| FlushEvents()					|	clears the current event queue, not by touching the buffer itself, but by resetting the count and read/write pointers.
+| PostEvent()					|	add a new event to the event queue. returns success/failure indication.
+| GetEvent()					|	pulls the oldest event (FIFO) from the queue. destructive read. returns success/failure indication.
++===============================+
+
+intentionally designed to be a superset of the core control structure.
+
+}
+
+* event handlers

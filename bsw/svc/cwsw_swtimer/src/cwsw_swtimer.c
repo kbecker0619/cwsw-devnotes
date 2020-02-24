@@ -53,13 +53,22 @@
  *  todo: pass the rearm time as an additional argument.
  */
 tErrorCodes_SwTmr
-Cwsw_SwTmr__Init(pCwswSwTimer pTimer, tCwswClockTics armtm, int16_t ev)
+Cwsw_SwTmr__Init(
+	// timer-related parameters
+	pCwswSwTimer	pTimer,
+	tCwswClockTics	tm_init,
+	tCwswClockTics	tm_rearm,
+	// timer-maturation parameters
+	pEvQ_QueueCtrl	pEvqCtrl,
+	size_t			qsz,		//
+	int16_t			evid)
 {
 	if(pTimer)
 	{
-		pTimer->tm = armtm;
-		pTimer->reloadtm = armtm;
-		pTimer->evid = ev;
+		pTimer->tm = tm_init;
+		pTimer->reloadtm = tm_rearm;
+		pTimer->pEvqCtrl = pEvqCtrl;
+		pTimer->evid = evid;
 		pTimer->tmrstate = kSwTimerDisabled;
 		return kErr_SwTmr_NoError;
 	}
@@ -99,7 +108,7 @@ Cwsw_SwTmr__SetState(pCwswSwTimer pTimer, tSwTimerState newstate)
  *	  which would have any hope of satisfying security or functional safety goals.
  */
 void
-Cwsw_SwTmr__ManageTimer(pCwswSwTimer pTimer, pEvQ_QueueCtrl pEvqCtrl)
+Cwsw_SwTmr__ManageTimer(pCwswSwTimer pTimer)
 {
 	if(pTimer)
 	{
@@ -121,7 +130,7 @@ Cwsw_SwTmr__ManageTimer(pCwswSwTimer pTimer, pEvQ_QueueCtrl pEvqCtrl)
 				{
 					tEvQ_ErrorCode err;
 					tEvQ_Event ev = {pTimer->evid, exptm};
-					err = Cwsw_EvQ__PostEvent(pEvqCtrl, ev);
+					err = Cwsw_EvQ__PostEvent(pTimer->pEvqCtrl, ev);	// don't need to check for valid queue ctrl, 'cuz it does its own checking
 					if(err)
 					{
 						err = ~0;

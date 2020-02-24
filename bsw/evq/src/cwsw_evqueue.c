@@ -104,7 +104,7 @@ Cwsw_EvQ__Get_Initialized(void)
 tEvQ_ErrorCode
 Cwsw_EvQ__InitEvQ(
 	tEvQ_QueueCtrl *pEvQueueCtrl,
-	tEvQ_EvQueue const pEvQueue,
+	pEvQ_EvQueue const pEvQueue,
 	uint8_t const EvQueueSz)
 {
 	// check preconditions, in order of priority
@@ -113,11 +113,11 @@ Cwsw_EvQ__InitEvQ(
 	if(!pEvQueue)					{ return kErr_EvQ_BadQueue; }			// is event buffer valid?
 	if(!EvQueueSz)					{ return kErr_EvQ_BadQueue; }			// is event buffer valid?
 
-	pEvQueueCtrl->Queue_Size		= EvQueueSz;
-	pEvQueueCtrl->Event_Queue_Ptr	= pEvQueue;
-	pEvQueueCtrl->Queue_Count		= 0;
-	pEvQueueCtrl->Read_Ptr			= pEvQueue;
-	pEvQueueCtrl->Write_Ptr			= pEvQueue;
+	pEvQueueCtrl->Queue_Size	= EvQueueSz;
+	pEvQueueCtrl->pEvent_Queue	= pEvQueue;
+	pEvQueueCtrl->Queue_Count	= 0;
+	pEvQueueCtrl->pRead			= pEvQueue;
+	pEvQueueCtrl->pWrite		= pEvQueue;
 
 	return kErr_EvQ_NoError;
 }
@@ -129,11 +129,11 @@ Cwsw_EvQ__FlushEvents(tEvQ_QueueCtrl * const pEvQueueCtrl)
 	// check preconditions, in order of priority
 	if(!initialized)					{ return kErr_EvQ_NotInitialized; }
 	if(!pEvQueueCtrl) 					{ return kErr_EvQ_BadCtrl; }
-	if(!pEvQueueCtrl->Event_Queue_Ptr)	{ return kErr_EvQ_BadQueue; }
+	if(!pEvQueueCtrl->pEvent_Queue)	{ return kErr_EvQ_BadQueue; }
 	if(!pEvQueueCtrl->Queue_Size)		{ return kErr_EvQ_BadQueue; }
 
-	pEvQueueCtrl->Read_Ptr = pEvQueueCtrl->Event_Queue_Ptr;
-	pEvQueueCtrl->Write_Ptr = pEvQueueCtrl->Event_Queue_Ptr;
+	pEvQueueCtrl->pRead = pEvQueueCtrl->pEvent_Queue;
+	pEvQueueCtrl->pWrite = pEvQueueCtrl->pEvent_Queue;
 	pEvQueueCtrl->Queue_Count = 0;
 
 	return kErr_EvQ_NoError;
@@ -149,11 +149,11 @@ Cwsw_EvQ__PostEvent(tEvQ_QueueCtrl *pEvQueueCtrl, tEvQ_Event ev)
 	// check preconditions, in order of priority
 	if(!initialized)							{ return kErr_EvQ_NotInitialized; }
 	if(!pEvQueueCtrl)							{ return kErr_EvQ_BadCtrl; }
-	if(!pEvQueueCtrl->Event_Queue_Ptr)			{ return kErr_EvQ_BadQueue; }
+	if(!pEvQueueCtrl->pEvent_Queue)				{ return kErr_EvQ_BadQueue; }
 	if(!pEvQueueCtrl->Queue_Size)				{ return kErr_EvQ_BadQueue; }
-	if(!pEvQueueCtrl->Write_Ptr)				{ return kErr_EvQ_BadCtrl; }
+	if(!pEvQueueCtrl->pWrite)					{ return kErr_EvQ_BadCtrl; }
 
-	writerange = pEvQueueCtrl->Write_Ptr - pEvQueueCtrl->Event_Queue_Ptr;
+	writerange = pEvQueueCtrl->pWrite - pEvQueueCtrl->pEvent_Queue;
 	if(writerange < 0)							{ return kErr_EvQ_BadCtrl; }
 	if(writerange >= pEvQueueCtrl->Queue_Size)	{ return kErr_EvQ_QueueFull; }
 
@@ -165,16 +165,16 @@ Cwsw_EvQ__PostEvent(tEvQ_QueueCtrl *pEvQueueCtrl, tEvQ_Event ev)
 	do {
 		int crit = Cwsw_Critical_Protect(0);
 		// add the item to the queue
-		*( pEvQueueCtrl->Write_Ptr++ ) = ev;
+		*( pEvQueueCtrl->pWrite++ ) = ev;
 
 		// adjust the count
 		++pEvQueueCtrl->Queue_Count;
 
 		// check for overflow
-		if(pEvQueueCtrl->Write_Ptr > (pEvQueueCtrl->Event_Queue_Ptr + pEvQueueCtrl->Queue_Size))
+		if(pEvQueueCtrl->pWrite > (pEvQueueCtrl->pEvent_Queue + pEvQueueCtrl->Queue_Size))
 		{
 			// reset it to beginning
-			pEvQueueCtrl->Write_Ptr = pEvQueueCtrl->Event_Queue_Ptr;
+			pEvQueueCtrl->pWrite = pEvQueueCtrl->pEvent_Queue;
 		}
 		crit = Cwsw_Critical_Release(crit);
 	} while(0);
@@ -191,9 +191,9 @@ Cwsw_EvQ__GetEvent(pEvQ_QueueCtrl pEvQueueCtrl, tEvQ_Event *pEv)
 	// check preconditions, in order of priority
 	if(!initialized)							{ return kErr_EvQ_NotInitialized; }
 	if(NULL == pEvQueueCtrl)					{ return kErr_EvQ_BadCtrl; }
-	if(NULL == pEvQueueCtrl->Event_Queue_Ptr)	{ return kErr_EvQ_BadQueue; }
+	if(NULL == pEvQueueCtrl->pEvent_Queue)	{ return kErr_EvQ_BadQueue; }
 	if(0 == pEvQueueCtrl->Queue_Size)			{ return kErr_EvQ_BadQueue; }
-	if(NULL == pEvQueueCtrl->Read_Ptr)			{ return kErr_EvQ_BadCtrl; }
+	if(NULL == pEvQueueCtrl->pRead)			{ return kErr_EvQ_BadCtrl; }
 	if(NULL == pEv)								{ return kErr_EvQ_BadParm; }
 
 	// are there any entries
@@ -205,13 +205,13 @@ Cwsw_EvQ__GetEvent(pEvQ_QueueCtrl pEvQueueCtrl, tEvQ_Event *pEv)
 		pEvQueueCtrl->Queue_Count--;
 
 		// get the event/increment the pointer
-		*pEv = *(pEvQueueCtrl->Read_Ptr++);
+		*pEv = *(pEvQueueCtrl->pRead++);
 
 		// check for buffer wraparound
-		if(pEvQueueCtrl->Read_Ptr > (pEvQueueCtrl->Event_Queue_Ptr + pEvQueueCtrl->Queue_Size))
+		if(pEvQueueCtrl->pRead > (pEvQueueCtrl->pEvent_Queue + pEvQueueCtrl->Queue_Size))
 		{
 			// reset it to beginning
-			pEvQueueCtrl->Read_Ptr = pEvQueueCtrl->Event_Queue_Ptr;
+			pEvQueueCtrl->pRead = pEvQueueCtrl->pEvent_Queue;
 		}
 		crit = Cwsw_Critical_Release(crit);
 	}

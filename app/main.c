@@ -66,13 +66,6 @@ EventHandler__evTerminateRequested(tEventPayload EventData)
 }
 
 
-static void
-handle_not_init(tEvQ_Event ev, uint32_t evInt)
-{
-
-}
-
-
 #include "evq_events.h"
 static void
 do_evdispatch(void)

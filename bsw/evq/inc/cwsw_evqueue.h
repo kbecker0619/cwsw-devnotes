@@ -83,15 +83,15 @@ typedef struct sEvQ_Event {
  *	the project may want to locate the event buffer in a different memory
  *	segment than the control struct itself.
  */
-typedef tEvQ_Event *tEvQ_EvQueue;
+typedef tEvQ_Event *pEvQ_EvQueue;
 
 //! Event Queue control structure
 typedef struct sEvQueue {
-	tEvQ_EvQueue	Event_Queue_Ptr;	//!< event queue
-	unsigned char	Queue_Size;			//!< queue size
-	unsigned char	Queue_Count;		//!< number of items in the queue
-	pEvQ_Event      Write_Ptr;			//!< queue write pointer. Defined as a pointer-to-event, rather than an index, to ease reading/writing API, letting complexity fall into queue management code.
-	pEvQ_Event      Read_Ptr;			//!< queue read pointer. Defined as a pointer-to-event, rather than an index, to ease reading/writing API, letting complexity fall into queue management code.
+	pEvQ_EvQueue	pEvent_Queue;	//!< reference to event queue
+	uint8_t			Queue_Size;		//!< queue size. this determines the maximum number of events that can be posted at one time.
+	uint8_t		 	Queue_Count;	//!< number of items in the queue
+	pEvQ_Event      pWrite;			//!< queue write pointer. Defined as a pointer-to-event, rather than an index, to ease reading/writing API, letting complexity fall into queue management code.
+	pEvQ_Event      pRead;			//!< queue read pointer. Defined as a pointer-to-event, rather than an index, to ease reading/writing API, letting complexity fall into queue management code.
 } tEvQ_QueueCtrl, *pEvQ_QueueCtrl;
 
 
@@ -128,7 +128,7 @@ extern uint16_t Cwsw_EvQ__Init(void);
  *	It is the responsibility of the caller to ensure the validity of the buffer
  *	and control struct.
  */
-extern tEvQ_ErrorCode Cwsw_EvQ__InitEvQ(tEvQ_QueueCtrl *EvQueueCtrl, tEvQ_EvQueue const pEvQueue, uint8_t const EvQueueSz);
+extern tEvQ_ErrorCode Cwsw_EvQ__InitEvQ(tEvQ_QueueCtrl *EvQueueCtrl, pEvQ_EvQueue const pEvQueue, uint8_t const EvQueueSz);
 
 /** Target for Get(Cwsw_EvQueue, Initialized) interface. */
 extern bool Cwsw_EvQ__Get_Initialized(void);

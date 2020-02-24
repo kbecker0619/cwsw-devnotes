@@ -40,13 +40,13 @@ extern "C" {
  */
 enum eOsEvqEvents {
 	evOsNullEvent = kEvQ_Ev_None,	/**< reserved value, used for initialization */
-	evGarbageEvent1,
+	evOsTmrHeartbeat,
+	evOs_Tmr10MsTaskInit,
 	evGarbageEvent2,
 	evGarbageEvent3,
 	evGarbageEvent4,
 	evGarbageEvent5,
 	evGarbageEvent6,
-	evOsTmrHeartbeat,
 	evUiUpdate,
 	evQuitRqst,
 	kNumOsEvqEvents

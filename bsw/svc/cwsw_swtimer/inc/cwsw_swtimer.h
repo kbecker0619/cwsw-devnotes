@@ -65,6 +65,7 @@ typedef enum eSwTimerState tSwTimerState;
 typedef struct sSwTimer {
 	tCwswClockTics		tm;
 	tCwswClockTics		reloadtm;
+	pEvQ_QueueCtrl 		pEvqCtrl;	// Event Queue for this timer.
 	int16_t				evid;		// generic container so any event class can be used; 0 for no event
 	tSwTimerState		tmrstate;	// allows for a different ev + handler than "normal" event associations
 } tCwswSwTimer, *pCwswSwTimer;
@@ -80,9 +81,17 @@ typedef struct sSwTimer {
 
 // ---- Discrete Functions -------------------------------------------------- {
 
-extern tErrorCodes_SwTmr Cwsw_SwTmr__Init(pCwswSwTimer pTimer, tCwswClockTics armtm, int16_t ev);
+extern tErrorCodes_SwTmr Cwsw_SwTmr__Init(
+	// timer-related parameters
+	pCwswSwTimer	pTimer,		// SW timer reference
+	tCwswClockTics	armtm, 		// initial timeout value
+	tCwswClockTics	tm_rearm, 	// rearm / reload time
+	// timer-maturation parameters
+	pEvQ_QueueCtrl	pEvqCtrl,	// which event queue do we post an event to?
+	size_t			qsz,		//	size of the event queue
+	int16_t 		evid);
 extern void Cwsw_SwTmr__SetState(pCwswSwTimer pTimer, tSwTimerState newstate);
-extern void Cwsw_SwTmr__ManageTimer(pCwswSwTimer pTimer, pEvQ_QueueCtrl pEvqCtrl);
+extern void Cwsw_SwTmr__ManageTimer(pCwswSwTimer pTimer);
 
 // ---- /Discrete Functions ------------------------------------------------- }
 
