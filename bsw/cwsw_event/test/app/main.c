@@ -1,11 +1,12 @@
 /** @file
+ *	@brief	MVP (Minimum Viable Product) main for CWSW Event component.
  *
  *	Description:
  *
  *	Copyright (c) 2020 Kevin L. Becker. All rights reserved.
  *
  *	Original:
- *	Created on: Feb 24, 2020
+ *	Created on: Feb 26, 2020
  *	Author: KBECKE35
  */
 
@@ -14,10 +15,9 @@
 // ============================================================================
 
 // ----	System Headers --------------------------
-#include <stdbool.h>
+#include "projcfg.h"
 
 // ----	Project Headers -------------------------
-#include "cwsw_lib.h"
 
 // ----	Module Headers --------------------------
 #include "cwsw_event.h"
@@ -39,9 +39,6 @@
 // ----	Module-level Variables ------------------------------------------------
 // ============================================================================
 
-static bool initialized = false;
-
-
 // ============================================================================
 // ----	Private Functions -----------------------------------------------------
 // ============================================================================
@@ -50,40 +47,26 @@ static bool initialized = false;
 // ----	Public Functions ------------------------------------------------------
 // ============================================================================
 
-/** Initialize the Event "object."
- *	This component doesn't really have any significant need for an initialize method; this function
- *	is here mostly for consistency with other CWSW components.
- *
- *	@ingroup sEvq_EvTable
- */
-uint16_t
-Cwsw_Evt__Init(void)
+int
+main(void)
 {
-	initialized = true;
-	return kErr_Lib_NoError;
-}
+	do {	/*  rote run-through of EVENT methods */
+		tEvQ_Event my_table_of_events[10] = {0};
+		tEvQ_EvTable myq = {0};
 
+		cwsw_assert(Init(Cwsw_Evt) == kErr_Lib_NoError, "test component init");
 
-/**	Initialize an Event Queue table of events.
- *	Note the actual table of events is not touched; only the metadata used to manage the table is
- *	initialized.
- *
- *	@param [out]	pEvQTable	Event Table object to be initialized.
- *	@param [in]		pTable		Table of events.
- *	@param [in]		TableSize	Size of the event table, in number of elements (not bytes).
- *	@return	Event Queue error code, where value `0` is success.
- *
- *	@ingroup sEvq_EvTable
- */
-tErrorCodes_EvQ
-Cwsw_Evt__InitEventTable(
-	pEvQ_EvTable pEvQTable,	// Event Queue table
-	pEvQ_Event pTable,		// table of events
-	size_t TableSize)		// size of the event table
-{
-	if(!pEvQTable)	return kErr_EvQ_BadParm;
-	if(!pTable)		return kErr_EvQ_BadParm;
-	pEvQTable->pEvTable = pTable;
-	pEvQTable->EvTblSize = TableSize;	// yes, we do accept a size of 0 elements
-	return kErr_EvQ_NoError;
+		cwsw_assert(
+			kErr_EvQ_BadParm == Cwsw_Evt__InitEventTable(NULL, my_table_of_events, TABLE_SIZE(my_table_of_events)),
+			"Confirm bad Event Queue parameter");
+		cwsw_assert(
+			kErr_EvQ_BadParm == Cwsw_Evt__InitEventTable(&myq, NULL, TABLE_SIZE(my_table_of_events)),
+			"Confirm bad Event Queue parameter");
+
+		cwsw_assert(
+			kErr_EvQ_NoError == Cwsw_Evt__InitEventTable(&myq, my_table_of_events, TABLE_SIZE(my_table_of_events)),
+			"Confirm good parms");
+
+	} while(0);
+
 }
