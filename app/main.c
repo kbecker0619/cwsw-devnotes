@@ -24,8 +24,8 @@
 
 // ----	Module Headers --------------------------
 // the point of this project
-#include "cwsw_evhandler.h"
-#include "tedlos.h"
+//#include "cwsw_evhandler.h"
+//#include "tedlos.h"
 
 
 // ============================================================================
@@ -66,14 +66,15 @@ EventHandler__evTerminateRequested(tEventPayload EventData)
 }
 
 
-#include "evq_events.h"
+//#include "evq_events.h"
 static void
 do_evdispatch(void)
 {
-	tedlos_init();
-	tedlos_do();
+//	tedlos_init();
+//	tedlos_do();
 }
 
+#include "cwsw_event.h"
 int
 main(void)
 {
@@ -87,14 +88,32 @@ main(void)
 	}
 
 	(void)Init(Cwsw_Services);
-	(void)Init(Cwsw_EvQ);		// Cwsw_EvQ__Init()
+//	(void)Init(Cwsw_EvQ);		// Cwsw_EvQ__Init()
 
 	/* contrived example, not recommended, to exercise other features of the component */
 	cwsw_assert(1 == Cwsw_Critical_Protect(0), "Confirm critical section nesting count");
 	cwsw_assert(0 == Cwsw_Critical_Release(0), "Confirm balanced critical region usage");
 	cwsw_assert(2 == Init(Cwsw_Lib), "Confirm reinitialization return code");
 
-	do_evdispatch();
+	do {	/*  rote run-through of EVENT methods */
+		tEvQ_Event my_table_of_events[10] = {0};
+		tEvQ_EvTable myq = {0};
+
+		cwsw_assert(Init(Cwsw_Evt) == kErr_Lib_NoError, "test component init");
+
+		cwsw_assert(
+			kErr_EvQ_BadParm == Cwsw_Evt__InitEventTable(NULL, my_table_of_events, TABLE_SIZE(my_table_of_events)),
+			"Confirm bad Event Queue parameter");
+		cwsw_assert(
+			kErr_EvQ_BadParm == Cwsw_Evt__InitEventTable(&myq, NULL, TABLE_SIZE(my_table_of_events)),
+			"Confirm bad Event Queue parameter");
+
+		cwsw_assert(
+			kErr_EvQ_NoError == Cwsw_Evt__InitEventTable(&myq, my_table_of_events, TABLE_SIZE(my_table_of_events)),
+			"Confirm good parms");
+
+	} while(0);
+//	do_evdispatch();
 
 	PostEvent(evTerminateRequested, ev);
     return (EXIT_SUCCESS);

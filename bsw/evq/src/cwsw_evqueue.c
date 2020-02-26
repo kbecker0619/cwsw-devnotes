@@ -104,7 +104,7 @@ Cwsw_EvQ__Get_Initialized(void)
 tEvQ_ErrorCode
 Cwsw_EvQ__InitEvQ(
 	tEvQ_QueueCtrl *pEvQueueCtrl,
-	pEvQ_EvQueue const pEvQueue,
+	pEvQ_EvTable const pEvQueue,
 	uint8_t const EvQueueSz)
 {
 	// check preconditions, in order of priority

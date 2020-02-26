@@ -21,9 +21,12 @@ event																	{
 | (no methods)				|
 +===========================+
 
+pEvQ_Event: tEvQ_Event *
+
 discussion																{
 tEvQ_EventID															{
 *	project-specific alias for the underlying container type
+	*	defined in `cwsw_event_proj.h`
 *	recommended to be an unsigned integer type; early demonstration / unit testing code used U8s.
 *	when using this component, be aware of data alignment issues; because the 1st field in the struct is the underlying type of the event ID, alignment may force the actual address of the data field to be located after some level of "gap".
 	*	on some MCU architectures, it may be useful to make the underlying type to be the same as the natural register size; it may not "help" or be of any benefit to use a U8 to try to conserve data space.
@@ -42,12 +45,13 @@ evData																	{
 
 
 event table																{
-+== pEvQ_EvQueue ===============+
-| pEvQ_EvTable: tEvQ_Event[]    |
-| evQ_size: size_t				|	<<== new, yet to be implemented
-+-------------------------------+
-| (no methods)					|
-+===============================+
++== tEvQ_EvTable ===========+
+| pEvTable: pEvQ_Event	    |
+| EvTblSize: size_t			|
++---------------------------+
+| Init()					|
+| InitEventTable()			|
++===========================+
 
 discussion																{
 * simple container for a number of individual events.

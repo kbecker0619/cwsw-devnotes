@@ -1,5 +1,4 @@
 /** @file
- *	@brief	One-sentence short description of file.
  *
  *	Description:
  *
@@ -20,7 +19,7 @@
 
 // ----	Module Headers --------------------------
 #include "cwsw_evhandler.h"
-#include "evq_events.h"		/* project must supply this header */
+#include "cwsw_event_proj.h"		/* project must supply this header */
 
 
 // ============================================================================

@@ -36,29 +36,12 @@ extern "C" {
 #include "cwsw_lib.h"
 
 // ----	Module Headers --------------------------
-#include "cwsw_evq_proj.h"
+#include "cwsw_event.h"		/* tEvQ_Event */
 
 
 // ============================================================================
 // ----	Constants -------------------------------------------------------------
 // ============================================================================
-
-/** Error codes returned by Event Queue API.
- */
-enum eErrorCodes_EvQ {
-	kErr_EvQ_NoError = kErr_Lib_NoError,
-	kErr_EvQ_NotInitialized,	//!< Event Queue component not initialized.
-	kErr_EvQ_BadParm,			//!< Bad Parameter; e.g., NULL pointer-to-event.
-	kErr_EvQ_BadCtrl,			//!< Bad or invalid control struct.
-	kErr_EvQ_BadQueue,			//!< Bad or invalid event queue.
-	kErr_EvQ_BadEvent,			//!< Bad or invalid event.
-	kErr_EvQ_QueueFull,			//!< Queue full, cannot add new event to queue.
-};
-
-
-/** Reserved event value. In the CWSW Event Queue system, this indicates "no event." */
-enum { kEvQ_Ev_None };
-
 
 // ============================================================================
 // ----	Type Definitions ------------------------------------------------------
@@ -67,27 +50,9 @@ enum { kEvQ_Ev_None };
 /** Error codes returned by Event Queue API. */
 typedef enum eErrorCodes_EvQ tEvQ_ErrorCode;
 
-/** Event object.
- *	Relies on the project-specific definition of a Event ID container type.
- */
-typedef struct sEvQ_Event {
-	tEvQ_EventID	evId;
-	uint32_t		evData;
-} tEvQ_Event, *pEvQ_Event;
-
-
-/**	Event queue buffer for projects that use the CWSW Event Queue.
- *	By design, this buffer must be an independent entity from the control
- *	structure with which it is associated. There needs to be a 1:1 correlation
- *	between the control structure, and the buffer it's controlling; however,
- *	the project may want to locate the event buffer in a different memory
- *	segment than the control struct itself.
- */
-typedef tEvQ_Event *pEvQ_EvQueue;
-
 //! Event Queue control structure
 typedef struct sEvQueue {
-	pEvQ_EvQueue	pEvent_Queue;	//!< reference to event queue
+	pEvQ_EvTable	pEvent_Queue;	//!< reference to event queue
 	uint8_t			Queue_Size;		//!< queue size. this determines the maximum number of events that can be posted at one time.
 	uint8_t		 	Queue_Count;	//!< number of items in the queue
 	pEvQ_Event      pWrite;			//!< queue write pointer. Defined as a pointer-to-event, rather than an index, to ease reading/writing API, letting complexity fall into queue management code.
@@ -128,7 +93,7 @@ extern uint16_t Cwsw_EvQ__Init(void);
  *	It is the responsibility of the caller to ensure the validity of the buffer
  *	and control struct.
  */
-extern tEvQ_ErrorCode Cwsw_EvQ__InitEvQ(tEvQ_QueueCtrl *EvQueueCtrl, pEvQ_EvQueue const pEvQueue, uint8_t const EvQueueSz);
+extern tEvQ_ErrorCode Cwsw_EvQ__InitEvQ(tEvQ_QueueCtrl *EvQueueCtrl, pEvQ_EvTable const pEvQueue, uint8_t const EvQueueSz);
 
 /** Target for Get(Cwsw_EvQueue, Initialized) interface. */
 extern bool Cwsw_EvQ__Get_Initialized(void);
