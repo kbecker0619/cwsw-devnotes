@@ -85,8 +85,8 @@ typedef struct sEvQ_Event {
  *	@ingroup sEvq_EvTable
  */
 typedef struct sEvq_EvTable {
-	pEvQ_Event	pEvTable;	//!< Pointer to event table
-	size_t		EvTblSize;	//!< Size of embedded table
+	pEvQ_Event		pEvTable;	//!< Pointer to event table
+	size_t			EvTblSize;	//!< Size of embedded table
 } tEvQ_EvTable, *pEvQ_EvTable;
 
 
@@ -100,7 +100,7 @@ typedef struct sEvq_EvTable {
 
 extern uint16_t			Cwsw_Evt__Init(void);		/* initialize event _component_ */
 extern tErrorCodes_EvQ	Cwsw_Evt__InitEventTable(pEvQ_EvTable pEvQTable, pEvQ_Event pTable, size_t TableSize);		/* initialize a table of events */
-
+extern int32_t			Cwsw_Evt__FindEvent(pEvQ_EvTable pEvQTable, tEvQ_EventID evId);
 
 #ifdef	__cplusplus
 }

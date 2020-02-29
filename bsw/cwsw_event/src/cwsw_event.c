@@ -46,6 +46,32 @@ static bool initialized = false;
 // ----	Private Functions -----------------------------------------------------
 // ============================================================================
 
+/**	Find an event ID in an event table.
+ *	Algorithm:
+ *	- In this iteration, we are simply using the event ID as an index into the event table;
+ *	  this works well for small tables, but is useless if you want sparse tables or if you have a
+ *	  lot of events
+ *	- RSN (Real Soon Now), we will implement either a linear search, or some sort of divide-and
+ *	  conquer, which will actually utilize the ID field of the table rows.
+ *
+ *	@param [in]	pTbl	Event table.
+ *	@param [in]	tblsz	Size of event table.
+ *	@param [in]	evId	Event ID to look for.
+ * @return
+ */
+static int32_t	// todo: make this an event "handle", not a direct S32
+FindEvent(pEvQ_Event pTbl, size_t tblsz, tEvQ_EventID evId)
+{
+	if(!pTbl) 			return -1;
+
+	// this check specifically tied to the id-as-index algorithm
+	if(evId >= tblsz)	return -1;
+
+	// we could insert here a check that the row's evId is the same as our search criteron, but ... nah.
+	return evId;
+}
+
+
 // ============================================================================
 // ----	Public Functions ------------------------------------------------------
 // ============================================================================
@@ -86,4 +112,18 @@ Cwsw_Evt__InitEventTable(
 	pEvQTable->pEvTable = pTable;
 	pEvQTable->EvTblSize = TableSize;	// yes, we do accept a size of 0 elements
 	return kErr_EvQ_NoError;
+}
+
+
+/**	Return the index in the table of events, where an event ID was found.
+ *
+ *	@param [in]		pEvQTable	Event table control structure.
+ *	@param [in]		evId
+ *	@return	Index into the table where the event was found, -1 if not found.
+ */
+int32_t
+Cwsw_Evt__FindEvent(pEvQ_EvTable pEvQTable, tEvQ_EventID evId)
+{
+	if(!pEvQTable)		return -1;
+	return FindEvent(pEvQTable->pEvTable, pEvQTable->EvTblSize, evId);
 }
