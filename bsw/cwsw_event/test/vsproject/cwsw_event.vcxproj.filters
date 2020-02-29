@@ -16,6 +16,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\cfg\readme.md" />
+    <None Include="..\cwsw_lib\inc\README.md">
+      <Filter>Header Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\cwsw_event.c">
@@ -42,6 +45,18 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\cfg\vs2010\stdbool.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\cwsw_lib\inc\ctassert.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\cwsw_lib\inc\cwsw_eventsim.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\cwsw_lib\inc\cwsw_lib.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\cwsw_lib\inc\ptypes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

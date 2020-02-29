@@ -54,7 +54,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <MultiProcessorCompilation>false</MultiProcessorCompilation>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <AdditionalIncludeDirectories>C:\_Projects\PersonalExploration\evq\bsw\cwsw_event\test\cwsw_lib\inc;C:\_Projects\PersonalExploration\evq\bsw\cwsw_event\inc;C:\_Projects\PersonalExploration\evq\bsw\cwsw_event\test\cfg\vs2010;C:\_Projects\PersonalExploration\evq\bsw\cwsw_event\test\cfg;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\cwsw_lib\inc;..\cfg;..\cfg\vs2010;..\..\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <CompileAsManaged>false</CompileAsManaged>
       <ExceptionHandling>false</ExceptionHandling>
     </ClCompile>
@@ -83,6 +83,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\cfg\readme.md" />
+    <None Include="..\cwsw_lib\inc\README.md" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\cwsw_event.c" />
@@ -95,6 +96,10 @@
     <ClInclude Include="..\cfg\cwsw_event_proj.h" />
     <ClInclude Include="..\cfg\projcfg.h" />
     <ClInclude Include="..\cfg\vs2010\stdbool.h" />
+    <ClInclude Include="..\cwsw_lib\inc\ctassert.h" />
+    <ClInclude Include="..\cwsw_lib\inc\cwsw_eventsim.h" />
+    <ClInclude Include="..\cwsw_lib\inc\cwsw_lib.h" />
+    <ClInclude Include="..\cwsw_lib\inc\ptypes.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

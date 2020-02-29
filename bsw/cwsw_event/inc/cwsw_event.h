@@ -9,8 +9,8 @@
  *	Author: KBECKE35
  */
 
-#ifndef BSW_EVQ_INC_CWSW_EVENT_H_
-#define BSW_EVQ_INC_CWSW_EVENT_H_
+#ifndef CWSW_EVENT_H
+#define CWSW_EVENT_H
 
 // ============================================================================
 // ----	Include Files ---------------------------------------------------------
@@ -106,4 +106,4 @@ extern int32_t			Cwsw_Evt__FindEvent(pEvQ_EvTable pEvQTable, tEvQ_EventID evId);
 }
 #endif
 
-#endif /* BSW_EVQ_INC_CWSW_EVENT_H_ */
+#endif /* CWSW_EVENT_H */
