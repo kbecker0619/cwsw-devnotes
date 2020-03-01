@@ -74,7 +74,7 @@ do_evdispatch(void)
 //	tedlos_do();
 }
 
-#include "cwsw_event.h"
+#include "cwsw_evqueue.h"
 int
 main(void)
 {
@@ -96,8 +96,11 @@ main(void)
 	cwsw_assert(2 == Init(Cwsw_Lib), "Confirm reinitialization return code");
 
 	do {	/*  rote run-through of EVENT methods */
-		tEvQ_Event my_table_of_events[10] = {0};
-		tEvQ_EvTable myq = {0};
+		tEvQ_Event my_table_of_events[] = {
+			{ 0, 100 }, { 1, 101 }, { 2, 102 }, { 3, 103 }, { 4, 204 },
+			{ 5, 205 }, { 6, 206 }, { 7, 207 }, { 8, 414 }, { 9, 415 },
+		};
+		tEvQ_EvTable evTbl = {0};
 
 		cwsw_assert(Init(Cwsw_Evt) == kErr_Lib_NoError, "test component init");
 
@@ -105,12 +108,59 @@ main(void)
 			kErr_EvQ_BadParm == Cwsw_Evt__InitEventTable(NULL, my_table_of_events, TABLE_SIZE(my_table_of_events)),
 			"Confirm bad Event Queue parameter");
 		cwsw_assert(
-			kErr_EvQ_BadParm == Cwsw_Evt__InitEventTable(&myq, NULL, TABLE_SIZE(my_table_of_events)),
+			kErr_EvQ_BadParm == Cwsw_Evt__InitEventTable(&evTbl, NULL, TABLE_SIZE(my_table_of_events)),
 			"Confirm bad Event Queue parameter");
+		cwsw_assert(
+			kErr_EvQ_NoError == Cwsw_Evt__InitEventTable(&evTbl, my_table_of_events, TABLE_SIZE(my_table_of_events)),
+			"Confirm good parms");
 
 		cwsw_assert(
-			kErr_EvQ_NoError == Cwsw_Evt__InitEventTable(&myq, my_table_of_events, TABLE_SIZE(my_table_of_events)),
-			"Confirm good parms");
+			kErr_EvQ_NoError == Cwsw_Evt__InitEventTable(&evTbl, my_table_of_events, TABLE_SIZE(my_table_of_events)),
+			"Confirm event table initialization");
+
+		Deinit(Cwsw_EvT);
+
+	} while(0);
+
+	do {	/* event queue methods */
+
+		// predefine a buffer already filled with events.
+		// Note: to try to help keep things straight, we're going to call the actual buffer that
+		//	contains the events, a "buffer." the "Event Table" will be the buffer control structure.
+		tEvQ_Event tblEventBuff[] = {
+			{ 0, 100 }, { 1, 101 }, { 2, 102 }, { 3, 103 }, { 4, 204 },
+			{ 5, 205 }, { 6, 206 }, { 7, 207 }, { 8, 414 }, { 9, 415 },
+		};
+		tEvQ_EvTable evTbl = {0};
+
+		// control structure for the OS event queue
+		static tEvQ_QueueCtrl evq = {0};
+
+		if(!Init(Cwsw_EvQ))
+		{
+			// step 1: initialize event table
+			if(!Cwsw_Evt__InitEventTable(&evTbl, tblEventBuff, TABLE_SIZE(tblEventBuff)))
+			{
+				tEvQ_Event myevent = {0};
+
+				// step 2: now that the Event Table is initialized, init the Event Queue
+				if(kErr_EvQ_NoError != Cwsw_EvQ__InitEvQ(&evq, &evTbl)) {break;}
+				// for this test only, modify an internal queue attribute to account for the initialization
+				//	done in the event buffer above.
+				evq.Queue_Count = 10;
+
+				// retrieve an event
+				Cwsw_EvQ__GetEvent(&evq, &myevent);
+
+				// initialize the handlers.
+		//		(void)Cwsw_EvQ__RegisterHandler(evcbTedlos, TABLE_SIZE(evcbTedlos), evOsTmrHeartbeat, Os1msTic);
+
+				// set up the app-level timer tic task
+		//		Cwsw_SwTmr__Init(&tmrOsTic, 10, 10, &evqcTedlos, 0);
+		//		Cwsw_SwTmr__SetState(&tmrOsTic, kSwTimerEnabled);
+			}
+
+		}
 
 	} while(0);
 //	do_evdispatch();

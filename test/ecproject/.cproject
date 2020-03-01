@@ -18,36 +18,14 @@
 							<targetPlatform id="cdt.managedbuild.target.gnu.platform.mingw.exe.debug.1349841940" name="Debug Platform" superClass="cdt.managedbuild.target.gnu.platform.mingw.exe.debug"/>
 							<builder buildPath="${workspace_loc:/EventQueue}/Debug" id="cdt.managedbuild.tool.gnu.builder.mingw.base.911043803" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="CDT Internal Builder" superClass="cdt.managedbuild.tool.gnu.builder.mingw.base"/>
 							<tool id="cdt.managedbuild.tool.gnu.assembler.mingw.exe.debug.955745680" name="GCC Assembler" superClass="cdt.managedbuild.tool.gnu.assembler.mingw.exe.debug">
-								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="gnu.both.asm.option.include.paths.697203087" name="Include paths (-I)" superClass="gnu.both.asm.option.include.paths" useByScannerDiscovery="false" valueType="includePath">
-									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../../bsw/svc/cwsw_lib/inc&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../../bsw/ecu/cwsw_arch/inc/i386&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../../app/cfg&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../../bsw/evq/inc&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../../bsw/bsp/cwsw_board/none&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../../bsw/evq_prj&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../../bsw/svc/inc&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../../bsw/svc/cwsw_clock/inc&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../..//bsw/svc/cwsw_swtimer/inc&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}../../bsw/cwsw_event/inc&quot;"/>
-								</option>
+								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="true" id="gnu.both.asm.option.include.paths.697203087" name="Include paths (-I)" superClass="gnu.both.asm.option.include.paths" useByScannerDiscovery="false" valueType="includePath"/>
 								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.1072749620" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
 							</tool>
 							<tool id="cdt.managedbuild.tool.gnu.archiver.mingw.base.1004530742" name="GCC Archiver" superClass="cdt.managedbuild.tool.gnu.archiver.mingw.base"/>
 							<tool id="cdt.managedbuild.tool.gnu.cpp.compiler.mingw.exe.debug.1050297134" name="GCC C++ Compiler" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.mingw.exe.debug">
 								<option id="gnu.cpp.compiler.mingw.exe.debug.option.optimization.level.171840968" name="Optimization Level" superClass="gnu.cpp.compiler.mingw.exe.debug.option.optimization.level" useByScannerDiscovery="false" value="gnu.cpp.compiler.optimization.level.none" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.mingw.exe.debug.option.debugging.level.446287234" name="Debug Level" superClass="gnu.cpp.compiler.mingw.exe.debug.option.debugging.level" useByScannerDiscovery="false" value="gnu.cpp.compiler.debugging.level.max" valueType="enumerated"/>
-								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="gnu.cpp.compiler.option.include.paths.1447331829" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" useByScannerDiscovery="false" valueType="includePath">
-									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../../bsw/svc/cwsw_lib/inc&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../../bsw/ecu/cwsw_arch/inc/i386&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../../app/cfg&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../../bsw/evq/inc&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../../bsw/bsp/cwsw_board/none&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../../bsw/evq_prj&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../../bsw/svc/inc&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../../bsw/svc/cwsw_clock/inc&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../..//bsw/svc/cwsw_swtimer/inc&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}../../bsw/cwsw_event/inc&quot;"/>
-								</option>
+								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="true" id="gnu.cpp.compiler.option.include.paths.1447331829" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" useByScannerDiscovery="false" valueType="includePath"/>
 								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="gnu.cpp.compiler.option.preprocessor.def.1797760866" name="Defined symbols (-D)" superClass="gnu.cpp.compiler.option.preprocessor.def" useByScannerDiscovery="false" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="&quot;XPRJ_Win_MinGW_${ConfigName}=1&quot;"/>
 									<listOptionValue builtIn="false" value="USE_NOTIFICATION_EVENTS=1"/>
@@ -71,8 +49,8 @@
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../../bsw/bsp/cwsw_board/none&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../../bsw/svc/inc&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../../bsw/svc/cwsw_clock/inc&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../..//bsw/svc/cwsw_swtimer/inc&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../../bsw/cwsw_event/inc&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../../bsw/svc/cwsw_event/inc&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../../bsw/svc/cwsw_swtimer/inc&quot;"/>
 								</option>
 								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="gnu.c.compiler.option.preprocessor.def.symbols.841831710" name="Defined symbols (-D)" superClass="gnu.c.compiler.option.preprocessor.def.symbols" useByScannerDiscovery="false" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="&quot;XPRJ_Win_MinGW_${ConfigName}=1&quot;"/>
@@ -90,13 +68,13 @@
 							</tool>
 						</toolChain>
 					</folderInfo>
-					<fileInfo id="cdt.managedbuild.config.gnu.mingw.exe.debug.1736302436.1819354867" name="cwsw_swtimer.c" rcbsApplicability="disable" resourcePath="bsw/svc/cwsw_swtimer/src/cwsw_swtimer.c" toolsToInvoke="cdt.managedbuild.tool.gnu.c.compiler.mingw.exe.debug.1489450762.896968452">
-						<tool id="cdt.managedbuild.tool.gnu.c.compiler.mingw.exe.debug.1489450762.896968452" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.mingw.exe.debug.1489450762">
-							<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.763897731" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
+					<fileInfo id="cdt.managedbuild.config.gnu.mingw.exe.debug.1736302436.773126324" name="cwsw_evqueue.c" rcbsApplicability="disable" resourcePath="bsw/evq/src/cwsw_evqueue.c" toolsToInvoke="cdt.managedbuild.tool.gnu.c.compiler.mingw.exe.debug.1489450762.1711806397">
+						<tool id="cdt.managedbuild.tool.gnu.c.compiler.mingw.exe.debug.1489450762.1711806397" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.mingw.exe.debug.1489450762">
+							<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.1521835525" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
 						</tool>
 					</fileInfo>
 					<sourceEntries>
-						<entry excluding="bsw/svc/cwsw_swtimer/src/cwsw_swtimer.c|bsw/svc/cwsw_clock/src/cwsw_clock_svc.c|bsw/evq/src/cwsw_evhandler.c|bsw/evq/src/cwsw_evqueue.c|app/tedlos.c|src|bsw/svc/cwsw_lib/test|bsw/ecu/cwsw_arch/test" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+						<entry excluding="bsw/svc/cwsw_evq/test|bsw/svc/cwsw_event/test|bsw/svc/cwsw_event/test/nbproject|bsw/svc/cwsw_event/test/vsproject|bsw/svc/cwsw_event/test/ecproject|bsw/svc/cwsw_event/test/app|bsw/svc/cwsw_event/test/cwsw_lib/test/ut|bsw/svc/cwsw_swtimer/src/cwsw_swtimer.c|bsw/svc/cwsw_clock/src/cwsw_clock_svc.c|bsw/evq/src/cwsw_evhandler.c|app/tedlos.c|src|bsw/svc/cwsw_lib/test|bsw/ecu/cwsw_arch/test" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>

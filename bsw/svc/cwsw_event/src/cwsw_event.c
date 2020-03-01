@@ -46,37 +46,11 @@ static bool initialized = false;
 // ----	Private Functions -----------------------------------------------------
 // ============================================================================
 
-/**	Find an event ID in an event table.
- *	Algorithm:
- *	- In this iteration, we are simply using the event ID as an index into the event table;
- *	  this works well for small tables, but is useless if you want sparse tables or if you have a
- *	  lot of events
- *	- RSN (Real Soon Now), we will implement either a linear search, or some sort of divide-and
- *	  conquer, which will actually utilize the ID field of the table rows.
- *
- *	@param [in]	pTbl	Event table.
- *	@param [in]	tblsz	Size of event table.
- *	@param [in]	evId	Event ID to look for.
- * @return
- */
-static int32_t	// todo: make this an event "handle", not a direct S32
-FindEvent(pEvQ_Event pTbl, size_t tblsz, tEvQ_EventID evId)
-{
-	if(!pTbl) 			return -1;
-
-	// this check specifically tied to the id-as-index algorithm
-	if(evId >= tblsz)	return -1;
-
-	// we could insert here a check that the row's evId is the same as our search criteron, but ... nah.
-	return evId;
-}
-
-
 // ============================================================================
 // ----	Public Functions ------------------------------------------------------
 // ============================================================================
 
-/** Initialize the Event "object."
+/** Initialize the Event component.
  *	This component doesn't really have any significant need for an initialize method; this function
  *	is here mostly for consistency with other CWSW components.
  *
@@ -90,9 +64,28 @@ Cwsw_Evt__Init(void)
 }
 
 
-/**	Initialize an Event Queue table of events.
- *	Note the actual table of events is not touched; only the metadata used to manage the table is
- *	initialized.
+void
+Cwsw_EvT__Deinit(void)
+{
+	initialized = false;
+}
+
+
+/**	Target for Get(Cwsw_EvT, Initialized) API.
+ *
+ *	@returns	true if component is initialized.
+ *	@returns	false if the component is not initialized.
+ */
+bool
+Cwsw_EvT__Get_Initialized(void)
+{
+	return initialized;
+}
+
+
+/**	Initialize an Event Table object.
+ *	Note the actual "buffer" (table of events) is not touched;
+ *	only the metadata used to manage the table is initialized.
  *
  *	@param [out]	pEvQTable	Event Table object to be initialized.
  *	@param [in]		pTable		Table of events.
@@ -109,21 +102,48 @@ Cwsw_Evt__InitEventTable(
 {
 	if(!pEvQTable)	return kErr_EvQ_BadParm;
 	if(!pTable)		return kErr_EvQ_BadParm;
-	pEvQTable->pEvTable = pTable;
-	pEvQTable->EvTblSize = TableSize;	// yes, we do accept a size of 0 elements
+	pEvQTable->pEvBuffer = pTable;
+	pEvQTable->szEvTbl = TableSize;	// yes, we do accept a size of 0 elements
 	return kErr_EvQ_NoError;
 }
 
 
-/**	Return the index in the table of events, where an event ID was found.
+/**	Return the address of a specified event in the event buffer.
  *
  *	@param [in]		pEvQTable	Event table control structure.
- *	@param [in]		evId
- *	@return	Index into the table where the event was found, -1 if not found.
+ *	@param [in]		hnd			base-0 handle, used as an index into the event buffer.
+ *	@return	address of the specified event.
  */
-int32_t
-Cwsw_Evt__FindEvent(pEvQ_EvTable pEvQTable, tEvQ_EventID evId)
+pEvQ_Event
+Cwsw_Evt__GetEventPtr(pEvQ_EvTable pEvTbl, tEvQ_EvtHandle hnd)
 {
-	if(!pEvQTable)		return -1;
-	return FindEvent(pEvQTable->pEvTable, pEvQTable->EvTblSize, evId);
+	if(!pEvTbl)					return NULL;	// bad Event Table object.
+	if(!pEvTbl->pEvBuffer)		return NULL;	// bad event buffer object.
+	if(hnd >= pEvTbl->szEvTbl)	return NULL;	// bad handle (index).
+	return &pEvTbl->pEvBuffer[hnd];
+}
+
+
+/**	Get a specified event from the event buffer.
+ *
+ *	@param pEv		[out]	destination.
+ *	@param pEvTb	[in]	table of events.
+ *	@param hnd		[in]	"handle" (index) into the event buffer of the event to retrieve.
+ *	@return	Event Queue error code.
+ */
+tErrorCodes_EvQ
+Cwsw_Evt__GetEvent(pEvQ_Event pEv, pEvQ_EvTable pEvTb, tEvQ_EvtHandle hnd)
+{
+	pEvQ_Event pfound;
+
+	if(!pEv)					return kErr_EvQ_BadParm;
+	if(!pEvTb)					return kErr_EvQ_BadParm;
+	if(hnd >= pEvTb->szEvTbl)	return kErr_EvQ_BadEvTable;
+	pfound = Cwsw_Evt__GetEventPtr(pEvTb, hnd);
+	if(pfound)
+	{
+		(void)memcpy(pEv, pfound, sizeof(tEvQ_Event));
+		return kErr_EvQ_NoError;
+	}
+	return kErr_EvQ_BadEvent;
 }

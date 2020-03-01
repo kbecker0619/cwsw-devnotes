@@ -21,9 +21,6 @@
 // ----	System Headers --------------------------
 #include <stdbool.h>
 #include <stddef.h>		/* ssize_t */
-#if defined(_CVI_)
-typedef signed int ssize_t;
-#endif
 
 // ----	Project Headers -------------------------
 
@@ -58,9 +55,16 @@ static bool initialized = false;
 // ----	Public Functions ------------------------------------------------------
 // ============================================================================
 
+/** Initialize the Event Queue component.
+ *	Because this component is a superclass of an Event Table, we'll ensure that subcomponent is
+ *	also initialized.
+ *
+ *	@return Error code.
+ */
 uint16_t
 Cwsw_EvQ__Init(void)
 {
+	uint16_t ret = kErr_EvQ_NoError;
 	if( (XPRJ_Win_MinGW_Debug) || (XPRJ_Debug_Linux_GCC) || (XPRJ_Win_MSVC_Debug) )
 	{
 		#if defined(__GNUC__)	/* --- GNU Environment ------------------------------ */
@@ -82,10 +86,24 @@ Cwsw_EvQ__Init(void)
 	{
 	}
 
-	initialized = true;
-	return kErr_EvQ_NoError;
+	if(!Get(Cwsw_EvT, Initialized))
+	{
+		ret = Init(Cwsw_Evt);
+	}
+
+	if(!ret)
+	{
+		initialized = true;
+	}
+	return ret;
 }
 
+
+/**	Target for Get(Cwsw_EvQ, Initialized) API.
+ *
+ *	@returns	true if component is initialized.
+ *	@returns	false if the component is not initialized.
+ */
 bool
 Cwsw_EvQ__Get_Initialized(void)
 {
@@ -93,48 +111,44 @@ Cwsw_EvQ__Get_Initialized(void)
 }
 
 
-/** Initialize the control structure for an event queue.
+/** Initialize an Event Queue (meaning specifically, the control structure for an event queue).
  *
- * 	@param pEvQueueCtrl	Pointer to the control structure.
- *	@param pEvQueue		Pointer to the event queue. This is an independent structure, not embedded
- *						into the control structure.
- * 	@param EvQueueSz	Size of the event queue, in number of elements, not bytes.
- * @return				Error code, where 0 (#kErr_EvQ_NoError) is no error.
+ * 	@param pEvQ		Pointer to the control structure.
+ *	@param pEvBuffer	Pointer to the event table object.
+ *					This is an independent object, not embedded into the EvQ control structure.
+ * @return			Error code, where 0 (#kErr_EvQ_NoError) is no error.
  */
 tEvQ_ErrorCode
-Cwsw_EvQ__InitEvQ(
-	tEvQ_QueueCtrl *pEvQueueCtrl,
-	pEvQ_EvTable const pEvQueue,
-	uint8_t const EvQueueSz)
+Cwsw_EvQ__InitEvQ(pEvQ_QueueCtrl pEvQ, pEvQ_EvTable pEvTable)
 {
 	// check preconditions, in order of priority
-	if(!initialized)				{ return kErr_EvQ_NotInitialized; }		// has component init happened?
-	if(!pEvQueueCtrl)				{ return kErr_EvQ_BadCtrl; }			// is control structure valid?
-	if(!pEvQueue)					{ return kErr_EvQ_BadQueue; }			// is event buffer valid?
-	if(!EvQueueSz)					{ return kErr_EvQ_BadQueue; }			// is event buffer valid?
+	if(!initialized)		{ return kErr_EvQ_NotInitialized; }		// has component init happened?
+	if(!pEvQ)				{ return kErr_EvQ_BadEvQ; }				// is evq control structure valid?
+	if(!pEvTable)			{ return kErr_EvQ_BadEvTable; }			// is event table valid?
+	if(!pEvTable->pEvBuffer)	{ return kErr_EvQ_BadEvBuffer; }		// is event buffer valid?
+	if(!pEvTable->szEvTbl)	{ return kErr_EvQ_BadEvBuffer; }		// is event buffer valid? (while the event component itself allows zero-size tables, we don't)
 
-	pEvQueueCtrl->Queue_Size	= EvQueueSz;
-	pEvQueueCtrl->pEvent_Queue	= pEvQueue;
-	pEvQueueCtrl->Queue_Count	= 0;
-	pEvQueueCtrl->pRead			= pEvQueue;
-	pEvQueueCtrl->pWrite		= pEvQueue;
+	pEvQ->pEventTable	= pEvTable;
+	pEvQ->Queue_Count	= 0U;
+	pEvQ->idxRead		= 0U;
+	pEvQ->idxWrite		= 0U;
 
 	return kErr_EvQ_NoError;
 }
 
 
 tEvQ_ErrorCode
-Cwsw_EvQ__FlushEvents(tEvQ_QueueCtrl * const pEvQueueCtrl)
+Cwsw_EvQ__FlushEvents(pEvQ_QueueCtrl pEvQueueCtrl)
 {
 	// check preconditions, in order of priority
-	if(!initialized)					{ return kErr_EvQ_NotInitialized; }
-	if(!pEvQueueCtrl) 					{ return kErr_EvQ_BadCtrl; }
-	if(!pEvQueueCtrl->pEvent_Queue)	{ return kErr_EvQ_BadQueue; }
-	if(!pEvQueueCtrl->Queue_Size)		{ return kErr_EvQ_BadQueue; }
-
-	pEvQueueCtrl->pRead = pEvQueueCtrl->pEvent_Queue;
-	pEvQueueCtrl->pWrite = pEvQueueCtrl->pEvent_Queue;
-	pEvQueueCtrl->Queue_Count = 0;
+//	if(!initialized)					{ return kErr_EvQ_NotInitialized; }
+//	if(!pEvQueueCtrl) 					{ return kErr_EvQ_BadEvQ; }
+//	if(!pEvQueueCtrl->pEvent_Queue)	{ return kErr_EvQ_BadEvTable; }
+//	if(!pEvQueueCtrl->Queue_Size)		{ return kErr_EvQ_BadEvTable; }
+//
+//	pEvQueueCtrl->idxRead = pEvQueueCtrl->pEvent_Queue;
+//	pEvQueueCtrl->idxWrite = pEvQueueCtrl->pEvent_Queue;
+//	pEvQueueCtrl->Queue_Count = 0;
 
 	return kErr_EvQ_NoError;
 }
@@ -143,76 +157,91 @@ Cwsw_EvQ__FlushEvents(tEvQ_QueueCtrl * const pEvQueueCtrl)
 tEvQ_ErrorCode
 Cwsw_EvQ__PostEvent(tEvQ_QueueCtrl *pEvQueueCtrl, tEvQ_Event ev)
 {
-	bool isthereroom;
-	int64_t writerange;
+//	bool isthereroom;
+//	int64_t writerange;
 
-	// check preconditions, in order of priority
-	if(!initialized)							{ return kErr_EvQ_NotInitialized; }
-	if(!pEvQueueCtrl)							{ return kErr_EvQ_BadCtrl; }
-	if(!pEvQueueCtrl->pEvent_Queue)				{ return kErr_EvQ_BadQueue; }
-	if(!pEvQueueCtrl->Queue_Size)				{ return kErr_EvQ_BadQueue; }
-	if(!pEvQueueCtrl->pWrite)					{ return kErr_EvQ_BadCtrl; }
-
-	writerange = pEvQueueCtrl->pWrite - pEvQueueCtrl->pEvent_Queue;
-	if(writerange < 0)							{ return kErr_EvQ_BadCtrl; }
-	if(writerange >= pEvQueueCtrl->Queue_Size)	{ return kErr_EvQ_QueueFull; }
-
-	isthereroom = (pEvQueueCtrl->Queue_Count < pEvQueueCtrl->Queue_Size);
-	if(!isthereroom)							{ return kErr_EvQ_QueueFull; }
-
-	if(!ev.evId)								{ return kErr_EvQ_BadEvent; }
-
-	do {
-		int crit = Cwsw_Critical_Protect(0);
-		// add the item to the queue
-		*( pEvQueueCtrl->pWrite++ ) = ev;
-
-		// adjust the count
-		++pEvQueueCtrl->Queue_Count;
-
-		// check for overflow
-		if(pEvQueueCtrl->pWrite > (pEvQueueCtrl->pEvent_Queue + pEvQueueCtrl->Queue_Size))
-		{
-			// reset it to beginning
-			pEvQueueCtrl->pWrite = pEvQueueCtrl->pEvent_Queue;
-		}
-		crit = Cwsw_Critical_Release(crit);
-	} while(0);
+//	// check preconditions, in order of priority
+//	if(!initialized)							{ return kErr_EvQ_NotInitialized; }
+//	if(!pEvQueueCtrl)							{ return kErr_EvQ_BadEvQ; }
+//	if(!pEvQueueCtrl->pEvent_Queue)				{ return kErr_EvQ_BadEvTable; }
+//	if(!pEvQueueCtrl->Queue_Size)				{ return kErr_EvQ_BadEvTable; }
+//	if(!pEvQueueCtrl->idxWrite)					{ return kErr_EvQ_BadEvQ; }
+//
+//	writerange = pEvQueueCtrl->idxWrite - pEvQueueCtrl->pEvent_Queue;
+//	if(writerange < 0)							{ return kErr_EvQ_BadEvQ; }
+//	if(writerange >= pEvQueueCtrl->Queue_Size)	{ return kErr_EvQ_QueueFull; }
+//
+//	isthereroom = (pEvQueueCtrl->Queue_Count < pEvQueueCtrl->Queue_Size);
+//	if(!isthereroom)							{ return kErr_EvQ_QueueFull; }
+//
+//	if(!ev.evId)								{ return kErr_EvQ_BadEvent; }
+//
+//	do {
+//		int crit = Cwsw_Critical_Protect(0);
+//		// add the item to the queue
+//		*( pEvQueueCtrl->idxWrite++ ) = ev;
+//
+//		// adjust the count
+//		++pEvQueueCtrl->Queue_Count;
+//
+//		// check for overflow
+//		if(pEvQueueCtrl->idxWrite > (pEvQueueCtrl->pEvent_Queue + pEvQueueCtrl->Queue_Size))
+//		{
+//			// reset it to beginning
+//			pEvQueueCtrl->idxWrite = pEvQueueCtrl->pEvent_Queue;
+//		}
+//		crit = Cwsw_Critical_Release(crit);
+//	} while(0);
 
 	return kErr_EvQ_NoError;
 }
 
 
+/** Get an event from the Event Queue.
+ * 	Destructive read from the event buffer.
+ *	Always writes to the event parameter.
+ *
+ *	@param pEvQ	[inout]	Event Queue. Control metadata is updated during this method's operation.
+ *	@param pEv	[out]	Event retrieved. Cleared if event buffer is empty.
+ *	@return	EvQ Error Code, where `0` is no problem observed.
+ */
 tEvQ_ErrorCode
-Cwsw_EvQ__GetEvent(pEvQ_QueueCtrl pEvQueueCtrl, tEvQ_Event *pEv)
+Cwsw_EvQ__GetEvent(pEvQ_QueueCtrl pEvQ, pEvQ_Event pEv)
 {
 	tEvQ_ErrorCode rc = kEvQ_Ev_None;
 
 	// check preconditions, in order of priority
 	if(!initialized)							{ return kErr_EvQ_NotInitialized; }
-	if(NULL == pEvQueueCtrl)					{ return kErr_EvQ_BadCtrl; }
-	if(NULL == pEvQueueCtrl->pEvent_Queue)	{ return kErr_EvQ_BadQueue; }
-	if(0 == pEvQueueCtrl->Queue_Size)			{ return kErr_EvQ_BadQueue; }
-	if(NULL == pEvQueueCtrl->pRead)			{ return kErr_EvQ_BadCtrl; }
+	if(NULL == pEvQ)							{ return kErr_EvQ_BadEvQ; }
+	if(NULL == pEvQ->pEventTable)				{ return kErr_EvQ_BadEvTable; }
+	if(NULL == pEvQ->pEventTable->pEvBuffer)	{ return kErr_EvQ_BadEvBuffer;}
+	if(0 == pEvQ->pEventTable->szEvTbl)			{ return kErr_EvQ_BadEvBuffer; }
 	if(NULL == pEv)								{ return kErr_EvQ_BadParm; }
 
-	// are there any entries
-	if(pEvQueueCtrl->Queue_Count != 0)
+	Cwsw_EvT__InitEvent(pEv);
+
+	// are there any entries?
+	if(pEvQ->Queue_Count != 0U)
 	{
-		int crit = Cwsw_Critical_Protect(0);
+		size_t idx;
+		int crit = Cwsw_Critical_Protect(0);	// protect the evq control structure.
+
+		// get the index of the current event to read, increment to point to the next read
+		idx = pEvQ->idxRead++;
+
+		// still updating for the next read, correct for buffer wrap-around
+		if(pEvQ->idxRead > pEvQ->pEventTable->szEvTbl)
+		{
+			pEvQ->idxRead = 0U;
+		}
+
+		rc = Cwsw_Evt__GetEvent(pEv, pEvQ->pEventTable, idx);
+
+		// retrieve the event
+		memcpy(pEv, &pEvQ->pEventTable->pEvBuffer[idx], sizeof(tEvQ_Event));
 
 		// decrement the count
-		pEvQueueCtrl->Queue_Count--;
-
-		// get the event/increment the pointer
-		*pEv = *(pEvQueueCtrl->pRead++);
-
-		// check for buffer wraparound
-		if(pEvQueueCtrl->pRead > (pEvQueueCtrl->pEvent_Queue + pEvQueueCtrl->Queue_Size))
-		{
-			// reset it to beginning
-			pEvQueueCtrl->pRead = pEvQueueCtrl->pEvent_Queue;
-		}
+		pEvQ->Queue_Count--;
 		crit = Cwsw_Critical_Release(crit);
 	}
 

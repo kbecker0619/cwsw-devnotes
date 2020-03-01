@@ -18,6 +18,7 @@
 
 // ----	System Headers --------------------------
 #include <stddef.h>				/* size_t */
+#include <string.h>				/* memset */
 
 // ----	Project Headers -------------------------
 #include "projcfg.h"
@@ -46,8 +47,9 @@ enum eErrorCodes_EvQ {
 	kErr_EvQ_NoError = kErr_Lib_NoError,
 	kErr_EvQ_NotInitialized,	//!< Event Queue component not initialized.
 	kErr_EvQ_BadParm,			//!< Bad Parameter; e.g., NULL pointer-to-event.
-	kErr_EvQ_BadCtrl,			//!< Bad or invalid control struct.
-	kErr_EvQ_BadQueue,			//!< Bad or invalid event queue.
+	kErr_EvQ_BadEvQ,			//!< Bad or invalid EvQ control struct (tEvQ_QueueCtrl).
+	kErr_EvQ_BadEvTable,		//!< Bad or invalid event table (tEvQ_EvTable).
+	kErr_EvQ_BadEvBuffer,		//!< Bad or invalid buffer for events (tEvQ_Event[]).
 	kErr_EvQ_BadEvent,			//!< Bad or invalid event.
 	kErr_EvQ_QueueFull,			//!< Queue full, cannot add new event to queue.
 };
@@ -85,9 +87,14 @@ typedef struct sEvQ_Event {
  *	@ingroup sEvq_EvTable
  */
 typedef struct sEvq_EvTable {
-	pEvQ_Event		pEvTable;	//!< Pointer to event table
-	size_t			EvTblSize;	//!< Size of embedded table
+	pEvQ_Event		pEvBuffer;	//!< Pointer to event table
+	int32_t			szEvTbl;	//!< Size of embedded table. Signed int to allow for `-1`.
 } tEvQ_EvTable, *pEvQ_EvTable;
+
+/** "Handle" for the position of a specific event in the event-handler table.
+ *	Intention is to use value `-1` to indicate invalid reference.
+ */
+typedef int32_t	tEvQ_EvtHandle;		/* would prefer to use `ssize_t`, but that's a POSIX type, not a C type */
 
 
 // ============================================================================
@@ -98,9 +105,39 @@ typedef struct sEvq_EvTable {
 // ----	Public API ------------------------------------------------------------
 // ============================================================================
 
-extern uint16_t			Cwsw_Evt__Init(void);		/* initialize event _component_ */
+// ---- Discrete Functions -------------------------------------------------- {
+
 extern tErrorCodes_EvQ	Cwsw_Evt__InitEventTable(pEvQ_EvTable pEvQTable, pEvQ_Event pTable, size_t TableSize);		/* initialize a table of events */
-extern int32_t			Cwsw_Evt__FindEvent(pEvQ_EvTable pEvQTable, tEvQ_EventID evId);
+extern pEvQ_Event		Cwsw_Evt__GetEventPtr(pEvQ_EvTable pEvTbl, tEvQ_EvtHandle hnd);
+extern tErrorCodes_EvQ	Cwsw_Evt__GetEvent(pEvQ_Event pEv, pEvQ_EvTable pEvTb, tEvQ_EvtHandle hnd);
+
+#define Cwsw_EvT__InitEvent(pEv)	memset(pEv, 0, sizeof(tEvQ_Event))
+
+// ---- /Discrete Functions ------------------------------------------------- }
+
+// ---- Targets for Get/Set APIs -------------------------------------------- {
+
+/** "Chapter Designator" for Get/Set API.
+ *	Intentionally unused symbol, designed to get you to the correct starting
+ *	point, when you want to find macros for the Get/Set API; simply highlight
+ *	the Module argument in your IDE (e.g, Eclipse, NetBeans, etc.), and select
+ *	Go To Definition.
+ */
+enum { Cwsw_EvT = 0 };	/* Component ID for Event Table */
+
+/** Target symbol for Get(Cwsw_EvT, xxx) interface */
+#define Cwsw_EvT__Get(resource)		Cwsw_EvT__Get_ ## resource()
+
+/** Target for Get(Cwsw_EvT, Initialized) interface. */
+extern bool Cwsw_EvT__Get_Initialized(void);
+
+/** target for Init(Cwsw_EvT) API */
+extern uint16_t			Cwsw_Evt__Init(void);		/* initialize event _component_ */
+
+extern void				Cwsw_EvT__Deinit(void);
+
+// ---- /Targets for Get/Set APIs ------------------------------------------- }
+
 
 #ifdef	__cplusplus
 }
