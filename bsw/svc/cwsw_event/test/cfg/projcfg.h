@@ -1,5 +1,5 @@
 /** @file
- *	@brief	Project Configuration for CWSW Library Unit test environment.
+ *	@brief	Project Configuration for CWSW Event component's Unit Test environment.
  *
  *	Copyright (c) 2020 Kevin L. Becker. All rights reserved.
  *
@@ -18,7 +18,6 @@
 #include <stdbool.h>	/* true, false - for preprocessor usage */
 
 // ----	Project Headers -------------------------
-#include "ctassert.h"
 
 // ----	Module Headers --------------------------
 
@@ -183,7 +182,7 @@ extern "C" {
 #endif
 
 /*	For this component, equate simulated events with notification events. */
-#if defined(USE_NOTIFICATION_EVENTS)
+#if (USE_NOTIFICATION_EVENTS)
 #define USE_SIMULATED_EVENTS	(true)
 #endif
 
@@ -200,7 +199,7 @@ extern "C" {
  * 	with a value of 1, certain behaviors within the component are different,
  * 	depending on the needs of the demo app environment.
  *
- * 	This value specifically chosen because most instances of value #true also
+ * 	This value specifically chosen because most instances of value `true` also
  * 	have the value "1", so that the default build, in the absence of a command-
  * 	line define, will enable console behavior.
  */
@@ -271,12 +270,11 @@ extern "C" {
  *	For the demo app + UT environment for the CWSW Library, we'll define this
  *	as a macro that supplies information that might be useful to the UT enviro.
  *
- *	@xreq{SR_LIB_0307}
- *
+*
  *	@ingroup cwsw_lib_crit_section_group
  */
-#define CWSW_LIB_CRIT_SECT_ENTER(protlvl)	cb_lib_demo_cs_enter(protlvl, __FILE__, __LINE__)
-extern void cb_lib_demo_cs_enter(int protlvl, char const * const filename, int const lineno);
+#define CWSW_LIB_CRIT_SECT_ENTER(protlvl)	cb_event_demo_cs_enter(protlvl, __FILE__, __LINE__)
+extern void cb_event_demo_cs_enter(int protlvl, char const * const filename, int const lineno);
 
 /**	Project-specific configuration, invoked when Critical Section is already
  *	active.
@@ -287,12 +285,10 @@ extern void cb_lib_demo_cs_enter(int protlvl, char const * const filename, int c
  *	For this project's UT environment, we'll define this as a macro that
  *	supplies info that might be useful to the UT enviro.
  *
- *	@xreq{SR_LIB_0308}
- *
  *	@ingroup cwsw_lib_crit_section_group
  */
-#define	CWSW_LIB_CRIT_SECT_LEAVE(protlvl)	cb_lib_demo_cs_leave(protlvl, __FILE__, __LINE__)
-extern void cb_lib_demo_cs_leave(int protlvl, char const * const filename, int const lineno);
+#define	CWSW_LIB_CRIT_SECT_LEAVE(protlvl)	cb_event_demo_cs_leave(protlvl, __FILE__, __LINE__)
+extern void cb_event_demo_cs_leave(int protlvl, char const * const filename, int const lineno);
 
 
 // define specifically for Eclipse CDT parser

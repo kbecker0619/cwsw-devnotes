@@ -39,6 +39,20 @@ extern "C" {
  */
 #define ENABLE_EVQ_GUARDS		1
 
+/** Global list of events for the event queue.
+ *	Note that this implementation assumes a contiguous list with no gaps in numeric values. This
+ *	implementation uses the event value as an index into a table, and sizes all tables according to
+ *	the value of kNumProjectEvqEvents.
+ */
+enum eTestProjectEvents {
+	evNullEvent = 0,	/**< reserved value, used for initialization */
+	evBtnPressed,		/**< debounced press event */
+	evBtnCommit,
+	evBtReleased,
+	evUiUpdate,
+	kNumProjectEvqEvents
+};
+
 
 // ============================================================================
 // ----	Type Definitions ------------------------------------------------------
