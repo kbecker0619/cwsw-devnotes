@@ -122,11 +122,11 @@ tEvQ_ErrorCode
 Cwsw_EvQ__InitEvQ(pEvQ_QueueCtrl pEvQ, pEvQ_EvTable pEvTable)
 {
 	// check preconditions, in order of priority
-	if(!initialized)		{ return kErr_EvQ_NotInitialized; }		// has component init happened?
-	if(!pEvQ)				{ return kErr_EvQ_BadEvQ; }				// is evq control structure valid?
-	if(!pEvTable)			{ return kErr_EvQ_BadEvTable; }			// is event table valid?
+	if(!initialized)			{ return kErr_EvQ_NotInitialized; }		// has component init happened?
+	if(!pEvQ)					{ return kErr_EvQ_BadEvQ; }				// is evq control structure valid?
+	if(!pEvTable)				{ return kErr_EvQ_BadEvTable; }			// is event table valid?
 	if(!pEvTable->pEvBuffer)	{ return kErr_EvQ_BadEvBuffer; }		// is event buffer valid?
-	if(!pEvTable->szEvTbl)	{ return kErr_EvQ_BadEvBuffer; }		// is event buffer valid? (while the event component itself allows zero-size tables, we don't)
+	if(!pEvTable->szEvTbl)		{ return kErr_EvQ_BadEvBuffer; }		// is event buffer valid? (while the event component itself allows zero-size tables, we don't)
 
 	pEvQ->pEventTable	= pEvTable;
 	pEvQ->Queue_Count	= 0U;
@@ -223,7 +223,7 @@ Cwsw_EvQ__GetEvent(pEvQ_QueueCtrl pEvQ, pEvQ_Event pEv)
 	// are there any entries?
 	if(pEvQ->Queue_Count != 0U)
 	{
-		size_t idx;
+		tEvQ_EvtHandle idx = 0;
 		int crit = Cwsw_Critical_Protect(0);	// protect the evq control structure.
 
 		// get the index of the current event to read, increment to point to the next read
