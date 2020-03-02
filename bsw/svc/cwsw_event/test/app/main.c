@@ -81,18 +81,9 @@ main(void)
 		};
 		tEvQ_EvTable evTbl = {0};
 
-		cwsw_assert(-1 == Cwsw_Evt__FindEvent(NULL, 2), "test bad param");
-		cwsw_assert(-1 == Cwsw_Evt__FindEvent(&evTbl, 2), "test uninit param");
-
 		cwsw_assert(
 			kErr_EvQ_NoError == Cwsw_Evt__InitEventTable(&evTbl, my_table_of_events, TABLE_SIZE(my_table_of_events)),
 			"Confirm event table initialization");
-
-		evtblidx = Cwsw_Evt__FindEvent(&evTbl, 2);
-		cwsw_assert(2 == evtblidx, "test retrieval");
-
-		evtblidx = Cwsw_Evt__FindEvent(&evTbl, 10);
-		cwsw_assert(-1 == evtblidx, "test retrieval, bad event ID");
 
 	} while(0);
 }
