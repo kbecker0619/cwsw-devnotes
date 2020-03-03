@@ -41,23 +41,22 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <LinkIncremental>true</LinkIncremental>
-  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <WarningLevel>Level4</WarningLevel>
+      <WarningLevel>EnableAllWarnings</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;XPRJ_Win_MSVC_$(Configuration);%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <MultiProcessorCompilation>false</MultiProcessorCompilation>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <AdditionalIncludeDirectories>..\app\cfg;..\app\cfg\vs2010;..\..\bsw\svc\cwsw_lib\inc;..\..\bsw\svc\inc;..\..\bsw\svc\cwsw_evq\inc;..\..\bsw\svc\cwsw_event\inc;..\libs\cwsw_board\none;..\..\bsw\ecu\cwsw_arch\inc\i386\;..\..\bsw\svc\cwsw_clock\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\app\cfg;..\app\cfg\vs2010;..\libs\cwsw_lib\inc;..\..\bsw\svc\inc;..\..\component\cwsw_evq\inc;..\..\component\cwsw_event\inc;..\libs\cwsw_board\none;..\libs\cwsw_arch\inc\i386\;..\..\bsw\svc\cwsw_clock\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <CompileAsManaged>false</CompileAsManaged>
       <ExceptionHandling>false</ExceptionHandling>
+      <DisableSpecificWarnings>4127;4668</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -83,20 +82,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\bsw\svc\cwsw_evq\inc\readme.md" />
-    <None Include="..\..\bsw\svc\cwsw_evq\src\readme.md" />
-    <None Include="..\..\bsw\svc\cwsw_lib\inc\README.md" />
+    <None Include="..\..\component\cwsw_evq\inc\readme.md" />
+    <None Include="..\..\component\cwsw_evq\src\readme.md" />
+    <None Include="..\libs\cwsw_lib\inc\README.md" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\app\cwsw_lib_prj\CritSect.c" />
     <ClCompile Include="..\app\main.c" />
     <ClCompile Include="..\libs\cwsw_board\none\src\cwsw_board.c" />
-    <ClCompile Include="..\..\bsw\ecu\cwsw_arch\inc\i386\peripheral\ports\ports_api.c" />
-    <ClCompile Include="..\..\bsw\ecu\cwsw_arch\src\i386\cwsw_arch.c" />
-    <ClCompile Include="..\..\bsw\svc\cwsw_clock\src\cwsw_clock_svc.c" />
-    <ClCompile Include="..\..\bsw\svc\cwsw_event\src\cwsw_event.c" />
-    <ClCompile Include="..\..\bsw\svc\cwsw_evq\src\cwsw_evqueue.c" />
-    <ClCompile Include="..\..\bsw\svc\cwsw_lib\src\cwsw_lib.c" />
+    <ClCompile Include="..\libs\cwsw_arch\inc\i386\peripheral\ports\ports_api.c" />
+    <ClCompile Include="..\libs\cwsw_arch\src\i386\cwsw_arch.c" />
+    <ClCompile Include="..\..\component\cwsw_event\src\cwsw_event.c" />
+    <ClCompile Include="..\..\component\cwsw_evq\src\cwsw_evqueue.c" />
+    <ClCompile Include="..\libs\cwsw_lib\src\cwsw_lib.c" />
     <ClCompile Include="..\..\bsw\svc\src\cwsw_svc.c" />
   </ItemGroup>
   <ItemGroup>
@@ -107,15 +105,15 @@
     <ClInclude Include="..\app\cfg\vs2010\stdbool.h" />
     <ClInclude Include="..\app\tedlos.h" />
     <ClInclude Include="..\libs\cwsw_board\none\cwsw_board.h" />
-    <ClInclude Include="..\..\bsw\ecu\cwsw_arch\inc\i386\cwsw_arch.h" />
-    <ClInclude Include="..\..\bsw\ecu\cwsw_arch\inc\i386\peripheral\ports\ports_api.h" />
+    <ClInclude Include="..\libs\cwsw_arch\inc\i386\cwsw_arch.h" />
+    <ClInclude Include="..\libs\cwsw_arch\inc\i386\peripheral\ports\ports_api.h" />
     <ClInclude Include="..\..\bsw\svc\cwsw_clock\inc\cwsw_clock.h" />
-    <ClInclude Include="..\..\bsw\svc\cwsw_event\inc\cwsw_event.h" />
-    <ClInclude Include="..\..\bsw\svc\cwsw_evq\inc\cwsw_evqueue.h" />
-    <ClInclude Include="..\..\bsw\svc\cwsw_lib\inc\ctassert.h" />
-    <ClInclude Include="..\..\bsw\svc\cwsw_lib\inc\cwsw_eventsim.h" />
-    <ClInclude Include="..\..\bsw\svc\cwsw_lib\inc\cwsw_lib.h" />
-    <ClInclude Include="..\..\bsw\svc\cwsw_lib\inc\ptypes.h" />
+    <ClInclude Include="..\..\component\cwsw_event\inc\cwsw_event.h" />
+    <ClInclude Include="..\..\component\cwsw_evq\inc\cwsw_evqueue.h" />
+    <ClInclude Include="..\libs\cwsw_lib\inc\ctassert.h" />
+    <ClInclude Include="..\libs\cwsw_lib\inc\cwsw_eventsim.h" />
+    <ClInclude Include="..\libs\cwsw_lib\inc\cwsw_lib.h" />
+    <ClInclude Include="..\libs\cwsw_lib\inc\ptypes.h" />
     <ClInclude Include="..\..\bsw\svc\inc\cwsw_svc.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

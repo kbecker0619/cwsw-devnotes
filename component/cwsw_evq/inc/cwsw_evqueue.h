@@ -1,5 +1,4 @@
 /** @file cwsw_evqueue.h
- *	@brief	One-sentence short description of file.
  *
  *	Description:
  *
@@ -54,9 +53,9 @@ typedef enum eErrorCodes_EvQ tEvQ_ErrorCode;
 //! Event Queue control structure
 typedef struct sEvQueue {
 	pEvQ_EvTable	pEventTable;	//!< reference to event table.
-	size_t		 	Queue_Count;	//!< number of items in the queue
-	size_t			idxWrite;		//!< queue write pointer. Defined as a pointer-to-event, rather than an index, to ease reading/writing API, letting complexity fall into queue management code.
-	size_t			idxRead;		//!< queue read pointer. Defined as a pointer-to-event, rather than an index, to ease reading/writing API, letting complexity fall into queue management code.
+	size_t		 	Queue_Count;	//!< number of items in the queue.
+	int32_t			idxWrite;		//!< queue write pointer.
+	int32_t			idxRead;		//!< queue read pointer.
 } tEvQ_QueueCtrl, *pEvQ_QueueCtrl;
 
 

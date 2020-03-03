@@ -15,6 +15,7 @@
 
 // ----	System Headers --------------------------
 #include <stdbool.h>
+#include <limits.h>		/* INT_MAX */
 
 // ----	Project Headers -------------------------
 #include "cwsw_lib.h"
@@ -90,20 +91,23 @@ Cwsw_EvT__Get_Initialized(void)
  *	@param [out]	pEvQTable	Event Table object to be initialized.
  *	@param [in]		pTable		Table of events.
  *	@param [in]		TableSize	Size of the event table, in number of elements (not bytes).
+ *								Rejection occurs if > INT_MAX.
  *	@return	Event Queue error code, where value `0` is success.
  *
  *	@ingroup sEvq_EvTable
  */
 tErrorCodes_EvQ
 Cwsw_Evt__InitEventTable(
-	pEvQ_EvTable pEvQTable,	// Event Queue table
-	pEvQ_Event pTable,		// table of events
-	size_t TableSize)		// size of the event table
+	pEvQ_EvTable pEvQTable,	// Event Queue table.
+	pEvQ_Event pTable,		// table of events.
+	size_t TableSize)		// size of the event table. the benefit of passing as unsigned, is that we don't have to worry about negative values.
 {
-	if(!pEvQTable)	return kErr_EvQ_BadParm;
-	if(!pTable)		return kErr_EvQ_BadParm;
-	pEvQTable->pEvBuffer = pTable;
-	pEvQTable->szEvTbl = TableSize;	// yes, we do accept a size of 0 elements
+	if(!pEvQTable)			return kErr_EvQ_BadParm;
+	if(!pTable)				return kErr_EvQ_BadParm;
+	if(TableSize > INT_MAX)	return kErr_EvQ_BadParm;
+
+	pEvQTable->pEvBuffer	= pTable;
+	pEvQTable->szEvTbl		= (int32_t)TableSize;	// yes, we do accept a size of 0 elements
 	return kErr_EvQ_NoError;
 }
 
@@ -139,6 +143,7 @@ Cwsw_Evt__GetEvent(pEvQ_Event pEv, pEvQ_EvTable pEvTb, tEvQ_EvtHandle hnd)
 	if(!pEv)					return kErr_EvQ_BadParm;
 	if(!pEvTb)					return kErr_EvQ_BadParm;
 	if(hnd >= pEvTb->szEvTbl)	return kErr_EvQ_BadEvTable;
+
 	pfound = Cwsw_Evt__GetEventPtr(pEvTb, hnd);
 	if(pfound)
 	{

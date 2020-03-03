@@ -15,41 +15,38 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\bsw\svc\cwsw_lib\inc\README.md" />
-    <None Include="..\..\bsw\svc\cwsw_evq\inc\readme.md">
+    <None Include="..\libs\cwsw_lib\inc\README.md" />
+    <None Include="..\..\component\cwsw_evq\inc\readme.md">
       <Filter>Source Files</Filter>
     </None>
-    <None Include="..\..\bsw\svc\cwsw_evq\src\readme.md" />
+    <None Include="..\..\component\cwsw_evq\src\readme.md" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\app\main.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\bsw\svc\src\cwsw_svc.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\bsw\svc\cwsw_evq\src\cwsw_evqueue.c">
+    <ClCompile Include="..\..\component\cwsw_evq\src\cwsw_evqueue.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\bsw\svc\cwsw_event\src\cwsw_event.c">
+    <ClCompile Include="..\..\component\cwsw_event\src\cwsw_event.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\libs\cwsw_board\none\src\cwsw_board.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\bsw\ecu\cwsw_arch\src\i386\cwsw_arch.c">
+    <ClCompile Include="..\libs\cwsw_arch\src\i386\cwsw_arch.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\bsw\svc\cwsw_clock\src\cwsw_clock_svc.c">
+    <ClCompile Include="..\libs\cwsw_lib\src\cwsw_lib.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\bsw\svc\cwsw_lib\src\cwsw_lib.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\bsw\ecu\cwsw_arch\inc\i386\peripheral\ports\ports_api.c">
+    <ClCompile Include="..\libs\cwsw_arch\inc\i386\peripheral\ports\ports_api.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\app\cwsw_lib_prj\CritSect.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\app\main.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -72,37 +69,37 @@
     <ClInclude Include="..\app\cfg\vs2010\stdbool.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\bsw\svc\cwsw_lib\inc\ctassert.h">
+    <ClInclude Include="..\libs\cwsw_lib\inc\ctassert.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\bsw\svc\cwsw_lib\inc\cwsw_eventsim.h">
+    <ClInclude Include="..\libs\cwsw_lib\inc\cwsw_eventsim.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\bsw\svc\cwsw_lib\inc\cwsw_lib.h">
+    <ClInclude Include="..\libs\cwsw_lib\inc\cwsw_lib.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\bsw\svc\cwsw_lib\inc\ptypes.h">
+    <ClInclude Include="..\libs\cwsw_lib\inc\ptypes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\bsw\svc\inc\cwsw_svc.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\bsw\svc\cwsw_evq\inc\cwsw_evqueue.h">
+    <ClInclude Include="..\..\component\cwsw_evq\inc\cwsw_evqueue.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\bsw\svc\cwsw_event\inc\cwsw_event.h">
+    <ClInclude Include="..\..\component\cwsw_event\inc\cwsw_event.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\libs\cwsw_board\none\cwsw_board.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\bsw\ecu\cwsw_arch\inc\i386\cwsw_arch.h">
+    <ClInclude Include="..\libs\cwsw_arch\inc\i386\cwsw_arch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\bsw\svc\cwsw_clock\inc\cwsw_clock.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\bsw\ecu\cwsw_arch\inc\i386\peripheral\ports\ports_api.h">
+    <ClInclude Include="..\libs\cwsw_arch\inc\i386\peripheral\ports\ports_api.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

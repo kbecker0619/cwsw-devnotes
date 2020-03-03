@@ -129,9 +129,9 @@ Cwsw_EvQ__InitEvQ(pEvQ_QueueCtrl pEvQ, pEvQ_EvTable pEvTable)
 	if(!pEvTable->szEvTbl)		{ return kErr_EvQ_BadEvBuffer; }		// is event buffer valid? (while the event component itself allows zero-size tables, we don't)
 
 	pEvQ->pEventTable	= pEvTable;
-	pEvQ->Queue_Count	= 0U;
-	pEvQ->idxRead		= 0U;
-	pEvQ->idxWrite		= 0U;
+	pEvQ->Queue_Count	= 0;
+	pEvQ->idxRead		= 0;
+	pEvQ->idxWrite		= 0;
 
 	return kErr_EvQ_NoError;
 }
@@ -227,6 +227,7 @@ Cwsw_EvQ__GetEvent(pEvQ_QueueCtrl pEvQ, pEvQ_Event pEv)
 		int crit = Cwsw_Critical_Protect(0);	// protect the evq control structure.
 
 		// get the index of the current event to read, increment to point to the next read
+		//	down-converstion to signed is OK here, we don't ever expect to have an index > INT_MAX
 		idx = pEvQ->idxRead++;
 
 		// still updating for the next read, correct for buffer wrap-around

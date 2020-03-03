@@ -42,7 +42,7 @@ Contributor(s):
     <type>org.netbeans.modules.cnd.makeproject</type>
     <configuration>
         <data xmlns="http://www.netbeans.org/ns/make-project/1">
-            <name>EvQ Demo - Development</name>
+            <name>EvQ Demo App</name>
             <make-project-type>0</make-project-type>
             <c-extensions>c</c-extensions>
             <cpp-extensions/>
@@ -50,17 +50,10 @@ Contributor(s):
             <sourceEncoding>UTF-8</sourceEncoding>
             <make-dep-projects/>
             <sourceRootList>
-                <sourceRootElem>../app</sourceRootElem>
-                <sourceRootElem>../cfg</sourceRootElem>
-                <sourceRootElem>../cwsw_lib</sourceRootElem>
-                <sourceRootElem>../../inc</sourceRootElem>
-                <sourceRootElem>../../src</sourceRootElem>
-                <sourceRootElem>../../app</sourceRootElem>
                 <sourceRootElem>../../bsw/svc</sourceRootElem>
-                <sourceRootElem>../../bsw/ecu/cwsw_arch/src</sourceRootElem>
-                <sourceRootElem>../../bsw/ecu/cwsw_arch/inc/i386/peripheral</sourceRootElem>
-                <sourceRootElem>../../bsw/ecu/cwsw_arch/inc/i386/system</sourceRootElem>
                 <sourceRootElem>../libs/cwsw_board</sourceRootElem>
+                <sourceRootElem>../libs/cwsw_arch</sourceRootElem>
+                <sourceRootElem>../app/cwsw_lib_prj</sourceRootElem>
             </sourceRootList>
             <confList>
                 <confElem>

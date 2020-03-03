@@ -17,10 +17,12 @@
 #include <limits.h>			/* INT_MAX */
 
 // ----	Project Headers -------------------------
+/* configuration items */
 #include "projcfg.h"
+#include "cwsw_eventsim.h"
+/* component headers used here */
 #include "cwsw_lib.h"
 #include "cwsw_svc.h"
-#include "cwsw_eventsim.h"
 
 // ----	Module Headers --------------------------
 // the point of this project
@@ -88,7 +90,7 @@ main(void)
 	}
 
 	(void)Init(Cwsw_Services);
-//	(void)Init(Cwsw_EvQ);		// Cwsw_EvQ__Init()
+//	(void)Init(Cwsw_EvQ);			// Cwsw_EvQ__Init()
 
 	/* contrived example, not recommended, to exercise other features of the component */
 	cwsw_assert(1 == Cwsw_Critical_Protect(0), "Confirm critical section nesting count");

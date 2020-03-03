@@ -21,7 +21,7 @@
 #include "projcfg.h"
 
 // ----	Module Headers --------------------------
-#include "cwsw_clock.h"
+//#include "cwsw_clock.h"
 
 
 // ============================================================================

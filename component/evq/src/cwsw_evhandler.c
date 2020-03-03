@@ -152,5 +152,3 @@ Cwsw_EvQ__GetHandler(pEvQ_EvHandlerAssoc pEvHndlr, size_t evtblsz, tEvQ_EventID 
 
 	return pEvHndlr[idx].pEvHandler;
 }
-
-
