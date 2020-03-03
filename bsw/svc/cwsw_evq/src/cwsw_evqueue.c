@@ -235,10 +235,8 @@ Cwsw_EvQ__GetEvent(pEvQ_QueueCtrl pEvQ, pEvQ_Event pEv)
 			pEvQ->idxRead = 0U;
 		}
 
-		rc = Cwsw_Evt__GetEvent(pEv, pEvQ->pEventTable, idx);
-
 		// retrieve the event
-		memcpy(pEv, &pEvQ->pEventTable->pEvBuffer[idx], sizeof(tEvQ_Event));
+		rc = Cwsw_Evt__GetEvent(pEv, pEvQ->pEventTable, idx);
 
 		// decrement the count
 		pEvQ->Queue_Count--;

@@ -60,6 +60,7 @@ Contributor(s):
                 <sourceRootElem>../../bsw/ecu/cwsw_arch/src</sourceRootElem>
                 <sourceRootElem>../../bsw/ecu/cwsw_arch/inc/i386/peripheral</sourceRootElem>
                 <sourceRootElem>../../bsw/ecu/cwsw_arch/inc/i386/system</sourceRootElem>
+                <sourceRootElem>../libs/cwsw_board</sourceRootElem>
             </sourceRootList>
             <confList>
                 <confElem>

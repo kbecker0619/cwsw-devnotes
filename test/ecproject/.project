@@ -28,7 +28,7 @@
 		<link>
 			<name>app</name>
 			<type>2</type>
-			<locationURI>$%7BPARENT-2-PROJECT_LOC%7D/app</locationURI>
+			<locationURI>$%7BPARENT-1-PROJECT_LOC%7D/app</locationURI>
 		</link>
 		<link>
 			<name>bsw</name>
@@ -39,6 +39,11 @@
 			<name>doc</name>
 			<type>2</type>
 			<locationURI>$%7BPARENT-2-PROJECT_LOC%7D/doc</locationURI>
+		</link>
+		<link>
+			<name>libs</name>
+			<type>2</type>
+			<locationURI>$%7BPARENT-1-PROJECT_LOC%7D/libs</locationURI>
 		</link>
 		<link>
 			<name>vfb</name>

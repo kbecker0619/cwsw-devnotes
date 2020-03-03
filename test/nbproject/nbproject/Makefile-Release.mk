@@ -35,9 +35,6 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
-	${OBJECTDIR}/_ext/ded6c155/CritSect.o \
-	${OBJECTDIR}/_ext/5624e081/main.o \
-	${OBJECTDIR}/_ext/7451caa4/cwsw_board.o \
 	${OBJECTDIR}/_ext/f3d31002/ports_api.o \
 	${OBJECTDIR}/_ext/28111b26/cwsw_arch.o \
 	${OBJECTDIR}/_ext/b0466254/cwsw_clock_svc.o \
@@ -45,7 +42,10 @@ OBJECTFILES= \
 	${OBJECTDIR}/_ext/5fe49f66/cwsw_evqueue.o \
 	${OBJECTDIR}/_ext/bb2ddd8b/cwsw_lib.o \
 	${OBJECTDIR}/_ext/a00d43e7/cwsw_swtimer.o \
-	${OBJECTDIR}/_ext/ae0ac54c/cwsw_svc.o
+	${OBJECTDIR}/_ext/ae0ac54c/cwsw_svc.o \
+	${OBJECTDIR}/_ext/e89cc024/CritSect.o \
+	${OBJECTDIR}/_ext/511dfd52/main.o \
+	${OBJECTDIR}/_ext/bf66c54b/cwsw_board.o
 
 
 # C Compiler Flags
@@ -71,21 +71,6 @@ LDLIBSOPTIONS=
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/nbproject.exe: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.c} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/nbproject ${OBJECTFILES} ${LDLIBSOPTIONS}
-
-${OBJECTDIR}/_ext/ded6c155/CritSect.o: ../../app/cwsw_lib_prj/CritSect.c
-	${MKDIR} -p ${OBJECTDIR}/_ext/ded6c155
-	${RM} "$@.d"
-	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/ded6c155/CritSect.o ../../app/cwsw_lib_prj/CritSect.c
-
-${OBJECTDIR}/_ext/5624e081/main.o: ../../app/main.c
-	${MKDIR} -p ${OBJECTDIR}/_ext/5624e081
-	${RM} "$@.d"
-	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/5624e081/main.o ../../app/main.c
-
-${OBJECTDIR}/_ext/7451caa4/cwsw_board.o: ../../bsw/bsp/cwsw_board/none/src/cwsw_board.c
-	${MKDIR} -p ${OBJECTDIR}/_ext/7451caa4
-	${RM} "$@.d"
-	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/7451caa4/cwsw_board.o ../../bsw/bsp/cwsw_board/none/src/cwsw_board.c
 
 ${OBJECTDIR}/_ext/f3d31002/ports_api.o: ../../bsw/ecu/cwsw_arch/inc/i386/peripheral/ports/ports_api.c
 	${MKDIR} -p ${OBJECTDIR}/_ext/f3d31002
@@ -126,6 +111,21 @@ ${OBJECTDIR}/_ext/ae0ac54c/cwsw_svc.o: ../../bsw/svc/src/cwsw_svc.c
 	${MKDIR} -p ${OBJECTDIR}/_ext/ae0ac54c
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/ae0ac54c/cwsw_svc.o ../../bsw/svc/src/cwsw_svc.c
+
+${OBJECTDIR}/_ext/e89cc024/CritSect.o: ../app/cwsw_lib_prj/CritSect.c
+	${MKDIR} -p ${OBJECTDIR}/_ext/e89cc024
+	${RM} "$@.d"
+	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/e89cc024/CritSect.o ../app/cwsw_lib_prj/CritSect.c
+
+${OBJECTDIR}/_ext/511dfd52/main.o: ../app/main.c
+	${MKDIR} -p ${OBJECTDIR}/_ext/511dfd52
+	${RM} "$@.d"
+	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/511dfd52/main.o ../app/main.c
+
+${OBJECTDIR}/_ext/bf66c54b/cwsw_board.o: ../libs/cwsw_board/none/src/cwsw_board.c
+	${MKDIR} -p ${OBJECTDIR}/_ext/bf66c54b
+	${RM} "$@.d"
+	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/bf66c54b/cwsw_board.o ../libs/cwsw_board/none/src/cwsw_board.c
 
 # Subprojects
 .build-subprojects:

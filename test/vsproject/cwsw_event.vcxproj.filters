@@ -34,7 +34,7 @@
     <ClCompile Include="..\..\bsw\svc\cwsw_event\src\cwsw_event.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\bsw\bsp\cwsw_board\none\src\cwsw_board.c">
+    <ClCompile Include="..\libs\cwsw_board\none\src\cwsw_board.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\bsw\ecu\cwsw_arch\src\i386\cwsw_arch.c">
@@ -49,27 +49,27 @@
     <ClCompile Include="..\..\bsw\ecu\cwsw_arch\inc\i386\peripheral\ports\ports_api.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\app\cwsw_lib_prj\CritSect.c">
+    <ClCompile Include="..\app\cwsw_lib_prj\CritSect.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\app\tedlos.h">
+    <ClInclude Include="..\app\tedlos.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\app\cfg\cwsw_event_proj.h">
+    <ClInclude Include="..\app\cfg\cwsw_event_proj.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\app\cfg\projcfg.h">
+    <ClInclude Include="..\app\cfg\projcfg.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\app\cfg\projevtnames.h">
+    <ClInclude Include="..\app\cfg\projevtnames.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\app\cfg\tedlosevents.h">
+    <ClInclude Include="..\app\cfg\tedlosevents.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\app\cfg\vs2010\stdbool.h">
+    <ClInclude Include="..\app\cfg\vs2010\stdbool.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\bsw\svc\cwsw_lib\inc\ctassert.h">
@@ -93,7 +93,7 @@
     <ClInclude Include="..\..\bsw\svc\cwsw_event\inc\cwsw_event.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\bsw\bsp\cwsw_board\none\cwsw_board.h">
+    <ClInclude Include="..\libs\cwsw_board\none\cwsw_board.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\bsw\ecu\cwsw_arch\inc\i386\cwsw_arch.h">

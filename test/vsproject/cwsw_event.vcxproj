@@ -55,7 +55,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <MultiProcessorCompilation>false</MultiProcessorCompilation>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <AdditionalIncludeDirectories>..\..\app\cfg;..\..\app\cfg\vs2010;..\..\bsw\svc\cwsw_lib\inc;..\..\bsw\svc\inc;..\..\bsw\svc\cwsw_evq\inc;..\..\bsw\svc\cwsw_event\inc;..\..\bsw\bsp\cwsw_board\none;..\..\bsw\ecu\cwsw_arch\inc\i386\;..\..\bsw\svc\cwsw_clock\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\app\cfg;..\app\cfg\vs2010;..\..\bsw\svc\cwsw_lib\inc;..\..\bsw\svc\inc;..\..\bsw\svc\cwsw_evq\inc;..\..\bsw\svc\cwsw_event\inc;..\libs\cwsw_board\none;..\..\bsw\ecu\cwsw_arch\inc\i386\;..\..\bsw\svc\cwsw_clock\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <CompileAsManaged>false</CompileAsManaged>
       <ExceptionHandling>false</ExceptionHandling>
     </ClCompile>
@@ -88,9 +88,9 @@
     <None Include="..\..\bsw\svc\cwsw_lib\inc\README.md" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\app\cwsw_lib_prj\CritSect.c" />
-    <ClCompile Include="..\..\app\main.c" />
-    <ClCompile Include="..\..\bsw\bsp\cwsw_board\none\src\cwsw_board.c" />
+    <ClCompile Include="..\app\cwsw_lib_prj\CritSect.c" />
+    <ClCompile Include="..\app\main.c" />
+    <ClCompile Include="..\libs\cwsw_board\none\src\cwsw_board.c" />
     <ClCompile Include="..\..\bsw\ecu\cwsw_arch\inc\i386\peripheral\ports\ports_api.c" />
     <ClCompile Include="..\..\bsw\ecu\cwsw_arch\src\i386\cwsw_arch.c" />
     <ClCompile Include="..\..\bsw\svc\cwsw_clock\src\cwsw_clock_svc.c" />
@@ -100,13 +100,13 @@
     <ClCompile Include="..\..\bsw\svc\src\cwsw_svc.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\app\cfg\cwsw_event_proj.h" />
-    <ClInclude Include="..\..\app\cfg\projcfg.h" />
-    <ClInclude Include="..\..\app\cfg\projevtnames.h" />
-    <ClInclude Include="..\..\app\cfg\tedlosevents.h" />
-    <ClInclude Include="..\..\app\cfg\vs2010\stdbool.h" />
-    <ClInclude Include="..\..\app\tedlos.h" />
-    <ClInclude Include="..\..\bsw\bsp\cwsw_board\none\cwsw_board.h" />
+    <ClInclude Include="..\app\cfg\cwsw_event_proj.h" />
+    <ClInclude Include="..\app\cfg\projcfg.h" />
+    <ClInclude Include="..\app\cfg\projevtnames.h" />
+    <ClInclude Include="..\app\cfg\tedlosevents.h" />
+    <ClInclude Include="..\app\cfg\vs2010\stdbool.h" />
+    <ClInclude Include="..\app\tedlos.h" />
+    <ClInclude Include="..\libs\cwsw_board\none\cwsw_board.h" />
     <ClInclude Include="..\..\bsw\ecu\cwsw_arch\inc\i386\cwsw_arch.h" />
     <ClInclude Include="..\..\bsw\ecu\cwsw_arch\inc\i386\peripheral\ports\ports_api.h" />
     <ClInclude Include="..\..\bsw\svc\cwsw_clock\inc\cwsw_clock.h" />

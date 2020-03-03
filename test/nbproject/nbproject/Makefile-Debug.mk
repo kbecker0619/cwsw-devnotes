@@ -35,9 +35,6 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
-	${OBJECTDIR}/_ext/ded6c155/CritSect.o \
-	${OBJECTDIR}/_ext/5624e081/main.o \
-	${OBJECTDIR}/_ext/7451caa4/cwsw_board.o \
 	${OBJECTDIR}/_ext/f3d31002/ports_api.o \
 	${OBJECTDIR}/_ext/28111b26/cwsw_arch.o \
 	${OBJECTDIR}/_ext/b0466254/cwsw_clock_svc.o \
@@ -45,7 +42,10 @@ OBJECTFILES= \
 	${OBJECTDIR}/_ext/5fe49f66/cwsw_evqueue.o \
 	${OBJECTDIR}/_ext/bb2ddd8b/cwsw_lib.o \
 	${OBJECTDIR}/_ext/a00d43e7/cwsw_swtimer.o \
-	${OBJECTDIR}/_ext/ae0ac54c/cwsw_svc.o
+	${OBJECTDIR}/_ext/ae0ac54c/cwsw_svc.o \
+	${OBJECTDIR}/_ext/e89cc024/CritSect.o \
+	${OBJECTDIR}/_ext/511dfd52/main.o \
+	${OBJECTDIR}/_ext/bf66c54b/cwsw_board.o
 
 
 # C Compiler Flags
@@ -72,60 +72,60 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/nbproject.exe: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.c} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/nbproject ${OBJECTFILES} ${LDLIBSOPTIONS}
 
-${OBJECTDIR}/_ext/ded6c155/CritSect.o: ../../app/cwsw_lib_prj/CritSect.c
-	${MKDIR} -p ${OBJECTDIR}/_ext/ded6c155
-	${RM} "$@.d"
-	$(COMPILE.c) -g -Wall -DXPRJ_NB_${CND_CONF} -I../../app/cfg -I../../bsw/svc/cwsw_lib/inc -I../../bsw/svc/inc -I../../bsw/svc/cwsw_evq/inc -I../../bsw/svc/cwsw_event/inc -I../../bsw/svc/cwsw_clock/inc -I../../bsw/svc/cwsw_swtimer/inc -I../../bsw/bsp/cwsw_board/none -I../../bsw/ecu/cwsw_arch/inc/i386 -std=c11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/ded6c155/CritSect.o ../../app/cwsw_lib_prj/CritSect.c
-
-${OBJECTDIR}/_ext/5624e081/main.o: ../../app/main.c
-	${MKDIR} -p ${OBJECTDIR}/_ext/5624e081
-	${RM} "$@.d"
-	$(COMPILE.c) -g -Wall -DXPRJ_NB_${CND_CONF} -I../../app/cfg -I../../bsw/svc/cwsw_lib/inc -I../../bsw/svc/inc -I../../bsw/svc/cwsw_evq/inc -I../../bsw/svc/cwsw_event/inc -I../../bsw/svc/cwsw_clock/inc -I../../bsw/svc/cwsw_swtimer/inc -I../../bsw/bsp/cwsw_board/none -I../../bsw/ecu/cwsw_arch/inc/i386 -std=c11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/5624e081/main.o ../../app/main.c
-
-${OBJECTDIR}/_ext/7451caa4/cwsw_board.o: ../../bsw/bsp/cwsw_board/none/src/cwsw_board.c
-	${MKDIR} -p ${OBJECTDIR}/_ext/7451caa4
-	${RM} "$@.d"
-	$(COMPILE.c) -g -Wall -DXPRJ_NB_${CND_CONF} -I../../app/cfg -I../../bsw/svc/cwsw_lib/inc -I../../bsw/svc/inc -I../../bsw/svc/cwsw_evq/inc -I../../bsw/svc/cwsw_event/inc -I../../bsw/svc/cwsw_clock/inc -I../../bsw/svc/cwsw_swtimer/inc -I../../bsw/bsp/cwsw_board/none -I../../bsw/ecu/cwsw_arch/inc/i386 -std=c11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/7451caa4/cwsw_board.o ../../bsw/bsp/cwsw_board/none/src/cwsw_board.c
-
 ${OBJECTDIR}/_ext/f3d31002/ports_api.o: ../../bsw/ecu/cwsw_arch/inc/i386/peripheral/ports/ports_api.c
 	${MKDIR} -p ${OBJECTDIR}/_ext/f3d31002
 	${RM} "$@.d"
-	$(COMPILE.c) -g -Wall -DXPRJ_NB_${CND_CONF} -I../../app/cfg -I../../bsw/svc/cwsw_lib/inc -I../../bsw/svc/inc -I../../bsw/svc/cwsw_evq/inc -I../../bsw/svc/cwsw_event/inc -I../../bsw/svc/cwsw_clock/inc -I../../bsw/svc/cwsw_swtimer/inc -I../../bsw/bsp/cwsw_board/none -I../../bsw/ecu/cwsw_arch/inc/i386 -std=c11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/f3d31002/ports_api.o ../../bsw/ecu/cwsw_arch/inc/i386/peripheral/ports/ports_api.c
+	$(COMPILE.c) -g -Wall -DXPRJ_NB_${CND_CONF} -I../app/cfg -I../../bsw/svc/cwsw_lib/inc -I../../bsw/svc/inc -I../../bsw/svc/cwsw_evq/inc -I../../bsw/svc/cwsw_event/inc -I../../bsw/svc/cwsw_clock/inc -I../../bsw/svc/cwsw_swtimer/inc -I../../libs/cwsw_board/none -I../../bsw/ecu/cwsw_arch/inc/i386 -I../libs/cwsw_board/none -std=c11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/f3d31002/ports_api.o ../../bsw/ecu/cwsw_arch/inc/i386/peripheral/ports/ports_api.c
 
 ${OBJECTDIR}/_ext/28111b26/cwsw_arch.o: ../../bsw/ecu/cwsw_arch/src/i386/cwsw_arch.c
 	${MKDIR} -p ${OBJECTDIR}/_ext/28111b26
 	${RM} "$@.d"
-	$(COMPILE.c) -g -Wall -DXPRJ_NB_${CND_CONF} -I../../app/cfg -I../../bsw/svc/cwsw_lib/inc -I../../bsw/svc/inc -I../../bsw/svc/cwsw_evq/inc -I../../bsw/svc/cwsw_event/inc -I../../bsw/svc/cwsw_clock/inc -I../../bsw/svc/cwsw_swtimer/inc -I../../bsw/bsp/cwsw_board/none -I../../bsw/ecu/cwsw_arch/inc/i386 -std=c11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/28111b26/cwsw_arch.o ../../bsw/ecu/cwsw_arch/src/i386/cwsw_arch.c
+	$(COMPILE.c) -g -Wall -DXPRJ_NB_${CND_CONF} -I../app/cfg -I../../bsw/svc/cwsw_lib/inc -I../../bsw/svc/inc -I../../bsw/svc/cwsw_evq/inc -I../../bsw/svc/cwsw_event/inc -I../../bsw/svc/cwsw_clock/inc -I../../bsw/svc/cwsw_swtimer/inc -I../../libs/cwsw_board/none -I../../bsw/ecu/cwsw_arch/inc/i386 -I../libs/cwsw_board/none -std=c11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/28111b26/cwsw_arch.o ../../bsw/ecu/cwsw_arch/src/i386/cwsw_arch.c
 
 ${OBJECTDIR}/_ext/b0466254/cwsw_clock_svc.o: ../../bsw/svc/cwsw_clock/src/cwsw_clock_svc.c
 	${MKDIR} -p ${OBJECTDIR}/_ext/b0466254
 	${RM} "$@.d"
-	$(COMPILE.c) -g -Wall -DXPRJ_NB_${CND_CONF} -I../../app/cfg -I../../bsw/svc/cwsw_lib/inc -I../../bsw/svc/inc -I../../bsw/svc/cwsw_evq/inc -I../../bsw/svc/cwsw_event/inc -I../../bsw/svc/cwsw_clock/inc -I../../bsw/svc/cwsw_swtimer/inc -I../../bsw/bsp/cwsw_board/none -I../../bsw/ecu/cwsw_arch/inc/i386 -std=c11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/b0466254/cwsw_clock_svc.o ../../bsw/svc/cwsw_clock/src/cwsw_clock_svc.c
+	$(COMPILE.c) -g -Wall -DXPRJ_NB_${CND_CONF} -I../app/cfg -I../../bsw/svc/cwsw_lib/inc -I../../bsw/svc/inc -I../../bsw/svc/cwsw_evq/inc -I../../bsw/svc/cwsw_event/inc -I../../bsw/svc/cwsw_clock/inc -I../../bsw/svc/cwsw_swtimer/inc -I../../libs/cwsw_board/none -I../../bsw/ecu/cwsw_arch/inc/i386 -I../libs/cwsw_board/none -std=c11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/b0466254/cwsw_clock_svc.o ../../bsw/svc/cwsw_clock/src/cwsw_clock_svc.c
 
 ${OBJECTDIR}/_ext/e9e0d2e0/cwsw_event.o: ../../bsw/svc/cwsw_event/src/cwsw_event.c
 	${MKDIR} -p ${OBJECTDIR}/_ext/e9e0d2e0
 	${RM} "$@.d"
-	$(COMPILE.c) -g -Wall -DXPRJ_NB_${CND_CONF} -I../../app/cfg -I../../bsw/svc/cwsw_lib/inc -I../../bsw/svc/inc -I../../bsw/svc/cwsw_evq/inc -I../../bsw/svc/cwsw_event/inc -I../../bsw/svc/cwsw_clock/inc -I../../bsw/svc/cwsw_swtimer/inc -I../../bsw/bsp/cwsw_board/none -I../../bsw/ecu/cwsw_arch/inc/i386 -std=c11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/e9e0d2e0/cwsw_event.o ../../bsw/svc/cwsw_event/src/cwsw_event.c
+	$(COMPILE.c) -g -Wall -DXPRJ_NB_${CND_CONF} -I../app/cfg -I../../bsw/svc/cwsw_lib/inc -I../../bsw/svc/inc -I../../bsw/svc/cwsw_evq/inc -I../../bsw/svc/cwsw_event/inc -I../../bsw/svc/cwsw_clock/inc -I../../bsw/svc/cwsw_swtimer/inc -I../../libs/cwsw_board/none -I../../bsw/ecu/cwsw_arch/inc/i386 -I../libs/cwsw_board/none -std=c11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/e9e0d2e0/cwsw_event.o ../../bsw/svc/cwsw_event/src/cwsw_event.c
 
 ${OBJECTDIR}/_ext/5fe49f66/cwsw_evqueue.o: ../../bsw/svc/cwsw_evq/src/cwsw_evqueue.c
 	${MKDIR} -p ${OBJECTDIR}/_ext/5fe49f66
 	${RM} "$@.d"
-	$(COMPILE.c) -g -Wall -DXPRJ_NB_${CND_CONF} -I../../app/cfg -I../../bsw/svc/cwsw_lib/inc -I../../bsw/svc/inc -I../../bsw/svc/cwsw_evq/inc -I../../bsw/svc/cwsw_event/inc -I../../bsw/svc/cwsw_clock/inc -I../../bsw/svc/cwsw_swtimer/inc -I../../bsw/bsp/cwsw_board/none -I../../bsw/ecu/cwsw_arch/inc/i386 -std=c11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/5fe49f66/cwsw_evqueue.o ../../bsw/svc/cwsw_evq/src/cwsw_evqueue.c
+	$(COMPILE.c) -g -Wall -DXPRJ_NB_${CND_CONF} -I../app/cfg -I../../bsw/svc/cwsw_lib/inc -I../../bsw/svc/inc -I../../bsw/svc/cwsw_evq/inc -I../../bsw/svc/cwsw_event/inc -I../../bsw/svc/cwsw_clock/inc -I../../bsw/svc/cwsw_swtimer/inc -I../../libs/cwsw_board/none -I../../bsw/ecu/cwsw_arch/inc/i386 -I../libs/cwsw_board/none -std=c11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/5fe49f66/cwsw_evqueue.o ../../bsw/svc/cwsw_evq/src/cwsw_evqueue.c
 
 ${OBJECTDIR}/_ext/bb2ddd8b/cwsw_lib.o: ../../bsw/svc/cwsw_lib/src/cwsw_lib.c
 	${MKDIR} -p ${OBJECTDIR}/_ext/bb2ddd8b
 	${RM} "$@.d"
-	$(COMPILE.c) -g -Wall -DXPRJ_NB_${CND_CONF} -I../../app/cfg -I../../bsw/svc/cwsw_lib/inc -I../../bsw/svc/inc -I../../bsw/svc/cwsw_evq/inc -I../../bsw/svc/cwsw_event/inc -I../../bsw/svc/cwsw_clock/inc -I../../bsw/svc/cwsw_swtimer/inc -I../../bsw/bsp/cwsw_board/none -I../../bsw/ecu/cwsw_arch/inc/i386 -std=c11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/bb2ddd8b/cwsw_lib.o ../../bsw/svc/cwsw_lib/src/cwsw_lib.c
+	$(COMPILE.c) -g -Wall -DXPRJ_NB_${CND_CONF} -I../app/cfg -I../../bsw/svc/cwsw_lib/inc -I../../bsw/svc/inc -I../../bsw/svc/cwsw_evq/inc -I../../bsw/svc/cwsw_event/inc -I../../bsw/svc/cwsw_clock/inc -I../../bsw/svc/cwsw_swtimer/inc -I../../libs/cwsw_board/none -I../../bsw/ecu/cwsw_arch/inc/i386 -I../libs/cwsw_board/none -std=c11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/bb2ddd8b/cwsw_lib.o ../../bsw/svc/cwsw_lib/src/cwsw_lib.c
 
 ${OBJECTDIR}/_ext/a00d43e7/cwsw_swtimer.o: ../../bsw/svc/cwsw_swtimer/src/cwsw_swtimer.c
 	${MKDIR} -p ${OBJECTDIR}/_ext/a00d43e7
 	${RM} "$@.d"
-	$(COMPILE.c) -g -Wall -DXPRJ_NB_${CND_CONF} -I../../app/cfg -I../../bsw/svc/cwsw_lib/inc -I../../bsw/svc/inc -I../../bsw/svc/cwsw_evq/inc -I../../bsw/svc/cwsw_event/inc -I../../bsw/svc/cwsw_clock/inc -I../../bsw/svc/cwsw_swtimer/inc -I../../bsw/bsp/cwsw_board/none -I../../bsw/ecu/cwsw_arch/inc/i386 -std=c11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/a00d43e7/cwsw_swtimer.o ../../bsw/svc/cwsw_swtimer/src/cwsw_swtimer.c
+	$(COMPILE.c) -g -Wall -DXPRJ_NB_${CND_CONF} -I../app/cfg -I../../bsw/svc/cwsw_lib/inc -I../../bsw/svc/inc -I../../bsw/svc/cwsw_evq/inc -I../../bsw/svc/cwsw_event/inc -I../../bsw/svc/cwsw_clock/inc -I../../bsw/svc/cwsw_swtimer/inc -I../../libs/cwsw_board/none -I../../bsw/ecu/cwsw_arch/inc/i386 -I../libs/cwsw_board/none -std=c11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/a00d43e7/cwsw_swtimer.o ../../bsw/svc/cwsw_swtimer/src/cwsw_swtimer.c
 
 ${OBJECTDIR}/_ext/ae0ac54c/cwsw_svc.o: ../../bsw/svc/src/cwsw_svc.c
 	${MKDIR} -p ${OBJECTDIR}/_ext/ae0ac54c
 	${RM} "$@.d"
-	$(COMPILE.c) -g -Wall -DXPRJ_NB_${CND_CONF} -I../../app/cfg -I../../bsw/svc/cwsw_lib/inc -I../../bsw/svc/inc -I../../bsw/svc/cwsw_evq/inc -I../../bsw/svc/cwsw_event/inc -I../../bsw/svc/cwsw_clock/inc -I../../bsw/svc/cwsw_swtimer/inc -I../../bsw/bsp/cwsw_board/none -I../../bsw/ecu/cwsw_arch/inc/i386 -std=c11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/ae0ac54c/cwsw_svc.o ../../bsw/svc/src/cwsw_svc.c
+	$(COMPILE.c) -g -Wall -DXPRJ_NB_${CND_CONF} -I../app/cfg -I../../bsw/svc/cwsw_lib/inc -I../../bsw/svc/inc -I../../bsw/svc/cwsw_evq/inc -I../../bsw/svc/cwsw_event/inc -I../../bsw/svc/cwsw_clock/inc -I../../bsw/svc/cwsw_swtimer/inc -I../../libs/cwsw_board/none -I../../bsw/ecu/cwsw_arch/inc/i386 -I../libs/cwsw_board/none -std=c11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/ae0ac54c/cwsw_svc.o ../../bsw/svc/src/cwsw_svc.c
+
+${OBJECTDIR}/_ext/e89cc024/CritSect.o: ../app/cwsw_lib_prj/CritSect.c
+	${MKDIR} -p ${OBJECTDIR}/_ext/e89cc024
+	${RM} "$@.d"
+	$(COMPILE.c) -g -Wall -DXPRJ_NB_${CND_CONF} -I../app/cfg -I../../bsw/svc/cwsw_lib/inc -I../../bsw/svc/inc -I../../bsw/svc/cwsw_evq/inc -I../../bsw/svc/cwsw_event/inc -I../../bsw/svc/cwsw_clock/inc -I../../bsw/svc/cwsw_swtimer/inc -I../../libs/cwsw_board/none -I../../bsw/ecu/cwsw_arch/inc/i386 -I../libs/cwsw_board/none -std=c11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/e89cc024/CritSect.o ../app/cwsw_lib_prj/CritSect.c
+
+${OBJECTDIR}/_ext/511dfd52/main.o: ../app/main.c
+	${MKDIR} -p ${OBJECTDIR}/_ext/511dfd52
+	${RM} "$@.d"
+	$(COMPILE.c) -g -Wall -DXPRJ_NB_${CND_CONF} -I../app/cfg -I../../bsw/svc/cwsw_lib/inc -I../../bsw/svc/inc -I../../bsw/svc/cwsw_evq/inc -I../../bsw/svc/cwsw_event/inc -I../../bsw/svc/cwsw_clock/inc -I../../bsw/svc/cwsw_swtimer/inc -I../../libs/cwsw_board/none -I../../bsw/ecu/cwsw_arch/inc/i386 -I../libs/cwsw_board/none -std=c11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/511dfd52/main.o ../app/main.c
+
+${OBJECTDIR}/_ext/bf66c54b/cwsw_board.o: ../libs/cwsw_board/none/src/cwsw_board.c
+	${MKDIR} -p ${OBJECTDIR}/_ext/bf66c54b
+	${RM} "$@.d"
+	$(COMPILE.c) -g -Wall -DXPRJ_NB_${CND_CONF} -I../app/cfg -I../../bsw/svc/cwsw_lib/inc -I../../bsw/svc/inc -I../../bsw/svc/cwsw_evq/inc -I../../bsw/svc/cwsw_event/inc -I../../bsw/svc/cwsw_clock/inc -I../../bsw/svc/cwsw_swtimer/inc -I../../libs/cwsw_board/none -I../../bsw/ecu/cwsw_arch/inc/i386 -I../libs/cwsw_board/none -std=c11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/bf66c54b/cwsw_board.o ../libs/cwsw_board/none/src/cwsw_board.c
 
 # Subprojects
 .build-subprojects:

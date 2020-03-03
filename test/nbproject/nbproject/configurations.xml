@@ -46,14 +46,17 @@ Contributor(s):
       <logicalFolder name="app" displayName="app" projectFiles="true">
         <logicalFolder name="cfg" displayName="cfg" projectFiles="true">
           <logicalFolder name="vs2010" displayName="vs2010" projectFiles="true">
-            <itemPath>../../app/cfg/vs2010/stdbool.h</itemPath>
+            <itemPath>../app/cfg/vs2010/stdbool.h</itemPath>
           </logicalFolder>
-          <itemPath>../../app/cfg/cwsw_event_proj.h</itemPath>
-          <itemPath>../../app/cfg/projcfg.h</itemPath>
-          <itemPath>../../app/cfg/projevtnames.h</itemPath>
-          <itemPath>../../app/cfg/tedlosevents.h</itemPath>
+          <itemPath>../app/cfg/cwsw_event_proj.h</itemPath>
+          <itemPath>../app/cfg/projcfg.h</itemPath>
+          <itemPath>../app/cfg/projevtnames.h</itemPath>
+          <itemPath>../app/cfg/tedlosevents.h</itemPath>
         </logicalFolder>
-        <itemPath>../../app/tedlos.h</itemPath>
+        <itemPath>../app/tedlos.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f1" displayName="bsp" projectFiles="true">
+        <itemPath>../libs/cwsw_board/none/cwsw_board.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f1" displayName="Lib" projectFiles="true">
         <itemPath>../../bsw/svc/cwsw_lib/inc/README.md</itemPath>
@@ -91,9 +94,9 @@ Contributor(s):
         <logicalFolder name="cwsw_lib_prj"
                        displayName="cwsw_lib_prj"
                        projectFiles="true">
-          <itemPath>../../app/cwsw_lib_prj/CritSect.c</itemPath>
+          <itemPath>../app/cwsw_lib_prj/CritSect.c</itemPath>
         </logicalFolder>
-        <itemPath>../../app/main.c</itemPath>
+        <itemPath>../app/main.c</itemPath>
       </logicalFolder>
       <logicalFolder name="f1" displayName="arch" projectFiles="true">
         <logicalFolder name="i386" displayName="i386" projectFiles="true">
@@ -115,7 +118,7 @@ Contributor(s):
         </logicalFolder>
       </logicalFolder>
       <logicalFolder name="f4" displayName="bsp" projectFiles="true">
-        <itemPath>../../bsw/bsp/cwsw_board/none/src/cwsw_board.c</itemPath>
+        <itemPath>../libs/cwsw_board/none/src/cwsw_board.c</itemPath>
       </logicalFolder>
       <logicalFolder name="f3" displayName="event" projectFiles="true">
         <itemPath>../../bsw/svc/cwsw_event/src/cwsw_event.c</itemPath>
@@ -153,6 +156,7 @@ Contributor(s):
     <Elem>../../bsw/ecu/cwsw_arch/src</Elem>
     <Elem>../../bsw/ecu/cwsw_arch/inc/i386/peripheral</Elem>
     <Elem>../../bsw/ecu/cwsw_arch/inc/i386/system</Elem>
+    <Elem>../libs/cwsw_board</Elem>
   </sourceRootList>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
@@ -166,15 +170,16 @@ Contributor(s):
         <cTool>
           <standard>10</standard>
           <incDir>
-            <pElem>../../app/cfg</pElem>
+            <pElem>../app/cfg</pElem>
             <pElem>../../bsw/svc/cwsw_lib/inc</pElem>
             <pElem>../../bsw/svc/inc</pElem>
             <pElem>../../bsw/svc/cwsw_evq/inc</pElem>
             <pElem>../../bsw/svc/cwsw_event/inc</pElem>
             <pElem>../../bsw/svc/cwsw_clock/inc</pElem>
             <pElem>../../bsw/svc/cwsw_swtimer/inc</pElem>
-            <pElem>../../bsw/bsp/cwsw_board/none</pElem>
+            <pElem>../../libs/cwsw_board/none</pElem>
             <pElem>../../bsw/ecu/cwsw_arch/inc/i386</pElem>
+            <pElem>../libs/cwsw_board/none</pElem>
           </incDir>
           <preprocessorList>
             <Elem>XPRJ_NB_${CND_CONF}</Elem>
@@ -182,27 +187,6 @@ Contributor(s):
           <warningLevel>2</warningLevel>
         </cTool>
       </compileType>
-      <item path="../../app/cfg/cwsw_event_proj.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="../../app/cfg/projcfg.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="../../app/cfg/projevtnames.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="../../app/cfg/tedlosevents.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="../../app/cfg/vs2010/stdbool.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="../../app/cwsw_lib_prj/CritSect.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="../../app/main.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="../../app/tedlos.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="../../bsw/bsp/cwsw_board/none/src/cwsw_board.c"
-            ex="false"
-            tool="0"
-            flavor2="0">
-      </item>
       <item path="../../bsw/ecu/cwsw_arch/inc/i386/peripheral/ports/ports_api.c"
             ex="false"
             tool="0"
@@ -301,6 +285,32 @@ Contributor(s):
       <item path="../../bsw/svc/inc/cwsw_svc.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="../../bsw/svc/src/cwsw_svc.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../app/cfg/cwsw_event_proj.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../app/cfg/projcfg.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../app/cfg/projevtnames.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../app/cfg/tedlosevents.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../app/cfg/vs2010/stdbool.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../app/cwsw_lib_prj/CritSect.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../app/main.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../app/tedlos.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../libs/cwsw_board/none/cwsw_board.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../libs/cwsw_board/none/src/cwsw_board.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
       </item>
     </conf>
     <conf name="Release" type="1">
@@ -323,27 +333,6 @@ Contributor(s):
           <developmentMode>5</developmentMode>
         </asmTool>
       </compileType>
-      <item path="../../app/cfg/cwsw_event_proj.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="../../app/cfg/projcfg.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="../../app/cfg/projevtnames.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="../../app/cfg/tedlosevents.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="../../app/cfg/vs2010/stdbool.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="../../app/cwsw_lib_prj/CritSect.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="../../app/main.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="../../app/tedlos.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="../../bsw/bsp/cwsw_board/none/src/cwsw_board.c"
-            ex="false"
-            tool="0"
-            flavor2="0">
-      </item>
       <item path="../../bsw/ecu/cwsw_arch/inc/i386/peripheral/ports/ports_api.c"
             ex="false"
             tool="0"
@@ -442,6 +431,32 @@ Contributor(s):
       <item path="../../bsw/svc/inc/cwsw_svc.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="../../bsw/svc/src/cwsw_svc.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../app/cfg/cwsw_event_proj.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../app/cfg/projcfg.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../app/cfg/projevtnames.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../app/cfg/tedlosevents.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../app/cfg/vs2010/stdbool.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../app/cwsw_lib_prj/CritSect.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../app/main.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../app/tedlos.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../libs/cwsw_board/none/cwsw_board.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../libs/cwsw_board/none/src/cwsw_board.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
       </item>
     </conf>
   </confs>
