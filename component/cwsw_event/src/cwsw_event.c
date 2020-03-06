@@ -147,8 +147,30 @@ Cwsw_Evt__GetEvent(pEvQ_Event pEv, pEvQ_EvTable pEvTb, tEvQ_EvtHandle hnd)
 	pfound = Cwsw_Evt__GetEventPtr(pEvTb, hnd);
 	if(pfound)
 	{
+		int crit = Cwsw_Critical_Protect(0);
 		(void)memcpy(pEv, pfound, sizeof(tEvQ_Event));
+		crit = Cwsw_Critical_Release(crit);
 		return kErr_EvQ_NoError;
 	}
 	return kErr_EvQ_BadEvent;
+}
+
+tErrorCodes_EvQ
+Cwsw_Evt__PutEvent(pEvQ_EvTable pEvTb, tEvQ_EvtHandle hnd, pEvQ_Event pEv)
+{
+	pEvQ_Event pfound;
+
+	if(!pEv)					return kErr_EvQ_BadParm;
+	if(!pEvTb)					return kErr_EvQ_BadParm;
+	if(hnd >= pEvTb->szEvTbl)	return kErr_EvQ_BadEvTable;
+
+	pfound = Cwsw_Evt__GetEventPtr(pEvTb, hnd);
+	if(pfound)
+	{
+		int crit = Cwsw_Critical_Protect(0);
+		(void)memcpy(pfound, pEv, sizeof(tEvQ_Event));
+		crit = Cwsw_Critical_Release(crit);
+		return kErr_EvQ_NoError;
+	}
+	return kErr_EvQ_BadEvBuffer;
 }

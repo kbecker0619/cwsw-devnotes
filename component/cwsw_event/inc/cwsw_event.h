@@ -38,7 +38,7 @@ extern "C" {
 // ============================================================================
 
 /** Reserved event value. In the CWSW Event Queue system, this indicates "no event." */
-enum { kEvQ_Ev_None };
+enum { kEvQ_Ev_None = 0 };
 
 /** Error codes returned by Event Queue API.
  *	@ingroup sEvq_EvTable
@@ -51,6 +51,7 @@ enum eErrorCodes_EvQ {
 	kErr_EvQ_BadEvTable,		//!< Bad or invalid event table (tEvQ_EvTable).
 	kErr_EvQ_BadEvBuffer,		//!< Bad or invalid buffer for events (tEvQ_Event[]).
 	kErr_EvQ_BadEvent,			//!< Bad or invalid event.
+	kErr_EvQ_QueueEmpty,		//!< Queue empty, cannot get event from queue.
 	kErr_EvQ_QueueFull,			//!< Queue full, cannot add new event to queue.
 };
 
@@ -110,6 +111,7 @@ typedef int32_t	tEvQ_EvtHandle;		/* would prefer to use `ssize_t`, but that's a 
 extern tErrorCodes_EvQ	Cwsw_Evt__InitEventTable(pEvQ_EvTable pEvQTable, pEvQ_Event pTable, size_t TableSize);		/* initialize a table of events */
 extern pEvQ_Event		Cwsw_Evt__GetEventPtr(pEvQ_EvTable pEvTbl, tEvQ_EvtHandle hnd);
 extern tErrorCodes_EvQ	Cwsw_Evt__GetEvent(pEvQ_Event pEv, pEvQ_EvTable pEvTb, tEvQ_EvtHandle hnd);
+extern tErrorCodes_EvQ	Cwsw_Evt__PutEvent(pEvQ_EvTable pEvTb, tEvQ_EvtHandle hnd, pEvQ_Event pEv);
 
 #define Cwsw_EvT__InitEvent(pEv)	memset(pEv, 0, sizeof(tEvQ_Event))
 

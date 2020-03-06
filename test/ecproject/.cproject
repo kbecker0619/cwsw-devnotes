@@ -43,7 +43,7 @@
 								<option id="gnu.c.compiler.mingw.exe.debug.option.debugging.level.966820115" name="Debug Level" superClass="gnu.c.compiler.mingw.exe.debug.option.debugging.level" useByScannerDiscovery="false" value="gnu.c.debugging.level.max" valueType="enumerated"/>
 								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="gnu.c.compiler.option.include.paths.2128645034" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" useByScannerDiscovery="false" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../libs/cwsw_arch/inc/i386&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../../bsw/evq/inc&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../../component/evq/inc&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../../bsw/svc/inc&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../libs/cwsw_clock/inc&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../../component/cwsw_event/inc&quot;"/>
@@ -72,18 +72,8 @@
 							</tool>
 						</toolChain>
 					</folderInfo>
-					<folderInfo id="cdt.managedbuild.config.gnu.mingw.exe.debug.1736302436.1794166950" name="/" resourcePath="component/evq">
-						<toolChain id="cdt.managedbuild.toolchain.gnu.mingw.exe.debug.2051824795" name="MinGW GCC" superClass="cdt.managedbuild.toolchain.gnu.mingw.exe.debug" unusedChildren="">
-							<tool id="cdt.managedbuild.tool.gnu.assembler.mingw.exe.debug.1265111283" name="GCC Assembler" superClass="cdt.managedbuild.tool.gnu.assembler.mingw.exe.debug.955745680"/>
-							<tool id="cdt.managedbuild.tool.gnu.archiver.mingw.base.317540264" name="GCC Archiver" superClass="cdt.managedbuild.tool.gnu.archiver.mingw.base.1004530742"/>
-							<tool id="cdt.managedbuild.tool.gnu.cpp.compiler.mingw.exe.debug.377008931" name="GCC C++ Compiler" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.mingw.exe.debug.1050297134"/>
-							<tool id="cdt.managedbuild.tool.gnu.c.compiler.mingw.exe.debug.551505244" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.mingw.exe.debug.1489450762"/>
-							<tool id="cdt.managedbuild.tool.gnu.c.linker.mingw.exe.debug.1521249724" name="MinGW C Linker" superClass="cdt.managedbuild.tool.gnu.c.linker.mingw.exe.debug.1268148108"/>
-							<tool id="cdt.managedbuild.tool.gnu.cpp.linker.mingw.exe.debug.290336911" name="MinGW C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.mingw.exe.debug.1051958027"/>
-						</toolChain>
-					</folderInfo>
 					<sourceEntries>
-						<entry excluding="component/evq|component/cwsw_event/test|component/cwsw_event/test/cwsw_lib/test|libs/cwsw_swtimer|libs/cwsw_clock|libs/cwsw_arch/test|libs/cwsw_lib/test|bsw/svc/cwsw_evq/test|bsw/svc/cwsw_event/test|bsw/svc/cwsw_event/test/nbproject|bsw/svc/cwsw_event/test/vsproject|bsw/svc/cwsw_event/test/ecproject|bsw/svc/cwsw_event/test/app|bsw/svc/cwsw_event/test/cwsw_lib/test/ut|bsw/svc/cwsw_swtimer/src/cwsw_swtimer.c|bsw/svc/cwsw_clock/src/cwsw_clock_svc.c|bsw/evq/src/cwsw_evhandler.c|app/tedlos.c|src|bsw/svc/cwsw_lib/test|bsw/ecu/cwsw_arch/test" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+						<entry excluding="component/cwsw_event/test|component/cwsw_event/test/cwsw_lib/test|libs/cwsw_swtimer|libs/cwsw_clock|libs/cwsw_arch/test|libs/cwsw_lib/test|bsw/svc/cwsw_evq/test|bsw/svc/cwsw_event/test|bsw/svc/cwsw_event/test/nbproject|bsw/svc/cwsw_event/test/vsproject|bsw/svc/cwsw_event/test/ecproject|bsw/svc/cwsw_event/test/app|bsw/svc/cwsw_event/test/cwsw_lib/test/ut|bsw/svc/cwsw_swtimer/src/cwsw_swtimer.c|bsw/svc/cwsw_clock/src/cwsw_clock_svc.c|bsw/evq/src/cwsw_evhandler.c|app/tedlos.c|src|bsw/svc/cwsw_lib/test|bsw/ecu/cwsw_arch/test" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>

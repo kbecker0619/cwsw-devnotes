@@ -138,68 +138,72 @@ Cwsw_EvQ__InitEvQ(pEvQ_QueueCtrl pEvQ, pEvQ_EvTable pEvTable)
 
 
 tEvQ_ErrorCode
-Cwsw_EvQ__FlushEvents(pEvQ_QueueCtrl pEvQueueCtrl)
+Cwsw_EvQ__FlushEvents(pEvQ_QueueCtrl pEvQ)
 {
 	// check preconditions, in order of priority
-//	if(!initialized)					{ return kErr_EvQ_NotInitialized; }
-//	if(!pEvQueueCtrl) 					{ return kErr_EvQ_BadEvQ; }
-//	if(!pEvQueueCtrl->pEvent_Queue)	{ return kErr_EvQ_BadEvTable; }
-//	if(!pEvQueueCtrl->Queue_Size)		{ return kErr_EvQ_BadEvTable; }
-//
-//	pEvQueueCtrl->idxRead = pEvQueueCtrl->pEvent_Queue;
-//	pEvQueueCtrl->idxWrite = pEvQueueCtrl->pEvent_Queue;
-//	pEvQueueCtrl->Queue_Count = 0;
+	if(!initialized)					{ return kErr_EvQ_NotInitialized; }
+	if(!pEvQ) 							{ return kErr_EvQ_BadEvQ; }
+	if(!pEvQ->pEventTable)				{ return kErr_EvQ_BadEvTable; }
+	if(!pEvQ->pEventTable->pEvBuffer)	{ return kErr_EvQ_BadEvBuffer; }
+	if(!pEvQ->pEventTable->szEvTbl)		{ return kErr_EvQ_BadEvBuffer; }
+
+	pEvQ->idxRead = 0;
+	pEvQ->idxWrite = 0;
+	pEvQ->Queue_Count = 0;
 
 	return kErr_EvQ_NoError;
 }
 
 
 tEvQ_ErrorCode
-Cwsw_EvQ__PostEvent(tEvQ_QueueCtrl *pEvQueueCtrl, tEvQ_Event ev)
+Cwsw_EvQ__PostEvent(pEvQ_QueueCtrl pEvQ, tEvQ_Event ev)
 {
-//	bool isthereroom;
-//	int64_t writerange;
+	tEvQ_ErrorCode rc = kErr_EvQ_NoError;
+	bool isthereroom;
 
-//	// check preconditions, in order of priority
-//	if(!initialized)							{ return kErr_EvQ_NotInitialized; }
-//	if(!pEvQueueCtrl)							{ return kErr_EvQ_BadEvQ; }
-//	if(!pEvQueueCtrl->pEvent_Queue)				{ return kErr_EvQ_BadEvTable; }
-//	if(!pEvQueueCtrl->Queue_Size)				{ return kErr_EvQ_BadEvTable; }
-//	if(!pEvQueueCtrl->idxWrite)					{ return kErr_EvQ_BadEvQ; }
-//
-//	writerange = pEvQueueCtrl->idxWrite - pEvQueueCtrl->pEvent_Queue;
-//	if(writerange < 0)							{ return kErr_EvQ_BadEvQ; }
-//	if(writerange >= pEvQueueCtrl->Queue_Size)	{ return kErr_EvQ_QueueFull; }
-//
-//	isthereroom = (pEvQueueCtrl->Queue_Count < pEvQueueCtrl->Queue_Size);
-//	if(!isthereroom)							{ return kErr_EvQ_QueueFull; }
-//
-//	if(!ev.evId)								{ return kErr_EvQ_BadEvent; }
-//
-//	do {
-//		int crit = Cwsw_Critical_Protect(0);
-//		// add the item to the queue
-//		*( pEvQueueCtrl->idxWrite++ ) = ev;
-//
-//		// adjust the count
-//		++pEvQueueCtrl->Queue_Count;
-//
-//		// check for overflow
-//		if(pEvQueueCtrl->idxWrite > (pEvQueueCtrl->pEvent_Queue + pEvQueueCtrl->Queue_Size))
-//		{
-//			// reset it to beginning
-//			pEvQueueCtrl->idxWrite = pEvQueueCtrl->pEvent_Queue;
-//		}
-//		crit = Cwsw_Critical_Release(crit);
-//	} while(0);
+	// check preconditions, in order of priority
+	if(!initialized)					{ return kErr_EvQ_NotInitialized; }
+	if(!pEvQ)							{ return kErr_EvQ_BadEvQ; }
+	if(!pEvQ->pEventTable)				{ return kErr_EvQ_BadEvTable; }
+	if(!pEvQ->pEventTable->pEvBuffer)	{ return kErr_EvQ_BadEvBuffer;}
+	if(!pEvQ->pEventTable->szEvTbl)		{ return kErr_EvQ_BadEvBuffer; }
+//	if(NULL == pEv)						{ return kErr_EvQ_BadParm; }	<<== reserved for if we convert to pointer-to-event
 
-	return kErr_EvQ_NoError;
+	isthereroom = (pEvQ->Queue_Count < pEvQ->pEventTable->szEvTbl);
+	if(!isthereroom)					{ return kErr_EvQ_QueueFull; }
+
+	if(!ev.evId)						{ return kErr_EvQ_BadEvent; }
+
+	do {
+		tEvQ_EvtHandle idx = 0;
+		int crit = Cwsw_Critical_Protect(0);
+
+		// get the index of the current event to write, increment to point to the next write
+		//	we don't ever expect to have an index > INT_MAX
+		idx = pEvQ->idxWrite++;
+
+		// still updating for the next write, correct for buffer wrap-around
+		if(pEvQ->idxWrite > pEvQ->pEventTable->szEvTbl)
+		{
+			pEvQ->idxWrite = 0;
+		}
+
+		// add the item to the queue
+		rc = Cwsw_Evt__PutEvent(pEvQ->pEventTable, idx, &ev);
+
+		// adjust the count
+		++pEvQ->Queue_Count;
+
+		crit = Cwsw_Critical_Release(crit);
+	} while(0);
+
+	return rc;
 }
 
 
 /** Get an event from the Event Queue.
  * 	Destructive read from the event buffer.
- *	Always writes to the event parameter.
+ *	Always writes to the event parameter, except if queue is presently empty.
  *
  *	@param pEvQ	[inout]	Event Queue. Control metadata is updated during this method's operation.
  *	@param pEv	[out]	Event retrieved. Cleared if event buffer is empty.
@@ -209,40 +213,37 @@ tEvQ_ErrorCode
 Cwsw_EvQ__GetEvent(pEvQ_QueueCtrl pEvQ, pEvQ_Event pEv)
 {
 	tEvQ_ErrorCode rc = kEvQ_Ev_None;
+	tEvQ_EvtHandle idx = 0;
 
 	// check preconditions, in order of priority
-	if(!initialized)							{ return kErr_EvQ_NotInitialized; }
-	if(NULL == pEvQ)							{ return kErr_EvQ_BadEvQ; }
-	if(NULL == pEvQ->pEventTable)				{ return kErr_EvQ_BadEvTable; }
-	if(NULL == pEvQ->pEventTable->pEvBuffer)	{ return kErr_EvQ_BadEvBuffer;}
-	if(0 == pEvQ->pEventTable->szEvTbl)			{ return kErr_EvQ_BadEvBuffer; }
-	if(NULL == pEv)								{ return kErr_EvQ_BadParm; }
+	if(!initialized)					{ return kErr_EvQ_NotInitialized; }
+	if(!pEvQ)							{ return kErr_EvQ_BadEvQ; }
+	if(!pEvQ->pEventTable)				{ return kErr_EvQ_BadEvTable; }
+	if(!pEvQ->pEventTable->pEvBuffer)	{ return kErr_EvQ_BadEvBuffer;}
+	if(!pEvQ->pEventTable->szEvTbl)		{ return kErr_EvQ_BadEvBuffer; }
+	if(!pEv)							{ return kErr_EvQ_BadParm; }
+	if(!pEvQ->Queue_Count)				{ return kErr_EvQ_QueueEmpty; }
 
 	Cwsw_EvT__InitEvent(pEv);
 
-	// are there any entries?
-	if(pEvQ->Queue_Count != 0U)
+	int crit = Cwsw_Critical_Protect(0);	// protect the evq control structure.
+
+	// get the index of the current event to read, increment to point to the next read
+	//	we don't ever expect to have an index > INT_MAX
+	idx = pEvQ->idxRead++;
+
+	// still updating for the next read, correct for buffer wrap-around
+	if(pEvQ->idxRead > pEvQ->pEventTable->szEvTbl)
 	{
-		tEvQ_EvtHandle idx = 0;
-		int crit = Cwsw_Critical_Protect(0);	// protect the evq control structure.
-
-		// get the index of the current event to read, increment to point to the next read
-		//	down-converstion to signed is OK here, we don't ever expect to have an index > INT_MAX
-		idx = pEvQ->idxRead++;
-
-		// still updating for the next read, correct for buffer wrap-around
-		if(pEvQ->idxRead > pEvQ->pEventTable->szEvTbl)
-		{
-			pEvQ->idxRead = 0U;
-		}
-
-		// retrieve the event
-		rc = Cwsw_Evt__GetEvent(pEv, pEvQ->pEventTable, idx);
-
-		// decrement the count
-		pEvQ->Queue_Count--;
-		crit = Cwsw_Critical_Release(crit);
+		pEvQ->idxRead = 0;
 	}
+
+	// retrieve the event
+	rc = Cwsw_Evt__GetEvent(pEv, pEvQ->pEventTable, idx);
+
+	// decrement the count
+	--pEvQ->Queue_Count;
+	crit = Cwsw_Critical_Release(crit);
 
 	// return the event
 	return rc;

@@ -152,7 +152,12 @@ main(void)
 				evq.Queue_Count = 10;
 
 				// retrieve an event
-				Cwsw_EvQ__GetEvent(&evq, &myevent);
+				cwsw_assert(kErr_EvQ_NoError == Cwsw_EvQ__GetEvent(&evq, &myevent), "confirm happy path");
+				cwsw_assert(kErr_EvQ_NoError == Cwsw_EvQ__GetEvent(&evq, &myevent), "confirm happy path");
+				cwsw_assert(kErr_EvQ_NoError == Cwsw_EvQ__FlushEvents(&evq), "confirm happy path");
+				cwsw_assert(kErr_EvQ_NoError == Cwsw_EvQ__PostEvent(&evq, myevent), "confirm happy path");
+				cwsw_assert(kErr_EvQ_NoError == Cwsw_EvQ__GetEvent(&evq, &myevent), "confirm happy path");
+				cwsw_assert(kErr_EvQ_QueueEmpty == Cwsw_EvQ__GetEvent(&evq, &myevent), "confirm happy path");
 
 				// initialize the handlers.
 		//		(void)Cwsw_EvQ__RegisterHandler(evcbTedlos, TABLE_SIZE(evcbTedlos), evOsTmrHeartbeat, Os1msTic);

@@ -53,7 +53,7 @@ typedef enum eErrorCodes_EvQ tEvQ_ErrorCode;
 //! Event Queue control structure
 typedef struct sEvQueue {
 	pEvQ_EvTable	pEventTable;	//!< reference to event table.
-	size_t		 	Queue_Count;	//!< number of items in the queue.
+	int32_t		 	Queue_Count;	//!< number of items in the queue.
 	int32_t			idxWrite;		//!< queue write pointer.
 	int32_t			idxRead;		//!< queue read pointer.
 } tEvQ_QueueCtrl, *pEvQ_QueueCtrl;
@@ -114,7 +114,7 @@ extern tEvQ_ErrorCode Cwsw_EvQ__FlushEvents(pEvQ_QueueCtrl pEvQueueCtrl);
  *	@param[in]		ev Event to add to the queue.
  *	@returns Error code, enumeration of type tEvQ_ErrorCode.
  */
-extern tEvQ_ErrorCode Cwsw_EvQ__PostEvent(tEvQ_QueueCtrl *pEvQueueCtrl, tEvQ_Event ev);
+extern tEvQ_ErrorCode Cwsw_EvQ__PostEvent(pEvQ_QueueCtrl pEvQueueCtrl, tEvQ_Event ev);
 
 /** Retrieve the current event.
  *	Depletes the event count in the queue by one event.
