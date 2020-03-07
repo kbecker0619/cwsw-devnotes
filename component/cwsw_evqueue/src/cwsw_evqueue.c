@@ -214,6 +214,7 @@ Cwsw_EvQ__GetEvent(pEvQ_QueueCtrl pEvQ, pEvQ_Event pEv)
 {
 	tEvQ_ErrorCode rc = kEvQ_Ev_None;
 	tEvQ_EvtHandle idx = 0;
+	int crit = 0;
 
 	// check preconditions, in order of priority
 	if(!initialized)					{ return kErr_EvQ_NotInitialized; }
@@ -226,7 +227,7 @@ Cwsw_EvQ__GetEvent(pEvQ_QueueCtrl pEvQ, pEvQ_Event pEv)
 
 	Cwsw_EvT__InitEvent(pEv);
 
-	int crit = Cwsw_Critical_Protect(0);	// protect the evq control structure.
+	crit = Cwsw_Critical_Protect(0);	// protect the evq control structure.
 
 	// get the index of the current event to read, increment to point to the next read
 	//	we don't ever expect to have an index > INT_MAX

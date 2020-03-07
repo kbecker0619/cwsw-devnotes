@@ -7,9 +7,12 @@ this is a scratchpad for ideation, not an official design document.
 udpate: 23-feb-2020
 
 overall background:														{
-*	coded to C99, primarily because
-	*	i want to use the standardized scalar types not available in C90
-	*	i want to be free to use C++-style comments
+* coded to C99, primarily because
+	* i want to use the standardized scalar types not available in C90
+	* i want to be free to use C++-style comments
+* however, since VS 2010 doesn't know C99, some things "look" closer to C90
+* packaged in one repo, though broken into separate components.
+* UT and documentation apply at the package level.
 }
 
 
@@ -50,23 +53,27 @@ event table																{
 | EvTblSize: size_t			|
 +---------------------------+
 | Init()					|
+| DeInit()					|
+| Get_Initialized()			|
 | InitEventTable()			|
+| GetEventPtr()				|
+| GetEvent()				|
+| PutEvent()				|
 +===========================+
 
 discussion																{
 * simple container for a number of individual events.
-* while not tested, in theory this could be a compile-time, ROM-based table.
+* this could be a compile-time, ROM-based table.
 }
 }
 
 
-event queue control														{
+event queue 															{
 +== tEvQ_QueueCtrl =============+
-| pEvent_Queue:	pEvQ_EvQueue	|	reference to event queue
-| Queue_Size:	uint8_t			|	queue size. this determines the maximum number of events that can be posted at one time.
-| Queue_Count:	uint8_t			|	number of items in the queue.
-| pWrite:		pEvQ_Event		|	queue write pointer; the address to which the next event posted will be written. Defined as a pointer-to-event, rather than an index, to ease reading/writing API, letting complexity fall into queue management code.
-| pRead:		pEvQ_Event		|	queue read pointer; the address that will be read at the next GetEvent() call. Defined as a pointer-to-event, rather than an index, to ease reading/writing API, letting complexity fall into queue management code.
+| pEventTable:	pEvQ_EvTable	|	reference to event table
+| Queue_Count:	int32_t			|	number of items in the queue.
+| idxWrite:		int32_t			|	queue write pointer; the index to which the next event posted will be written.
+| idxRead:		int32_t			|	queue read pointer; the address that will be read at the next GetEvent() call
 +-------------------------------+
 | Init()						|	initializes the COMPONENT "event queue", not any specific instance of an event queue.
 | Get_Initialized()				|	return the component's initialization status.
@@ -113,7 +120,7 @@ event handler association												{
 }
 
 
-event queue control (extended)											{
+event queue (extended)													{
 extends tEvQ_QueueCtrl
 +== tEvQ_QueueCtrlEx ===========+
 | pEvQ_Ctrl:	*tEvQ_QueueCtrl	|	reference to event queue control

@@ -114,19 +114,21 @@ Contributor(s):
         <itemPath>../../component/cwsw_event/src/cwsw_event.c</itemPath>
       </logicalFolder>
     </logicalFolder>
-    <logicalFolder name="cwsw_evq" displayName="cwsw_evq" projectFiles="true">
+    <logicalFolder name="cwsw_evqueue"
+                   displayName="cwsw_evqueue"
+                   projectFiles="true">
       <logicalFolder name="doc" displayName="doc" projectFiles="true">
-        <itemPath>../../component/cwsw_evq/doc/readme.md</itemPath>
+        <itemPath>../../component/cwsw_evqueue/doc/readme.md</itemPath>
       </logicalFolder>
       <logicalFolder name="inc" displayName="inc" projectFiles="true">
-        <itemPath>../../component/cwsw_evq/inc/cwsw_evqueue.h</itemPath>
-        <itemPath>../../component/cwsw_evq/inc/readme.md</itemPath>
+        <itemPath>../../component/cwsw_evqueue/inc/cwsw_evqueue.h</itemPath>
+        <itemPath>../../component/cwsw_evqueue/inc/readme.md</itemPath>
       </logicalFolder>
       <logicalFolder name="src" displayName="src" projectFiles="true">
-        <itemPath>../../component/cwsw_evq/src/cwsw_evqueue.c</itemPath>
-        <itemPath>../../component/cwsw_evq/src/readme.md</itemPath>
+        <itemPath>../../component/cwsw_evqueue/src/cwsw_evqueue.c</itemPath>
+        <itemPath>../../component/cwsw_evqueue/src/readme.md</itemPath>
       </logicalFolder>
-      <itemPath>../../component/cwsw_evq/readme.md</itemPath>
+      <itemPath>../../component/cwsw_evqueue/readme.md</itemPath>
     </logicalFolder>
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
@@ -272,7 +274,7 @@ Contributor(s):
           <incDir>
             <pElem>../app/cfg</pElem>
             <pElem>../libs/cwsw_lib/inc</pElem>
-            <pElem>../../component/cwsw_evq/inc</pElem>
+            <pElem>../../component/cwsw_evqueue/inc</pElem>
             <pElem>../../component/cwsw_event/inc</pElem>
             <pElem>../../bsw/svc/inc</pElem>
             <pElem>../libs/cwsw_board/none</pElem>
@@ -302,29 +304,32 @@ Contributor(s):
             tool="0"
             flavor2="0">
       </item>
-      <item path="../../component/cwsw_evq/doc/readme.md"
+      <item path="../../component/cwsw_evqueue/doc/readme.md"
             ex="false"
             tool="3"
             flavor2="0">
       </item>
-      <item path="../../component/cwsw_evq/inc/cwsw_evqueue.h"
+      <item path="../../component/cwsw_evqueue/inc/cwsw_evqueue.h"
             ex="false"
             tool="3"
             flavor2="0">
       </item>
-      <item path="../../component/cwsw_evq/inc/readme.md"
+      <item path="../../component/cwsw_evqueue/inc/readme.md"
             ex="false"
             tool="3"
             flavor2="0">
       </item>
-      <item path="../../component/cwsw_evq/readme.md" ex="false" tool="3" flavor2="0">
+      <item path="../../component/cwsw_evqueue/readme.md"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
-      <item path="../../component/cwsw_evq/src/cwsw_evqueue.c"
+      <item path="../../component/cwsw_evqueue/src/cwsw_evqueue.c"
             ex="false"
             tool="0"
             flavor2="0">
       </item>
-      <item path="../../component/cwsw_evq/src/readme.md"
+      <item path="../../component/cwsw_evqueue/src/readme.md"
             ex="false"
             tool="3"
             flavor2="0">
@@ -687,29 +692,32 @@ Contributor(s):
             tool="0"
             flavor2="0">
       </item>
-      <item path="../../component/cwsw_evq/doc/readme.md"
+      <item path="../../component/cwsw_evqueue/doc/readme.md"
             ex="false"
             tool="3"
             flavor2="0">
       </item>
-      <item path="../../component/cwsw_evq/inc/cwsw_evqueue.h"
+      <item path="../../component/cwsw_evqueue/inc/cwsw_evqueue.h"
             ex="false"
             tool="3"
             flavor2="0">
       </item>
-      <item path="../../component/cwsw_evq/inc/readme.md"
+      <item path="../../component/cwsw_evqueue/inc/readme.md"
             ex="false"
             tool="3"
             flavor2="0">
       </item>
-      <item path="../../component/cwsw_evq/readme.md" ex="false" tool="3" flavor2="0">
+      <item path="../../component/cwsw_evqueue/readme.md"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
-      <item path="../../component/cwsw_evq/src/cwsw_evqueue.c"
+      <item path="../../component/cwsw_evqueue/src/cwsw_evqueue.c"
             ex="false"
             tool="0"
             flavor2="0">
       </item>
-      <item path="../../component/cwsw_evq/src/readme.md"
+      <item path="../../component/cwsw_evqueue/src/readme.md"
             ex="false"
             tool="3"
             flavor2="0">

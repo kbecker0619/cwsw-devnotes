@@ -3,10 +3,10 @@
 	url = git@github.com:kbecker0619/cwsw_lib.git
 	branch = development
 [submodule "bsw/cwsw_event/test/doc/doc_core"]
-	path = component/cwsw_event/test/doc/doc_core
+	path = component/doc/doc_core
 	url = git@github.com:kbecker0619/cwsw_doc_core.git
 	branch = development
 [submodule "bsw/cwsw_event/test/cwsw_lib"]
-	path = component/cwsw_event/test/cwsw_lib
+	path = component/test/cwsw_lib
 	url = git@github.com:kbecker0619/cwsw_lib.git
 	branch = development

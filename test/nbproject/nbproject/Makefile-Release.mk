@@ -37,7 +37,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 OBJECTFILES= \
 	${OBJECTDIR}/_ext/ae0ac54c/cwsw_svc.o \
 	${OBJECTDIR}/_ext/585d8c3a/cwsw_event.o \
-	${OBJECTDIR}/_ext/5d13e740/cwsw_evqueue.o \
+	${OBJECTDIR}/_ext/de9b22e0/cwsw_evqueue.o \
 	${OBJECTDIR}/_ext/e89cc024/CritSect.o \
 	${OBJECTDIR}/_ext/511dfd52/main.o \
 	${OBJECTDIR}/_ext/70639f51/ports_api.o \
@@ -80,10 +80,10 @@ ${OBJECTDIR}/_ext/585d8c3a/cwsw_event.o: ../../component/cwsw_event/src/cwsw_eve
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/585d8c3a/cwsw_event.o ../../component/cwsw_event/src/cwsw_event.c
 
-${OBJECTDIR}/_ext/5d13e740/cwsw_evqueue.o: ../../component/cwsw_evq/src/cwsw_evqueue.c
-	${MKDIR} -p ${OBJECTDIR}/_ext/5d13e740
+${OBJECTDIR}/_ext/de9b22e0/cwsw_evqueue.o: ../../component/cwsw_evqueue/src/cwsw_evqueue.c
+	${MKDIR} -p ${OBJECTDIR}/_ext/de9b22e0
 	${RM} "$@.d"
-	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/5d13e740/cwsw_evqueue.o ../../component/cwsw_evq/src/cwsw_evqueue.c
+	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/de9b22e0/cwsw_evqueue.o ../../component/cwsw_evqueue/src/cwsw_evqueue.c
 
 ${OBJECTDIR}/_ext/e89cc024/CritSect.o: ../app/cwsw_lib_prj/CritSect.c
 	${MKDIR} -p ${OBJECTDIR}/_ext/e89cc024
