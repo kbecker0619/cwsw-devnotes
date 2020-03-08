@@ -1,12 +1,13 @@
 /** @file
  *
- *	Description:
+ *	@brief	Definition of the Event object.
+ *	The Event object is the base type upon which the Event Queue and its extended forms is built.
  *
+ *	\copyright
  *	Copyright (c) 2020 Kevin L. Becker. All rights reserved.
  *
- *	Original:
  *	Created on: Feb 24, 2020
- *	Author: KBECKE35
+ *	@author: kbecker
  */
 
 #ifndef CWSW_EVENT_H
@@ -22,7 +23,7 @@
 
 // ----	Project Headers -------------------------
 #include "projcfg.h"
-#include "cwsw_lib.h"
+#include "cwsw_lib.h"			/* kErr_Lib_NoError */
 
 // ----	Module Headers --------------------------
 #include "cwsw_event_proj.h"	/* project-specific compile-time configuration */
@@ -60,11 +61,11 @@ enum eErrorCodes_EvQ {
 // ----	Type Definitions ------------------------------------------------------
 // ============================================================================
 
-typedef enum eErrorCodes_EvQ tErrorCodes_EvQ;
-
-/** @defgroup tEvQ_Event	Event for Event Queue usage.
+/** @defgroup tEvQ_Event	Event data type for Event Queue usage.
  *	@brief	Base class for Event Queue component.
  */
+
+typedef enum eErrorCodes_EvQ tErrorCodes_EvQ;
 
 /** Event object.
  *	Relies on the project-specific definition of a Event ID container type.
@@ -74,28 +75,14 @@ typedef enum eErrorCodes_EvQ tErrorCodes_EvQ;
 typedef struct sEvQ_Event {
 	tEvQ_EventID	evId;		//!< Scalar number, unambiguous identifier for "this" event.
 	uint32_t		evData;		//!< Supplemental data to augment the context of the event.
-} tEvQ_Event, *pEvQ_Event;
+} tEvQ_Event;
 
-
-/** @defgroup sEvq_EvTable	Table of events for Event Queue usage.
- *	@brief In order to have a queue, you must have a storage container for those items; this is the storage for the events in the event queue.
- */
-
-/**	Table of Events for projects that use the CWSW Event Queue.
- *	By design, the project must allocate the actual table of events; the project may want to locate
- *	the event buffer in a different memory segment than the control struct itself.
+/** Reference to one row in a buffer of events.
+ *	Also used to point at the base of an event buffer.
  *
- *	@ingroup sEvq_EvTable
+ *	@ingroup tEvQ_Event
  */
-typedef struct sEvq_EvTable {
-	pEvQ_Event		pEvBuffer;	//!< Pointer to event table
-	int32_t			szEvTbl;	//!< Size of embedded table. Signed int to allow for `-1`.
-} tEvQ_EvTable, *pEvQ_EvTable;
-
-/** "Handle" for the position of a specific event in the event-handler table.
- *	Intention is to use value `-1` to indicate invalid reference.
- */
-typedef int32_t	tEvQ_EvtHandle;		/* would prefer to use `ssize_t`, but that's a POSIX type, not a C type */
+typedef tEvQ_Event *pEvQ_Event;
 
 
 // ============================================================================
@@ -108,13 +95,6 @@ typedef int32_t	tEvQ_EvtHandle;		/* would prefer to use `ssize_t`, but that's a 
 
 // ---- Discrete Functions -------------------------------------------------- {
 
-extern tErrorCodes_EvQ	Cwsw_Evt__InitEventTable(pEvQ_EvTable pEvQTable, pEvQ_Event pTable, size_t TableSize);		/* initialize a table of events */
-extern pEvQ_Event		Cwsw_Evt__GetEventPtr(pEvQ_EvTable pEvTbl, tEvQ_EvtHandle hnd);
-extern tErrorCodes_EvQ	Cwsw_Evt__GetEvent(pEvQ_Event pEv, pEvQ_EvTable pEvTb, tEvQ_EvtHandle hnd);
-extern tErrorCodes_EvQ	Cwsw_Evt__PutEvent(pEvQ_EvTable pEvTb, tEvQ_EvtHandle hnd, pEvQ_Event pEv);
-
-#define Cwsw_EvT__InitEvent(pEv)	memset(pEv, 0, sizeof(tEvQ_Event))
-
 // ---- /Discrete Functions ------------------------------------------------- }
 
 // ---- Targets for Get/Set APIs -------------------------------------------- {
@@ -125,15 +105,21 @@ extern tErrorCodes_EvQ	Cwsw_Evt__PutEvent(pEvQ_EvTable pEvTb, tEvQ_EvtHandle hnd
  *	the Module argument in your IDE (e.g, Eclipse, NetBeans, etc.), and select
  *	Go To Definition.
  */
-enum { Cwsw_EvT = 0 };	/* Component ID for Event Table */
+enum { Cwsw_EvT };		/* Component ID for Event Table */
 
-/** Target symbol for Get(Cwsw_EvT, xxx) interface */
+/** Target symbol for Get(Cwsw_EvT, xxx) interface.
+ *	@ingroup tEvQ_Event
+ */
 #define Cwsw_EvT__Get(resource)		Cwsw_EvT__Get_ ## resource()
 
-/** Target for Get(Cwsw_EvT, Initialized) interface. */
+/** Target for Get(Cwsw_EvT, Initialized) interface.
+ *	@ingroup tEvQ_Event
+ */
 extern bool Cwsw_EvT__Get_Initialized(void);
 
-/** target for Init(Cwsw_EvT) API */
+/** target for Init(Cwsw_EvT) API.
+ *	@ingroup tEvQ_Event
+ */
 extern uint16_t			Cwsw_Evt__Init(void);		/* initialize event _component_ */
 
 extern void				Cwsw_EvT__Deinit(void);

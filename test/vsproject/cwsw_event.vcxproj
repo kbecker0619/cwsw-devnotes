@@ -87,6 +87,7 @@
     <None Include="..\libs\cwsw_lib\inc\README.md" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\component\cwsw_event\src\cwsw_eventtable.c" />
     <ClCompile Include="..\app\cwsw_lib_prj\CritSect.c" />
     <ClCompile Include="..\app\main.c" />
     <ClCompile Include="..\libs\cwsw_board\none\src\cwsw_board.c" />

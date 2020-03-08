@@ -1,12 +1,10 @@
 /** @file cwsw_svc.h
  *
- *	Description:
- *
+ *	\copyright
  *	Copyright (c) 2020 Kevin L. Becker. All rights reserved.
  *
- *	Original:
  *	Created on: Feb 19, 2020
- *	Author: KBECKE35
+ *	@author: kbecker
  */
 
 #ifndef CWSW_SVC_H_

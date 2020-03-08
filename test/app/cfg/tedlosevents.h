@@ -1,13 +1,11 @@
-/** @file evq_events.h
+/** @file
  *	@brief	events for tedlos
  *
- *	Description:
- *
+ *	\copyright
  *	Copyright (c) 2020 Kevin L. Becker. All rights reserved.
  *
- *	Original:
  *	Created on: Feb 8, 2020
- *	Author: KBECKE35
+ *	@author: kbecker
  */
 
 #ifndef PRJ_EVQ_EVENTS_H

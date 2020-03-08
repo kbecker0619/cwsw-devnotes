@@ -1,6 +1,7 @@
 /** @file
  *	@brief	Project Configuration for CWSW Library Unit test environment.
  *
+ *	\copyright
  *	Copyright (c) 2020 Kevin L. Becker. All rights reserved.
  *
  *	Created on: Sep 4, 2016
@@ -271,9 +272,11 @@ extern "C" {
  *	For the demo app + UT environment for the CWSW Library, we'll define this
  *	as a macro that supplies information that might be useful to the UT enviro.
  *
- *	@xreq{SR_LIB_0307}
- *
  *	@ingroup cwsw_lib_crit_section_group
+ *//* Note: the following moved out of Doxy space, to avoid warnings when building component-specific
+ * documentation.
+ *
+ *	@xreq{SR_LIB_0307}
  */
 #define CWSW_LIB_CRIT_SECT_ENTER(protlvl)	cb_lib_demo_cs_enter(protlvl, __FILE__, __LINE__)
 extern void cb_lib_demo_cs_enter(int protlvl, char const * const filename, int const lineno);
@@ -287,9 +290,11 @@ extern void cb_lib_demo_cs_enter(int protlvl, char const * const filename, int c
  *	For this project's UT environment, we'll define this as a macro that
  *	supplies info that might be useful to the UT enviro.
  *
- *	@xreq{SR_LIB_0308}
- *
  *	@ingroup cwsw_lib_crit_section_group
+ *//* Note: the following moved out of Doxy space, to avoid warnings when building component-specific
+ * documentation.
+ *
+ *	@xreq{SR_LIB_0308}
  */
 #define	CWSW_LIB_CRIT_SECT_LEAVE(protlvl)	cb_lib_demo_cs_leave(protlvl, __FILE__, __LINE__)
 extern void cb_lib_demo_cs_leave(int protlvl, char const * const filename, int const lineno);

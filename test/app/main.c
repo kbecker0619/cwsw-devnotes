@@ -1,6 +1,7 @@
 /** @file
  *	@brief	Primary Unit Test file for the CWSW Lib component.
  *
+ *	\copyright
  *	Copyright (c) 2020 Kevin L. Becker. All rights reserved.
  *
  *	Created on: Oct 15, 2019
@@ -26,7 +27,7 @@
 
 // ----	Module Headers --------------------------
 // the point of this project
-//#include "cwsw_evhandler.h"
+#include "cwsw_eventtable.h"
 //#include "tedlos.h"
 
 
@@ -160,7 +161,7 @@ main(void)
 				cwsw_assert(kErr_EvQ_QueueEmpty == Cwsw_EvQ__GetEvent(&evq, &myevent), "confirm happy path");
 
 				// initialize the handlers.
-				(void)Cwsw_EvQ__RegisterHandler(evcbTedlos, TABLE_SIZE(evcbTedlos), evOsTmrHeartbeat, Os1msTic);
+//				(void)Cwsw_EvQ__RegisterHandler(evcbTedlos, TABLE_SIZE(evcbTedlos), evOsTmrHeartbeat, Os1msTic);
 
 				// set up the app-level timer tic task
 		//		Cwsw_SwTmr__Init(&tmrOsTic, 10, 10, &evqcTedlos, 0);

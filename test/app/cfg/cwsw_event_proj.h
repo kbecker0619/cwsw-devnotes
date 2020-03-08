@@ -1,11 +1,11 @@
-/** @file cwsw_evq_proj.h
+/** @file
  *	@brief	Project-specific definitions related to event queues.
  *
+ *	\copyright
  *	Copyright (c) 2020 Kevin L. Becker. All rights reserved.
  *
- *	Original:
  *	Created on: Mar 2, 2018
- *	Author: kbecker
+ *	@author: kbecker
  */
 
 #ifndef CWSW_EVQ_PROJ_H_

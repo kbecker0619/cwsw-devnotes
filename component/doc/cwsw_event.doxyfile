@@ -1,11 +1,10 @@
-# Doxyfile for CWSW Lib component
+# Doxyfile for CWSW Event and Event Queue components
 #   This configuration superclasses the generic Doxy configuration for this project, and provides
 #   a customization of it specifically for this component.
 
 PROJECT_NAME	 = "CWSW Event Services"
 PROJECT_BRIEF	 = "Core event services for the CWSW family of components for embedded software."
 
-MSCGEN_PATH      = 
 DOT_PATH         = 
 # override default values for graph generation (to address Doxy warning in logfile)
 DOT_GRAPH_MAX_NODES    = 150
@@ -22,27 +21,35 @@ PREDEFINED		+=  XPRJ_NB_Debug=1
 @INCLUDE		 = doc_core/cwsw.doxyfile
 
 # configuration inputs
-INPUT           += ../cfg
-EXCLUDE			+= ../cfg/readme.md
-INCLUDE_PATH	+= ../cfg
+#	Note this is for the dev project, not the package 
+INPUT           += ../../test/app/cfg
+EXCLUDE			+= ../../test/app/cfg/readme.md
+INCLUDE_PATH	+= ../../test/app/cfg
+# todo: make this package-relevant, not dev-env relevant
 
-# Unit test inputs
-#   don't enable if you also enable app as input - competing versions of main()
-INPUT			+= ../ut
-EXCLUDE			+= ../ut/readme.md
-INCLUDE_PATH	+= ../ut
 
 # specify front page for Doxy output
 #	note this makes another assumption about this file's location in the project tree
 INPUT			+= ../README.md
 
-# component input files
-INPUT			+= ../../src
-INPUT			+= ../../inc
-EXCLUDE         += ../../src/README.md
-INCLUDE_PATH	+= ../../inc
+# Demo-app inputs
+#	Note this is for the dev project, not the package 
+INPUT			+= ../../test/app
+EXCLUDE			+= ../../test/app/readme.md
+EXCLUDE			+= ../../test/app/tedlos.c
+EXCLUDE			+= ../../test/app/cwsw_lib_prj
+#INCLUDE_PATH	+= ../test/app
 
+# event input files
+INPUT			+= ../cwsw_event
+EXCLUDE         += ../cwsw_event/README.md
+INCLUDE_PATH	+= ../cwsw_event
+
+# event queue input files
+INPUT			+= ../cwsw_evqueue
+EXCLUDE         += ../cwsw_evqueue/README.md
+INCLUDE_PATH	+= ../cwsw_evqueue
 
 # documentation inputs
-INPUT			+= ../../doc
-EXCLUDE			+= ../../doc/README.md
+#INPUT			+= ../../doc
+#EXCLUDE 		+= ../../doc/README.md

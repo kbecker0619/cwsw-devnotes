@@ -1,6 +1,7 @@
 /** @file
  *	@brief	Project-specific event enumerations for simulated events.
  *
+ *	\copyright
  *	Copyright (c) 2020 Kevin L. Becker. All rights reserved.
  *
  *	Created on: Jan 20, 2018

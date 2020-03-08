@@ -42,13 +42,13 @@
 								<option defaultValue="gnu.c.optimization.level.none" id="gnu.c.compiler.mingw.exe.debug.option.optimization.level.884229705" name="Optimization Level" superClass="gnu.c.compiler.mingw.exe.debug.option.optimization.level" useByScannerDiscovery="false" valueType="enumerated"/>
 								<option id="gnu.c.compiler.mingw.exe.debug.option.debugging.level.966820115" name="Debug Level" superClass="gnu.c.compiler.mingw.exe.debug.option.debugging.level" useByScannerDiscovery="false" value="gnu.c.debugging.level.max" valueType="enumerated"/>
 								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="gnu.c.compiler.option.include.paths.2128645034" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" useByScannerDiscovery="false" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../../component/cwsw_event/inc&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../../component/cwsw_evqueue/inc&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../../component/cwsw_evqueue_ex/inc&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../libs/cwsw_arch/inc/i386&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../../component/evq/inc&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../../bsw/svc/inc&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../libs/cwsw_clock/inc&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../../component/cwsw_event/inc&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../libs/cwsw_swtimer/inc&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../../component/cwsw_evq/inc&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../app/cfg&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../libs/cwsw_board/none&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../libs/cwsw_lib/inc&quot;"/>
@@ -70,16 +70,6 @@
 									<additionalInput kind="additionalinput" paths="$(LIBS)"/>
 								</inputType>
 							</tool>
-						</toolChain>
-					</folderInfo>
-					<folderInfo id="cdt.managedbuild.config.gnu.mingw.exe.debug.1736302436.352142731" name="/" resourcePath="component/test">
-						<toolChain id="cdt.managedbuild.toolchain.gnu.mingw.exe.debug.696901847" name="MinGW GCC" superClass="cdt.managedbuild.toolchain.gnu.mingw.exe.debug" unusedChildren="">
-							<tool id="cdt.managedbuild.tool.gnu.assembler.mingw.exe.debug.1290185923" name="GCC Assembler" superClass="cdt.managedbuild.tool.gnu.assembler.mingw.exe.debug.955745680"/>
-							<tool id="cdt.managedbuild.tool.gnu.archiver.mingw.base.710968436" name="GCC Archiver" superClass="cdt.managedbuild.tool.gnu.archiver.mingw.base.1004530742"/>
-							<tool id="cdt.managedbuild.tool.gnu.cpp.compiler.mingw.exe.debug.705442971" name="GCC C++ Compiler" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.mingw.exe.debug.1050297134"/>
-							<tool id="cdt.managedbuild.tool.gnu.c.compiler.mingw.exe.debug.2087004501" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.mingw.exe.debug.1489450762"/>
-							<tool id="cdt.managedbuild.tool.gnu.c.linker.mingw.exe.debug.1103001260" name="MinGW C Linker" superClass="cdt.managedbuild.tool.gnu.c.linker.mingw.exe.debug.1268148108"/>
-							<tool id="cdt.managedbuild.tool.gnu.cpp.linker.mingw.exe.debug.815750338" name="MinGW C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.mingw.exe.debug.1051958027"/>
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
