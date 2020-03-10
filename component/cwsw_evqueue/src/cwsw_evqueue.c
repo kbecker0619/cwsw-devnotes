@@ -1,5 +1,5 @@
 /** @file
- *	@brief
+ *	@brief	Event Queue component definitions and methods.
  *
  *	Description:
  *

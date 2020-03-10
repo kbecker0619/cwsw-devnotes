@@ -1,30 +1,19 @@
-/** @file cwsw_evqueue.h
+/** @file
+ *	@brief	Event Queue component definitions and methods.
  *
- *	Description:
- *
- *	Copyright (c) 2018 Kevin L. Becker. All rights reserved.
+ *	Copyright (c) 2020 Kevin L. Becker. All rights reserved.
  *
  *	Original:
  *	Created on: Mar 1, 2018
  *	Author: kbecker
- *
- *	Current:
- *	$Revision: $
- *	$Date: $
  */
 
 #ifndef CWSW_EVQUEUE_H_
 #define CWSW_EVQUEUE_H_
 
-#ifdef	__cplusplus
-extern "C" {
-#endif
-
 // ============================================================================
 // ----	Include Files ---------------------------------------------------------
 // ============================================================================
-
-#include "projcfg.h"
 
 // ----	System Headers --------------------------
 #include <stdint.h>				/* uint16_t */
@@ -33,11 +22,18 @@ extern "C" {
 #include <limits.h>
 
 // ----	Project Headers -------------------------
+#include "projcfg.h"
 #include "cwsw_lib.h"
 
 // ----	Module Headers --------------------------
 #include "cwsw_event.h"			/* tEvQ_Event */
 #include "cwsw_eventtable.h"	/* pEvQ_EvTable */
+
+
+#ifdef	__cplusplus
+extern "C" {
+#endif
+
 
 // ============================================================================
 // ----	Constants -------------------------------------------------------------
@@ -48,7 +44,8 @@ extern "C" {
 // ============================================================================
 
 /** @defgroup tEvQ_QueueCtrl	Event Queue object.
- *	@brief TBD.
+ *	@brief Takes a table of events and adds management routines to it.
+ *	@ingroup tEvQ_QueueCtrlEx
  */
 
 /** Error codes returned by Event Queue API.

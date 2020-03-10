@@ -1,16 +1,15 @@
-/** @file cwsw_evhandler.h
+/** @file
+ *	@brief	Definitions for the Event Queue Extended component.
  *
- *	Description:
- *
- *	Copyright (c) 2019 Kevin L. Becker. All rights reserved.
+ *	Copyright (c) 2020 Kevin L. Becker. All rights reserved.
  *
  *	Original:
  *	Created on: Feb 8, 2020
  *	Author: KBECKE35
  */
 
-#ifndef BSW_EVQ_INC_CWSW_EVHANDLER_H_
-#define BSW_EVQ_INC_CWSW_EVHANDLER_H_
+#ifndef CWSW_EVHANDLER_H
+#define CWSW_EVHANDLER_H
 
 // ============================================================================
 // ----	Include Files ---------------------------------------------------------
@@ -20,7 +19,7 @@
 
 // ----	Project Headers -------------------------
 #include "projcfg.h"
-#include "cwsw_evqueue.h"	/* tEvQ_Event, et. al. */
+#include "cwsw_evqueue.h"		/* tEvQ_Event, et. al. */
 #include "cwsw_eventtable.h"
 
 // ----	Module Headers --------------------------
@@ -39,25 +38,40 @@ extern "C" {
 // ----	Type Definitions ------------------------------------------------------
 // ============================================================================
 
+/** @defgroup tEvQ_QueueCtrlEx	Event Queue Extended object.
+ *	@brief Builds upon an Event Queue, adding handlers for each type of event.
+ */
+
 /** Event handler, implemented as a function pointer.
  * 	To accommodate the possibility that a common handler could be used for multiple events, pass
  * 	the event as the 1st parameter (so the handler can react accordingly).
  *
  * 	@param ev		Event to handle (typically from Event Queue).
  * 	@param evInt	Supplemental information for the event.
+ *
+ * 	@ingroup tEvQ_QueueCtrlEx
  */
 typedef void (*pEvQ_EvHandlerFunc)(tEvQ_Event evId, uint32_t extra);
 
 /**	Association of event handler to a specific event.
+ *	@note	This type defines _ONE ROW_ of a table of event-handler associations.
+ *
+ * 	@ingroup tEvQ_QueueCtrlEx
  */
 typedef struct sEvHandlerAssoc {
 	tEvQ_EventID		evId;
 	pEvQ_EvHandlerFunc	pEvHandler;
-} tEvQ_EvHandlerAssoc, *pEvQ_EvHandlerAssoc;
+} tEvQ_EvHandlerAssoc;
+
+/** Reference to one row of an Event Handler Association Table.
+ * 	@ingroup tEvQ_QueueCtrlEx
+ */
+typedef tEvQ_EvHandlerAssoc * pEvQ_EvHandlerAssoc;
 
 /** "Handle" for the position of a specific event in the event-handler table.
+ * 	@ingroup tEvQ_QueueCtrlEx
  */
-typedef int32_t	tEvQ_EvtHandle;		/* would prefer to use `ssize_t`, but that's a POSIX type, not a C type */
+typedef tEvQ_EvtHandle	tEvQ_EvtHandle;
 
 
 // ============================================================================
@@ -76,4 +90,4 @@ pEvQ_EvHandlerFunc	Cwsw_EvQ__GetHandler(pEvQ_EvHandlerAssoc pEvHndlr, size_t evt
 }
 #endif
 
-#endif /* BSW_EVQ_INC_CWSW_EVHANDLER_H_ */
+#endif /* CWSW_EVHANDLER_H */

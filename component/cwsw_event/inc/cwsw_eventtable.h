@@ -13,7 +13,6 @@
 #ifndef CWSW_EVENTTABLE_H
 #define CWSW_EVENTTABLE_H
 
-
 // ============================================================================
 // ----	Include Files ---------------------------------------------------------
 // ============================================================================
@@ -25,6 +24,11 @@
 
 // ----	Module Headers --------------------------
 #include "cwsw_event.h"
+
+
+#ifdef	__cplusplus
+extern "C" {
+#endif
 
 
 // ============================================================================
@@ -49,10 +53,16 @@
 typedef struct sEvq_EvTable {
 	pEvQ_Event		pEvBuffer;	//!< Pointer to event table
 	int32_t			szEvTbl;	//!< Size of embedded table. Signed int to allow for `-1`.
-} tEvQ_EvTable, *pEvQ_EvTable;
+} tEvQ_EvTable;
+
+/** Reference to an Event Table.
+ *	@ingroup sEvq_EvTable
+ */
+typedef tEvQ_EvTable *pEvQ_EvTable;
 
 /** "Handle" for the position of a specific event in the event-handler table.
  *	Intention is to use value `-1` to indicate invalid reference.
+ *	@ingroup sEvq_EvTable
  */
 typedef int32_t	tEvQ_EvtHandle;		/* would prefer to use `ssize_t`, but that's a POSIX type, not a C type */
 
@@ -91,5 +101,9 @@ extern tErrorCodes_EvQ	Cwsw_Evt__PutEvent(pEvQ_EvTable pEvTb, tEvQ_EvtHandle hnd
 
 // ---- /Targets for Get/Set APIs ------------------------------------------- }
 
+
+#ifdef	__cplusplus
+}
+#endif
 
 #endif /* CWSW_EVENTTABLE_H */

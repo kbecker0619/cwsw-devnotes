@@ -78,6 +78,8 @@ do_evdispatch(void)
 }
 
 #include "cwsw_evqueue.h"
+#include "cwsw_evthndlrassoc.h"		/* tEvQ_EvHandlerAssoc */
+#include "tedlosevents.h"			/* OS events for this demo */
 int
 main(void)
 {
@@ -134,6 +136,10 @@ main(void)
 			{ 0, 100 }, { 1, 101 }, { 2, 102 }, { 3, 103 }, { 4, 204 },
 			{ 5, 205 }, { 6, 206 }, { 7, 207 }, { 8, 414 }, { 9, 415 },
 		};
+		tEvQ_Event tblEventBuf2[] = {
+			{ 9, 415 }, { 8, 414 }, { 7, 207 }, { 6, 206 }, { 5, 205 },
+			{ 4, 204 }, { 3, 103 }, { 2, 102 }, { 1, 101 }, { 0, 100 },
+		};
 		tEvQ_EvTable evTbl = {0};
 
 		// control structure for the OS event queue
@@ -153,22 +159,60 @@ main(void)
 				evq.Queue_Count = 10;
 
 				// retrieve an event
+				cwsw_assert(kErr_EvQ_NoError == Cwsw_EvQ__GetEvent(&evq, &myevent), "Unexpected initialization problem.");
+					cwsw_assert(0 == myevent.evId, "Unexpected event.");
+					cwsw_assert(100 == myevent.evData, "Unexpected event data.");
 				cwsw_assert(kErr_EvQ_NoError == Cwsw_EvQ__GetEvent(&evq, &myevent), "confirm happy path");
-				cwsw_assert(kErr_EvQ_NoError == Cwsw_EvQ__GetEvent(&evq, &myevent), "confirm happy path");
+					cwsw_assert(1 == myevent.evId, "Unexpected event.");
+					cwsw_assert(101 == myevent.evData, "Unexpected event data.");
 				cwsw_assert(kErr_EvQ_NoError == Cwsw_EvQ__FlushEvents(&evq), "confirm happy path");
 				cwsw_assert(kErr_EvQ_NoError == Cwsw_EvQ__PostEvent(&evq, myevent), "confirm happy path");
 				cwsw_assert(kErr_EvQ_NoError == Cwsw_EvQ__GetEvent(&evq, &myevent), "confirm happy path");
+					cwsw_assert(1 == myevent.evId, "Unexpected event.");
+					cwsw_assert(101 == myevent.evData, "Unexpected event data.");
 				cwsw_assert(kErr_EvQ_QueueEmpty == Cwsw_EvQ__GetEvent(&evq, &myevent), "confirm happy path");
+			}
+			// step 1: initialize event table
+			if(!Cwsw_Evt__InitEventTable(&evTbl, tblEventBuf2, TABLE_SIZE(tblEventBuf2)))
+			{
+				tEvQ_Event myev = {0};
 
-				// initialize the handlers.
+				// step 2: now that the Event Table is initialized, init the Event Queue
+				if(kErr_EvQ_NoError != Cwsw_EvQ__InitEvQ(&evq, &evTbl)) {break;}
+				// for this test only, modify an internal queue attribute to account for the initialization
+				//	done in the event buffer above.
+				evq.Queue_Count = 10;
+
+				// retrieve an event
+				cwsw_assert(kErr_EvQ_NoError == Cwsw_EvQ__GetEvent(&evq, &myev), "Unexpected initialization problem.");
+					cwsw_assert(0 == myev.evId, "Unexpected event.");
+					cwsw_assert(0 == myev.evData, "Unexpected event data.");
+				cwsw_assert(kErr_EvQ_NoError == Cwsw_EvQ__GetEvent(&evq, &myev), "confirm happy path");
+					cwsw_assert(0 == myev.evId, "Unexpected event.");
+					cwsw_assert(0 == myev.evData, "Unexpected event data.");
+				cwsw_assert(kErr_EvQ_NoError == Cwsw_EvQ__FlushEvents(&evq), "confirm happy path");
+				cwsw_assert(kErr_EvQ_NoError == Cwsw_EvQ__PostEvent(&evq, myev), "confirm happy path");
+				cwsw_assert(kErr_EvQ_NoError == Cwsw_EvQ__GetEvent(&evq, &myev), "confirm happy path");
+					cwsw_assert(0 == myev.evId, "Unexpected event.");
+					cwsw_assert(0 == myev.evData, "Unexpected event data.");
+				cwsw_assert(kErr_EvQ_QueueEmpty == Cwsw_EvQ__GetEvent(&evq, &myev), "confirm happy path");
+			}
+		}
+
+	} while(0);
+
+	do {	/* event handler */
+		tEvQ_EvHandlerAssoc mytbl[kNumOsEvqEvents] = { {0} };
+		tEvQ_EvHndlrAssocTable myhandlers = {0};
+
+		Cwsw_EvQX__InitEventHandlerTable(&myhandlers, mytbl, TABLE_SIZE(mytbl));
+
 //				(void)Cwsw_EvQ__RegisterHandler(evcbTedlos, TABLE_SIZE(evcbTedlos), evOsTmrHeartbeat, Os1msTic);
 
 				// set up the app-level timer tic task
 		//		Cwsw_SwTmr__Init(&tmrOsTic, 10, 10, &evqcTedlos, 0);
 		//		Cwsw_SwTmr__SetState(&tmrOsTic, kSwTimerEnabled);
-			}
 
-		}
 
 	} while(0);
 //	do_evdispatch();

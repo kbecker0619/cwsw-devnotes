@@ -50,6 +50,11 @@ INPUT			+= ../cwsw_evqueue
 EXCLUDE         += ../cwsw_evqueue/README.md
 INCLUDE_PATH	+= ../cwsw_evqueue
 
+# extended event queue inputs
+INPUT			+= ../cwsw_evqueue_ex
+EXCLUDE         += ../cwsw_evqueue_ex/README.md
+INCLUDE_PATH	+= ../cwsw_evqueue_ex
+
 # documentation inputs
 #INPUT			+= ../../doc
 #EXCLUDE 		+= ../../doc/README.md

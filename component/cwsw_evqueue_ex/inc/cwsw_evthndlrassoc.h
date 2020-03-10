@@ -1,15 +1,16 @@
 /** @file
- *	@brief	events for tedlos
+ *	@brief	One-sentence short description of file.
  *
  *	\copyright
  *	Copyright (c) 2020 Kevin L. Becker. All rights reserved.
  *
- *	Created on: Feb 8, 2020
- *	@author: kbecker
+ *	Original:
+ *	Created on: Mar 9, 2020
+ *	Author: Kevin
  */
 
-#ifndef PRJ_EVQ_EVENTS_H
-#define PRJ_EVQ_EVENTS_H
+#ifndef CWSW_EVTHNDLRASSOC_H
+#define CWSW_EVTHNDLRASSOC_H
 
 // ============================================================================
 // ----	Include Files ---------------------------------------------------------
@@ -18,9 +19,10 @@
 // ----	System Headers --------------------------
 
 // ----	Project Headers -------------------------
-#include "cwsw_event.h"		/* kEvQ_Ev_None */
+#include "cwsw_event.h"		/* event */
 
 // ----	Module Headers --------------------------
+#include "cwsw_evhandler.h"
 
 
 #ifdef	__cplusplus
@@ -32,30 +34,16 @@ extern "C" {
 // ----	Constants -------------------------------------------------------------
 // ============================================================================
 
-/** Global list of events for the event queue.
- *	Note that this implementation assumes a contiguous list with no gaps in numeric values. This
- *	implementation uses the event value as an index into a table, and sizes all tables according to
- *	the value of kNumOsEvqEvents.
- */
-enum eOsEvqEvents {
-	evOsNullEvent = kEvQ_Ev_None,	/**< reserved value, used for initialization */
-	evOsTmrHeartbeat,
-	evOs_Tmr10MsTaskInit,
-	evGarbageEvent2,
-	evGarbageEvent3,
-	evGarbageEvent4,
-	evGarbageEvent5,
-	evGarbageEvent6,
-	evQuitRqst,
-	kNumOsEvqEvents
-};
-
-
 // ============================================================================
 // ----	Type Definitions ------------------------------------------------------
 // ============================================================================
 
-typedef enum eOsEvqEvents tOsEvqEvents, *pOsEvqEvents;
+typedef struct eEvQ_EvHndlrAssocTable {
+	pEvQ_EvHandlerAssoc	pEvtHndlrTbl;
+	int32_t				szEvtHandlerTbl;
+} tEvQ_EvHndlrAssocTable;
+
+typedef tEvQ_EvHndlrAssocTable * ptEvQ_EvHndlrAssocTable;
 
 
 // ============================================================================
@@ -66,9 +54,11 @@ typedef enum eOsEvqEvents tOsEvqEvents, *pOsEvqEvents;
 // ----	Public API ------------------------------------------------------------
 // ============================================================================
 
+extern tErrorCodes_EvQ Cwsw_EvQX__InitEventHandlerTable(ptEvQ_EvHndlrAssocTable EvtHndlrTbl, pEvQ_EvHandlerAssoc HndlrArray, int32_t szHndlrArray);
+
 
 #ifdef	__cplusplus
 }
 #endif
 
-#endif /* EVQ_EVENTS_H_ */
+#endif /* CWSW_EVTHNDLRASSOC_H */
