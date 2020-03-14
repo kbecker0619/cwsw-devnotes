@@ -136,7 +136,7 @@ Cwsw_EvQ__InitEvQ(pEvQ_QueueCtrl pEvQ, pEvQ_EvTable pEvTable)
 	// check preconditions, in order of priority
 	if(!initialized)			{ return kErr_EvQ_NotInitialized; }		// has component init happened?
 	if(!pEvQ)					{ return kErr_EvQ_BadEvQ; }				// is evq control structure valid?
-	if(!pEvTable)				{ return kErr_EvQ_BadEvTable; }			// is event table valid?
+	if(!pEvTable)				{ return kErr_EvQ_BadTable; }			// is event table valid?
 	if(!pEvTable->pEvBuffer)	{ return kErr_EvQ_BadEvBuffer; }		// is event buffer valid?
 	if(!pEvTable->szEvTbl)		{ return kErr_EvQ_BadEvBuffer; }		// is event buffer valid? (while the event component itself allows zero-size tables, we don't)
 
@@ -167,7 +167,7 @@ Cwsw_EvQ__FlushEvents(pEvQ_QueueCtrl pEvQ)
 	// check preconditions, in order of priority
 	if(!initialized)					{ return kErr_EvQ_NotInitialized; }
 	if(!pEvQ) 							{ return kErr_EvQ_BadEvQ; }
-	if(!pEvQ->pEventTable)				{ return kErr_EvQ_BadEvTable; }
+	if(!pEvQ->pEventTable)				{ return kErr_EvQ_BadTable; }
 	if(!pEvQ->pEventTable->pEvBuffer)	{ return kErr_EvQ_BadEvBuffer; }
 	if(!pEvQ->pEventTable->szEvTbl)		{ return kErr_EvQ_BadEvBuffer; }
 
@@ -197,7 +197,7 @@ Cwsw_EvQ__PostEvent(pEvQ_QueueCtrl pEvQ, tEvQ_Event ev)
 	// check preconditions, in order of priority
 	if(!initialized)					{ return kErr_EvQ_NotInitialized; }
 	if(!pEvQ)							{ return kErr_EvQ_BadEvQ; }
-	if(!pEvQ->pEventTable)				{ return kErr_EvQ_BadEvTable; }
+	if(!pEvQ->pEventTable)				{ return kErr_EvQ_BadTable; }
 	if(!pEvQ->pEventTable->pEvBuffer)	{ return kErr_EvQ_BadEvBuffer;}
 	if(!pEvQ->pEventTable->szEvTbl)		{ return kErr_EvQ_BadEvBuffer; }
 //	if(NULL == pEv)						{ return kErr_EvQ_BadParm; }	<<== reserved for if we convert to pointer-to-event
@@ -255,7 +255,7 @@ Cwsw_EvQ__GetEvent(pEvQ_QueueCtrl pEvQ, pEvQ_Event pEv)
 	// check preconditions, in order of priority
 	if(!initialized)					{ return kErr_EvQ_NotInitialized; }
 	if(!pEvQ)							{ return kErr_EvQ_BadEvQ; }
-	if(!pEvQ->pEventTable)				{ return kErr_EvQ_BadEvTable; }
+	if(!pEvQ->pEventTable)				{ return kErr_EvQ_BadTable; }
 	if(!pEvQ->pEventTable->pEvBuffer)	{ return kErr_EvQ_BadEvBuffer;}
 	if(!pEvQ->pEventTable->szEvTbl)		{ return kErr_EvQ_BadEvBuffer; }
 	if(!pEv)							{ return kErr_EvQ_BadParm; }

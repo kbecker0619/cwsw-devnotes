@@ -1,5 +1,5 @@
 /** @file
- *	@brief	Primary Unit Test file for the CWSW Lib component.
+ *	@brief	demo main() for CWSW Event Queue and EvQ Extended.
  *
  *	\copyright
  *	Copyright (c) 2020 Kevin L. Becker. All rights reserved.
@@ -80,6 +80,7 @@ do_evdispatch(void)
 #include "cwsw_evqueue.h"
 #include "cwsw_evthndlrassoc.h"		/* tEvQ_EvHandlerAssoc */
 #include "tedlosevents.h"			/* OS events for this demo */
+
 int
 main(void)
 {
@@ -203,9 +204,10 @@ main(void)
 
 	do {	/* event handler */
 		tEvQ_EvHandlerAssoc mytbl[kNumOsEvqEvents] = { {0} };
-		tEvQ_EvHndlrAssocTable myhandlers = {0};
+		tEvQ_EvHndlrAssocTable tblMyHandlers = {0};
 
-		Cwsw_EvQX__InitEventHandlerTable(&myhandlers, mytbl, TABLE_SIZE(mytbl));
+		(void)Cwsw_EvQX__InitEventHandlerTable(&tblMyHandlers, mytbl, TABLE_SIZE(mytbl));
+		Cwsw_EvQX__SetEvHandler(&tblMyHandlers, 1, NULL);
 
 //				(void)Cwsw_EvQ__RegisterHandler(evcbTedlos, TABLE_SIZE(evcbTedlos), evOsTmrHeartbeat, Os1msTic);
 

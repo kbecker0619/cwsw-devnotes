@@ -48,24 +48,24 @@
  * 	This implementation uses the Event ID as an index into the handler table; we're trading ease-of-
  * 	implementation + fast lookup speed, for sparse tables.
  *
- * @param pEvHndlr		Pointer to the event-handler table (presumed to be index 0, or at least as much room left in the table as specified size).
+ * @param pEvHndlrTbl	Pointer to the event-handler table (presumed to be index 0, or at least as much room left in the table as specified size).
  * @param evtblsz		Size of event-handler table.
- * @param ev			Event to search for.
+ * @param evId			Event to search for.
  * @return				Index in the table where event was found, or -1 if not found
  */
 static tEvQ_EvtHandle
-get_ev_handle(pEvQ_EvHandlerAssoc pEvHndlrTbl, size_t evtblsz, tEvQ_EventID ev)
+get_ev_handle(pEvQ_EvHandlerAssoc pEvHndlrTbl, size_t evtblsz, tEvQ_EventID evId)
 {
 	tEvQ_EvtHandle		handle = 0;
 	if(!pEvHndlrTbl)	return -1;	// no table specified
 	if(evtblsz <= 0)	return -1;	// table has invalid size
-	if(ev < 1)			return -1;	// invalid event
-	if(ev >= evtblsz)	return -1;	// invalid event
+	if(evId < 1)			return -1;	// invalid event
+	if(evId >= evtblsz)	return -1;	// invalid event
 
 	// for this edition, we're using the event as an index into our table, rather than any sort of
 	//	more sophisticated means. Due to this, we're ignoring the event-handler table args.
 	UNUSED(pEvHndlrTbl);
-	handle = (tEvQ_EvtHandle)ev;
+	handle = (tEvQ_EvtHandle)evId;
 	return handle;
 }
 
@@ -79,17 +79,18 @@ get_ev_handle(pEvQ_EvHandlerAssoc pEvHndlrTbl, size_t evtblsz, tEvQ_EventID ev)
  * 	must be passed as a parameter, with the full understanding that we will be using index notation
  * 	(rather than pointer notation) to index into it.
  *
- * 	@param pEvHndlr	Pointer to the event-handler table.
- * 	@param evtlbsz	Size of event-handler table, in number of elements.
- *	@param ev		Event to associate. Note that the container type is defined by the project, and
- * 					might not be of the same signedness as the list of events (e.g., if the list of
- * 					events is implemented as an enumeration type, the signedness may be unsigned or
- * 					signed; the container type for `tEvQ_Event` may be either signed or unsigned.
- * 					It is a project responsibility to match the compatibility types between the list
- * 					of event IDs and the container in which they're held, if that is important (such
- * 					as it might be for MISRA analysis).
- *	@param pf	Address of the function to be associated with the event. A "disassociation" can be
- * 				accomplished by passing NULL.
+ * 	@param pEvHndlrTbl	[out]	Pointer to the event-handler table.
+ * 	@param evtblsz		[in]	Size of event-handler table, in number of elements.
+ *	@param evId			[in]	Event to associate. Note that the container type is defined by the project, and
+ * 						might not be of the same signedness as the list of events (e.g., if the list of
+ * 						events is implemented as an enumeration type, the signedness may be unsigned or
+ * 						signed; the container type for `tEvQ_Event` may be either signed or unsigned.
+ * 						It is a project responsibility to match the compatibility types between the list
+ * 						of event IDs and the container in which they're held, if that is important (such
+ * 						as it might be for MISRA analysis).
+ *	@param pf			Address of the function to be associated with the event. A "disassociation" can be
+ * 						accomplished by passing NULL.
+ *
  *	@return		#kErr_EvQ_BadParm if any problem is noticed, #kErr_EvQ_NoError on success.
  *
  *	@note 	To accommodate compile-time configuration, it is not required to use this handler
@@ -100,7 +101,7 @@ tEvQ_ErrorCode
 Cwsw_EvQ__RegisterHandler(
 	pEvQ_EvHandlerAssoc pEvHndlrTbl,
 	size_t evtblsz,
-	tEvQ_EventID evid,
+	tEvQ_EventID evId,
 	pEvQ_EvHandlerFunc pf)
 {
 	tEvQ_EvtHandle idx;
@@ -112,15 +113,15 @@ Cwsw_EvQ__RegisterHandler(
 	//	minimum value is 0 or higher.
 	// in our system, event value `0` is a special event, and so we don't want to allow for it to
 	//	be associated with a handler.
-	if(evid < 1)		  	return kErr_EvQ_BadParm;
-	if(evid >= evtblsz)		return kErr_EvQ_BadParm;
+	if(evId < 1)		  	return kErr_EvQ_BadParm;
+	if(evId >= evtblsz)		return kErr_EvQ_BadParm;
 
-	idx = get_ev_handle(pEvHndlrTbl, evtblsz, evid);
+	idx = get_ev_handle(pEvHndlrTbl, evtblsz, evId);
 	if(idx < 1)				return kErr_EvQ_BadEvent;
 
 //	pEvHndlr += idx * sizeof(tEvH_EvHandler);
 
-	pEvHndlrTbl[idx].evId = evid;
+	pEvHndlrTbl[idx].evId = evId;
 	pEvHndlrTbl[idx].pEvHandler = pf;
 	return kErr_EvQ_NoError;
 }
@@ -128,9 +129,9 @@ Cwsw_EvQ__RegisterHandler(
 
 /**	Get the current event handler.
  *
- *	@param pEvHndlr
- *	@param evtblsz
- * @param ev
+ *	@param pEvHndlr	[in]
+ *	@param evtblsz	[in]
+ *	@param evId		[in]
  * @return	address of handler; NULL if non or disabled.
  *
  * @todo: implement "enabled/disabled" status.

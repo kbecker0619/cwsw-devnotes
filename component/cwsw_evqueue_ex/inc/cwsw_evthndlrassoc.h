@@ -41,6 +41,7 @@ extern "C" {
 typedef struct eEvQ_EvHndlrAssocTable {
 	pEvQ_EvHandlerAssoc	pEvtHndlrTbl;
 	int32_t				szEvtHandlerTbl;
+	uint32_t			validity;			//!< On the concern for validating the integrity of the table, provide for a validity signature of some sort.
 } tEvQ_EvHndlrAssocTable;
 
 typedef tEvQ_EvHndlrAssocTable * ptEvQ_EvHndlrAssocTable;
@@ -55,6 +56,7 @@ typedef tEvQ_EvHndlrAssocTable * ptEvQ_EvHndlrAssocTable;
 // ============================================================================
 
 extern tErrorCodes_EvQ Cwsw_EvQX__InitEventHandlerTable(ptEvQ_EvHndlrAssocTable EvtHndlrTbl, pEvQ_EvHandlerAssoc HndlrArray, int32_t szHndlrArray);
+extern tErrorCodes_EvQ Cwsw_EvQX__SetEvHandler(ptEvQ_EvHndlrAssocTable pHndlrTbl,	tEvQ_EventID evId, pEvQ_EvHandlerFunc pHndlrFunc);
 
 
 #ifdef	__cplusplus

@@ -49,7 +49,7 @@ enum eErrorCodes_EvQ {
 	kErr_EvQ_NotInitialized,	//!< Event Queue component not initialized.
 	kErr_EvQ_BadParm,			//!< Bad Parameter; e.g., NULL pointer-to-event.
 	kErr_EvQ_BadEvQ,			//!< Bad or invalid EvQ control struct (tEvQ_QueueCtrl).
-	kErr_EvQ_BadEvTable,		//!< Bad or invalid event table (tEvQ_EvTable).
+	kErr_EvQ_BadTable,			//!< Bad or invalid event table (tEvQ_EvTable or tEvQ_EvHndlrAssocTable).
 	kErr_EvQ_BadEvBuffer,		//!< Bad or invalid buffer for events (tEvQ_Event[]).
 	kErr_EvQ_BadEvent,			//!< Bad or invalid event.
 	kErr_EvQ_QueueEmpty,		//!< Queue empty, cannot get event from queue.
@@ -61,7 +61,7 @@ enum eErrorCodes_EvQ {
 // ----	Type Definitions ------------------------------------------------------
 // ============================================================================
 
-/** @defgroup tEvQ_Event	Event data type for Event Queue usage.
+/** @defgroup tEvQ_Event	tEvQ_Event: Event component, the foundation for the Event Queue component.
  *	@brief	Base class for Event Queue component.
  */
 

@@ -52,6 +52,12 @@
     <ClCompile Include="..\..\component\cwsw_event\src\cwsw_eventtable.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\component\cwsw_evqueue_ex\src\cwsw_evhandler.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\component\cwsw_evqueue_ex\src\cwsw_evthndlrassoc.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\app\tedlos.h">

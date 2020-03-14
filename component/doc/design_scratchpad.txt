@@ -134,7 +134,7 @@ The table _**must be**_ at least as large as the number of defined for the speci
 | szEvtHandlerTbl: int32_t			|
 +-----------------------------------+
 | InitEventHandlerTable()			|	initialize the Event Handler Association table
-| GetHandlerAddr()					|
+| GetAssocAddr()					|
 +===================================+
 
 }

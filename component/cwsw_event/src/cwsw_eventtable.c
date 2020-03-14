@@ -1,5 +1,5 @@
-/** @file cwsw_eventtable.c
- *	@brief	One-sentence short description of file.
+/** @file
+ *	@brief	Methods for Event Table component.
  *
  *	\copyright
  *	Copyright (c) 2020 Kevin L. Becker. All rights reserved.
@@ -98,6 +98,7 @@ Cwsw_Evt__GetEventPtr(pEvQ_EvTable pEvTbl, tEvQ_EvtHandle hnd)
  *	@param pEvTb	[in]	table of events.
  *	@param hnd		[in]	"handle" (index) into the event buffer of the event to retrieve.
  *	@return	Event Queue error code.
+ *	@ingroup sEvq_EvTable
  */
 tErrorCodes_EvQ
 Cwsw_Evt__GetEvent(pEvQ_Event pEv, pEvQ_EvTable pEvTb, tEvQ_EvtHandle hnd)
@@ -106,7 +107,7 @@ Cwsw_Evt__GetEvent(pEvQ_Event pEv, pEvQ_EvTable pEvTb, tEvQ_EvtHandle hnd)
 
 	if(!pEv)					return kErr_EvQ_BadParm;
 	if(!pEvTb)					return kErr_EvQ_BadParm;
-	if(hnd >= pEvTb->szEvTbl)	return kErr_EvQ_BadEvTable;
+	if(hnd >= pEvTb->szEvTbl)	return kErr_EvQ_BadTable;
 
 	pfound = Cwsw_Evt__GetEventPtr(pEvTb, hnd);
 	if(pfound)
@@ -120,6 +121,14 @@ Cwsw_Evt__GetEvent(pEvQ_Event pEv, pEvQ_EvTable pEvTb, tEvQ_EvtHandle hnd)
 }
 
 
+/**
+ *
+ *	@param pEvTb
+ *	@param hnd
+ *	@param pEv
+ *	@return
+ *	@ingroup sEvq_EvTable
+ */
 tErrorCodes_EvQ
 Cwsw_Evt__PutEvent(pEvQ_EvTable pEvTb, tEvQ_EvtHandle hnd, pEvQ_Event pEv)
 {
@@ -127,7 +136,7 @@ Cwsw_Evt__PutEvent(pEvQ_EvTable pEvTb, tEvQ_EvtHandle hnd, pEvQ_Event pEv)
 
 	if(!pEv)					return kErr_EvQ_BadParm;
 	if(!pEvTb)					return kErr_EvQ_BadParm;
-	if(hnd >= pEvTb->szEvTbl)	return kErr_EvQ_BadEvTable;
+	if(hnd >= pEvTb->szEvTbl)	return kErr_EvQ_BadTable;
 
 	pfound = Cwsw_Evt__GetEventPtr(pEvTb, hnd);
 	if(pfound)

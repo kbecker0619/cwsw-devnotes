@@ -54,3 +54,5 @@ dkms.conf
 # Backup & temporary files
 *.bak
 *.ini
+test/
+component/

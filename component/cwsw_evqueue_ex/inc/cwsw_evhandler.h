@@ -68,11 +68,6 @@ typedef struct sEvHandlerAssoc {
  */
 typedef tEvQ_EvHandlerAssoc * pEvQ_EvHandlerAssoc;
 
-/** "Handle" for the position of a specific event in the event-handler table.
- * 	@ingroup tEvQ_QueueCtrlEx
- */
-typedef tEvQ_EvtHandle	tEvQ_EvtHandle;
-
 
 // ============================================================================
 // ----	Public Variables ------------------------------------------------------
