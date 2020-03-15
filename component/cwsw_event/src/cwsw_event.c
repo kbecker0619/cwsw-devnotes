@@ -54,7 +54,7 @@ static bool initialized = false;
  *	This component doesn't really have any significant need for an initialize method; this function
  *	is here mostly for consistency with other CWSW components.
  *
- *	@ingroup sEvq_EvTable
+ *	@ingroup tEvq_EvTable
  */
 uint16_t
 Cwsw_Evt__Init(void)

@@ -55,9 +55,9 @@ typedef tEvQ_EvHndlrAssocTable * ptEvQ_EvHndlrAssocTable;
 // ----	Public API ------------------------------------------------------------
 // ============================================================================
 
-extern tErrorCodes_EvQ Cwsw_EvQX__InitEventHandlerTable(ptEvQ_EvHndlrAssocTable EvtHndlrTbl, pEvQ_EvHandlerAssoc HndlrArray, int32_t szHndlrArray);
-extern tErrorCodes_EvQ Cwsw_EvQX__SetEvHandler(ptEvQ_EvHndlrAssocTable pHndlrTbl,	tEvQ_EventID evId, pEvQ_EvHandlerFunc pHndlrFunc);
-
+extern tErrorCodes_EvQ		Cwsw_EvQX__InitEventHandlerTable(ptEvQ_EvHndlrAssocTable EvtHndlrTbl, pEvQ_EvHandlerAssoc HndlrArray, int32_t szHndlrArray);
+extern tErrorCodes_EvQ		Cwsw_EvQX__SetEvHandler(ptEvQ_EvHndlrAssocTable pHndlrTbl,	tEvQ_EventID evId, pEvQ_EvHandlerFunc pHndlrFunc);
+extern pEvQ_EvHandlerFunc	Cwsw_EvQX__GetEvHandler(ptEvQ_EvHndlrAssocTable pHndlrTbl,	tEvQ_EventID evId);
 
 #ifdef	__cplusplus
 }

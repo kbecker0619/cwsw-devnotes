@@ -38,7 +38,7 @@ extern "C" {
 // ----	Type Definitions ------------------------------------------------------
 // ============================================================================
 
-/** @defgroup tEvQ_QueueCtrlEx	Event Queue Extended object.
+/** @defgroup tEvQ_QueueCtrlEx	tEvQ_QueueCtrlEx: Event Queue Extended object
  *	@brief Builds upon an Event Queue, adding handlers for each type of event.
  */
 
@@ -46,8 +46,8 @@ extern "C" {
  * 	To accommodate the possibility that a common handler could be used for multiple events, pass
  * 	the event as the 1st parameter (so the handler can react accordingly).
  *
- * 	@param ev		Event to handle (typically from Event Queue).
- * 	@param evInt	Supplemental information for the event.
+ * 	@param evId		Event to handle (typically from Event Queue).
+ * 	@param extra	Supplemental information for the event handler.
  *
  * 	@ingroup tEvQ_QueueCtrlEx
  */

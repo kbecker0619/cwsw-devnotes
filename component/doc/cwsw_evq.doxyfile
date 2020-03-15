@@ -2,12 +2,15 @@
 #   This configuration superclasses the generic Doxy configuration for this project, and provides
 #   a customization of it specifically for this component.
 
-PROJECT_NAME	 = "CWSW Event Services"
-PROJECT_BRIEF	 = "Core event services for the CWSW family of components for embedded software."
+PROJECT_NAME		= "CWSW Event Services"
+PROJECT_BRIEF		= "Core event services for the CWSW family of components for embedded software."
 
-DOT_PATH         = 
+DOT_PATH         	= 
 # override default values for graph generation (to address Doxy warning in logfile)
-DOT_GRAPH_MAX_NODES    = 150
+DOT_GRAPH_MAX_NODES	= 150
+
+PLANTUML_JAR_PATH	=	D:\_Programs\PlantUML\
+
 
 # pick one of the supported IDEs to enable the appropriate code macros
 PREDEFINED		+=  XPRJ_NB_Debug=1
@@ -42,19 +45,25 @@ EXCLUDE			+= ../../test/app/cwsw_lib_prj
 
 # event input files
 INPUT			+= ../cwsw_event
-EXCLUDE         += ../cwsw_event/README.md
+EXCLUDE 		+= ../cwsw_event/README.md
 INCLUDE_PATH	+= ../cwsw_event
 
 # event queue input files
 INPUT			+= ../cwsw_evqueue
-EXCLUDE         += ../cwsw_evqueue/README.md
+EXCLUDE 		+= ../cwsw_evqueue/README.md
 INCLUDE_PATH	+= ../cwsw_evqueue
 
 # extended event queue inputs
 INPUT			+= ../cwsw_evqueue_ex
-EXCLUDE         += ../cwsw_evqueue_ex/README.md
+EXCLUDE 		+= ../cwsw_evqueue_ex/README.md
 INCLUDE_PATH	+= ../cwsw_evqueue_ex
 
-# documentation inputs
+# event queue documentation inputs
 #INPUT			+= ../../doc
 #EXCLUDE 		+= ../../doc/README.md
+
+# library + other component inputs
+INPUT			+= ../../test/libs/cwsw_lib/src
+INCLUDE_PATH	+= ../../test/libs/cwsw_lib/inc
+INPUT			+= ../../test/libs/cwsw_lib/doc
+EXCLUDE			+= ../../test/libs/cwsw_lib/doc/doc_core/README.md

@@ -58,11 +58,11 @@
  *								Rejection occurs if > INT_MAX.
  *	@return	Event Queue error code, where value `0` is success.
  *
- *	@ingroup sEvq_EvTable
+ *	@ingroup tEvq_EvTable
  */
 tErrorCodes_EvQ
 Cwsw_Evt__InitEventTable(
-	pEvQ_EvTable pEvQTable,	// Event Queue table.
+	ptEvQ_EvTable pEvQTable,	// Event Queue table.
 	pEvQ_Event pTable,		// table of events.
 	size_t TableSize)		// size of the event table. the benefit of passing as unsigned, is that we don't have to worry about negative values.
 {
@@ -83,7 +83,7 @@ Cwsw_Evt__InitEventTable(
  *	@return	address of the specified event.
  */
 pEvQ_Event
-Cwsw_Evt__GetEventPtr(pEvQ_EvTable pEvTbl, tEvQ_EvtHandle hnd)
+Cwsw_Evt__GetEventPtr(ptEvQ_EvTable pEvTbl, tEvQ_EvtHandle hnd)
 {
 	if(!pEvTbl)					return NULL;	// bad Event Table object.
 	if(!pEvTbl->pEvBuffer)		return NULL;	// bad event buffer object.
@@ -98,10 +98,10 @@ Cwsw_Evt__GetEventPtr(pEvQ_EvTable pEvTbl, tEvQ_EvtHandle hnd)
  *	@param pEvTb	[in]	table of events.
  *	@param hnd		[in]	"handle" (index) into the event buffer of the event to retrieve.
  *	@return	Event Queue error code.
- *	@ingroup sEvq_EvTable
+ *	@ingroup tEvq_EvTable
  */
 tErrorCodes_EvQ
-Cwsw_Evt__GetEvent(pEvQ_Event pEv, pEvQ_EvTable pEvTb, tEvQ_EvtHandle hnd)
+Cwsw_Evt__GetEvent(pEvQ_Event pEv, ptEvQ_EvTable pEvTb, tEvQ_EvtHandle hnd)
 {
 	pEvQ_Event pfound;
 
@@ -121,16 +121,19 @@ Cwsw_Evt__GetEvent(pEvQ_Event pEv, pEvQ_EvTable pEvTb, tEvQ_EvtHandle hnd)
 }
 
 
-/**
+/** Write an event into the Event Table.
+ * 	This function is primarily meant for use by the Event Queue component.
  *
- *	@param pEvTb
- *	@param hnd
- *	@param pEv
- *	@return
- *	@ingroup sEvq_EvTable
+ *	@param pEvTb	[in,out]	Event Table into which to write the new Event.
+ *	@param hnd		[in]		"Handle" for the slot in the Event Table to which the new event will be written.
+ *	@param pEv		[in]		Event to be added to the table.
+ *
+ *	@return	Error code, where 0 is success.
+ *
+ *	@ingroup tEvq_EvTable
  */
 tErrorCodes_EvQ
-Cwsw_Evt__PutEvent(pEvQ_EvTable pEvTb, tEvQ_EvtHandle hnd, pEvQ_Event pEv)
+Cwsw_Evt__PutEvent(ptEvQ_EvTable pEvTb, tEvQ_EvtHandle hnd, pEvQ_Event pEv)
 {
 	pEvQ_Event pfound;
 

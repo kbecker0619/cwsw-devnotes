@@ -42,7 +42,7 @@ extern "C" {
 enum { kEvQ_Ev_None = 0 };
 
 /** Error codes returned by Event Queue API.
- *	@ingroup sEvq_EvTable
+ *	@ingroup tEvq_EvTable
  */
 enum eErrorCodes_EvQ {
 	kErr_EvQ_NoError = kErr_Lib_NoError,
@@ -61,7 +61,7 @@ enum eErrorCodes_EvQ {
 // ----	Type Definitions ------------------------------------------------------
 // ============================================================================
 
-/** @defgroup tEvQ_Event	tEvQ_Event: Event component, the foundation for the Event Queue component.
+/** @defgroup tEvQ_Event	tEvQ_Event: Event component
  *	@brief	Base class for Event Queue component.
  */
 

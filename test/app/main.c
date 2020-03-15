@@ -15,19 +15,20 @@
 // ----	System Headers --------------------------
 #include <stdio.h>
 #include <stdlib.h>			/* EXIT_SUCCESS */
-#include <limits.h>			/* INT_MAX */
 
 // ----	Project Headers -------------------------
 /* configuration items */
-#include "projcfg.h"
+//#include "projcfg.h"
 #include "cwsw_eventsim.h"
 /* component headers used here */
-#include "cwsw_lib.h"
+#include "cwsw_evqueue.h"
+#include "cwsw_evthndlrassoc.h"		/* tEvQ_EvHandlerAssoc */
+//#include "cwsw_eventtable.h"
+#include "tedlosevents.h"			/* OS events for this demo */
 #include "cwsw_svc.h"
 
 // ----	Module Headers --------------------------
 // the point of this project
-#include "cwsw_eventtable.h"
 //#include "tedlos.h"
 
 
@@ -77,9 +78,13 @@ do_evdispatch(void)
 //	tedlos_do();
 }
 
-#include "cwsw_evqueue.h"
-#include "cwsw_evthndlrassoc.h"		/* tEvQ_EvHandlerAssoc */
-#include "tedlosevents.h"			/* OS events for this demo */
+
+void
+MyEvHandler(tEvQ_Event ev, uint32_t extra)
+{
+	UNUSED(ev);
+	UNUSED(extra);
+}
 
 int
 main(void)
@@ -186,16 +191,16 @@ main(void)
 
 				// retrieve an event
 				cwsw_assert(kErr_EvQ_NoError == Cwsw_EvQ__GetEvent(&evq, &myev), "Unexpected initialization problem.");
-					cwsw_assert(0 == myev.evId, "Unexpected event.");
-					cwsw_assert(0 == myev.evData, "Unexpected event data.");
+					cwsw_assert(9 == myev.evId, "Unexpected event.");
+					cwsw_assert(415 == myev.evData, "Unexpected event data.");
 				cwsw_assert(kErr_EvQ_NoError == Cwsw_EvQ__GetEvent(&evq, &myev), "confirm happy path");
-					cwsw_assert(0 == myev.evId, "Unexpected event.");
-					cwsw_assert(0 == myev.evData, "Unexpected event data.");
+					cwsw_assert(8 == myev.evId, "Unexpected event.");
+					cwsw_assert(414 == myev.evData, "Unexpected event data.");
 				cwsw_assert(kErr_EvQ_NoError == Cwsw_EvQ__FlushEvents(&evq), "confirm happy path");
 				cwsw_assert(kErr_EvQ_NoError == Cwsw_EvQ__PostEvent(&evq, myev), "confirm happy path");
 				cwsw_assert(kErr_EvQ_NoError == Cwsw_EvQ__GetEvent(&evq, &myev), "confirm happy path");
-					cwsw_assert(0 == myev.evId, "Unexpected event.");
-					cwsw_assert(0 == myev.evData, "Unexpected event data.");
+					cwsw_assert(8 == myev.evId, "Unexpected event.");
+					cwsw_assert(414 == myev.evData, "Unexpected event data.");
 				cwsw_assert(kErr_EvQ_QueueEmpty == Cwsw_EvQ__GetEvent(&evq, &myev), "confirm happy path");
 			}
 		}
@@ -205,10 +210,16 @@ main(void)
 	do {	/* event handler */
 		tEvQ_EvHandlerAssoc mytbl[kNumOsEvqEvents] = { {0} };
 		tEvQ_EvHndlrAssocTable tblMyHandlers = {0};
+		pEvQ_EvHandlerFunc myfunc;
 
 		(void)Cwsw_EvQX__InitEventHandlerTable(&tblMyHandlers, mytbl, TABLE_SIZE(mytbl));
-		Cwsw_EvQX__SetEvHandler(&tblMyHandlers, 1, NULL);
-
+		Cwsw_EvQX__SetEvHandler(&tblMyHandlers, 1, MyEvHandler);
+		myfunc = Cwsw_EvQX__GetEvHandler(&tblMyHandlers, 1);
+		if(myfunc)
+		{
+			tEvQ_Event ev = {13, 137};
+			myfunc(ev, __LINE__);
+		}
 //				(void)Cwsw_EvQ__RegisterHandler(evcbTedlos, TABLE_SIZE(evcbTedlos), evOsTmrHeartbeat, Os1msTic);
 
 				// set up the app-level timer tic task

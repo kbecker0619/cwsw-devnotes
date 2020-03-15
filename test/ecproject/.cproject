@@ -45,13 +45,13 @@
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../../component/cwsw_event/inc&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../../component/cwsw_evqueue/inc&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../../component/cwsw_evqueue_ex/inc&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../libs/cwsw_lib/inc&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../libs/cwsw_arch/inc/i386&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../libs/cwsw_board/none&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../../bsw/svc/inc&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../libs/cwsw_clock/inc&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../libs/cwsw_swtimer/inc&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../app/cfg&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../libs/cwsw_board/none&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../libs/cwsw_lib/inc&quot;"/>
 								</option>
 								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="gnu.c.compiler.option.preprocessor.def.symbols.841831710" name="Defined symbols (-D)" superClass="gnu.c.compiler.option.preprocessor.def.symbols" useByScannerDiscovery="false" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="&quot;XPRJ_Win_MinGW_${ConfigName}=1&quot;"/>

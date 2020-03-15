@@ -16,18 +16,18 @@
 // ============================================================================
 
 // ----	System Headers --------------------------
-#include <stdint.h>				/* uint16_t */
-#include <stdbool.h>			/* bool */
-#include <stddef.h>				/* size_t */
+//#include <stdint.h>				/* uint16_t */
+//#include <stdbool.h>			/* bool */
+//#include <stddef.h>				/* size_t */
 #include <limits.h>
 
 // ----	Project Headers -------------------------
-#include "projcfg.h"
-#include "cwsw_lib.h"
+//#include "projcfg.h"
+//#include "cwsw_lib.h"
 
 // ----	Module Headers --------------------------
-#include "cwsw_event.h"			/* tEvQ_Event */
-#include "cwsw_eventtable.h"	/* pEvQ_EvTable */
+//#include "cwsw_event.h"			/* tEvQ_Event */
+#include "cwsw_eventtable.h"	/* ptEvQ_EvTable */
 
 
 #ifdef	__cplusplus
@@ -43,9 +43,8 @@ extern "C" {
 // ----	Type Definitions ------------------------------------------------------
 // ============================================================================
 
-/** @defgroup tEvQ_QueueCtrl	Event Queue object.
+/** @defgroup tEvQ_QueueCtrl	tEvQ_QueueCtrl: Event Queue component.
  *	@brief Takes a table of events and adds management routines to it.
- *	@ingroup tEvQ_QueueCtrlEx
  */
 
 /** Error codes returned by Event Queue API.
@@ -57,7 +56,7 @@ typedef enum eErrorCodes_EvQ tEvQ_ErrorCode;
  *	@ingroup tEvQ_QueueCtrl
  */
 typedef struct sEvQueue {
-	pEvQ_EvTable	pEventTable;	//!< reference to event table.
+	ptEvQ_EvTable	pEventTable;	//!< reference to event table.
 	int32_t		 	Queue_Count;	//!< number of items in the queue.
 	int32_t			idxWrite;		//!< queue write pointer.
 	int32_t			idxRead;		//!< queue read pointer.
@@ -80,7 +79,7 @@ typedef tEvQ_QueueCtrl *pEvQ_QueueCtrl;
 // ---- Discrete Functions -------------------------------------------------- {
 
 extern uint16_t			Cwsw_EvQ__Init(void);
-extern tEvQ_ErrorCode	Cwsw_EvQ__InitEvQ(pEvQ_QueueCtrl EvQueueCtrl, pEvQ_EvTable pEvQueue);
+extern tEvQ_ErrorCode	Cwsw_EvQ__InitEvQ(pEvQ_QueueCtrl EvQueueCtrl, ptEvQ_EvTable pEvQueue);
 extern bool 			Cwsw_EvQ__Get_Initialized(void);
 extern tEvQ_ErrorCode	Cwsw_EvQ__FlushEvents(pEvQ_QueueCtrl pEvQueueCtrl);
 extern tEvQ_ErrorCode	Cwsw_EvQ__PostEvent(pEvQ_QueueCtrl pEvQueueCtrl, tEvQ_Event ev);

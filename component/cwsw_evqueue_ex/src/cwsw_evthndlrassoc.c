@@ -38,8 +38,20 @@
 // ============================================================================
 
 // ============================================================================
-// ----	Private Prototypes ----------------------------------------------------
+// ----	Private Functions -----------------------------------------------------
 // ============================================================================
+
+static tEvQ_EvtHandle
+GetTableHandle(ptEvQ_EvHndlrAssocTable pHndlrTbl, tEvQ_EventID evId)
+{
+	// for this implementation, the event is used as an index into the LUT
+	if(!pHndlrTbl)							return -1;
+	// todo: check table validity
+	if(evId >= pHndlrTbl->szEvtHandlerTbl)	return -1;
+	if(evId < 1)							return -1;
+	return (tEvQ_EvtHandle)evId;
+}
+
 
 // ============================================================================
 // ----	Public Functions ------------------------------------------------------
@@ -72,18 +84,15 @@ Cwsw_EvQX__InitEventHandlerTable(
 }
 
 
-static tEvQ_EvtHandle
-GetTableHandle(ptEvQ_EvHndlrAssocTable pHndlrTbl, tEvQ_EventID evId)
-{
-	// for this implementation, the event is used as an index into the LUT
-	if(!pHndlrTbl)							return -1;
-	// todo: check table validity
-	if(evId >= pHndlrTbl->szEvtHandlerTbl)	return -1;
-	if(evId < 1)							return -1;
-	return (tEvQ_EvtHandle)evId;
-}
-
-
+/** Set the association between an Event ID and a handler or that event.
+ *
+ *	@param[in,out]	pHndlrTbl	Event Handler Association object.
+ *	@param[in]		evId		Event ID to which to "attach" the handler.
+ *	@param[in]		pHndlrFunc	Event handler.
+ *	@return Error code, where 0 is success.
+ *
+ *	@ingroup tEvQ_QueueCtrlEx
+ */
 tErrorCodes_EvQ
 Cwsw_EvQX__SetEvHandler(
 	ptEvQ_EvHndlrAssocTable pHndlrTbl,	//!< Event Handler Association table.
@@ -98,4 +107,23 @@ Cwsw_EvQX__SetEvHandler(
 	// set handler
 	pHndlrTbl->pEvtHndlrTbl[hnd].pEvHandler = pHndlrFunc;
 	return kErr_EvQ_NoError;
+}
+
+
+/** Get the address of the registered event handler for event ID \<n\>.
+ *
+ *	@param[in,out]	pHndlrTbl	Event Handler array.
+ *	@param[in]		evId		Event ID to which to "attach" the handler.
+ *
+ *	@return Address of the handler function, or NULL for failure.
+ *
+ *	@ingroup tEvQ_QueueCtrlEx
+ */
+pEvQ_EvHandlerFunc
+Cwsw_EvQX__GetEvHandler(ptEvQ_EvHndlrAssocTable pHndlrTbl,	tEvQ_EventID evId)
+{
+	tEvQ_EvtHandle hnd = GetTableHandle(pHndlrTbl, evId);	// validates both association table as well as event id
+	if(hnd < 1)	return NULL;
+
+	return pHndlrTbl->pEvtHndlrTbl[hnd].pEvHandler;
 }

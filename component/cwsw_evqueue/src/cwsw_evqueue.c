@@ -131,7 +131,7 @@ Cwsw_EvQ__Get_Initialized(void)
  *	@ingroup tEvQ_QueueCtrl
  */
 tEvQ_ErrorCode
-Cwsw_EvQ__InitEvQ(pEvQ_QueueCtrl pEvQ, pEvQ_EvTable pEvTable)
+Cwsw_EvQ__InitEvQ(pEvQ_QueueCtrl pEvQ, ptEvQ_EvTable pEvTable)
 {
 	// check preconditions, in order of priority
 	if(!initialized)			{ return kErr_EvQ_NotInitialized; }		// has component init happened?
