@@ -14,6 +14,7 @@
 // ============================================================================
 
 // ----	System Headers --------------------------
+#include <limits.h>		/* INT_MAX */
 
 // ----	Project Headers -------------------------
 
@@ -59,8 +60,9 @@ GetTableHandle(ptEvQ_EvHndlrAssocTable pHndlrTbl, tEvQ_EventID evId)
 
 /** "Constructor" for an Event Handler association.
  * 	This connects an event ID with its handler.
+ *	This function works at the level of the Event Handler Assocation object.
  *
- *	@param pEvtHndlrTbl
+ *	@param[in,out]	pEvtHndlrTbl
  *	@param pHndlrArray
  *	@param szHndlrArray
  *	@return	Error code, where `0` is success.
@@ -68,7 +70,7 @@ GetTableHandle(ptEvQ_EvHndlrAssocTable pHndlrTbl, tEvQ_EventID evId)
  *	@ingroup tEvQ_QueueCtrlEx
  */
 tErrorCodes_EvQ
-Cwsw_EvQX__InitEventHandlerTable(
+Cwsw_EvHA__InitEventHandlerTable(
 	ptEvQ_EvHndlrAssocTable pEvtHndlrTbl,
 	pEvQ_EvHandlerAssoc pHndlrArray,
 	int32_t szHndlrArray)
@@ -91,10 +93,11 @@ Cwsw_EvQX__InitEventHandlerTable(
  *	@param[in]		pHndlrFunc	Event handler.
  *	@return Error code, where 0 is success.
  *
+ *	@note This works at the level of the Event Handler Association table, not at the EvQX level.
  *	@ingroup tEvQ_QueueCtrlEx
  */
 tErrorCodes_EvQ
-Cwsw_EvQX__SetEvHandler(
+Cwsw_EvHA__SetEvHandler(
 	ptEvQ_EvHndlrAssocTable pHndlrTbl,	//!< Event Handler Association table.
 	tEvQ_EventID evId, 					//!< Event ID to associate.
 	pEvQ_EvHandlerFunc pHndlrFunc)		//!< Handler for the identified event. NULL accepted to disassociate an event.
@@ -112,15 +115,16 @@ Cwsw_EvQX__SetEvHandler(
 
 /** Get the address of the registered event handler for event ID \<n\>.
  *
- *	@param[in,out]	pHndlrTbl	Event Handler array.
- *	@param[in]		evId		Event ID to which to "attach" the handler.
+ *	@param[in]	pHndlrTbl	Event Handler array.
+ *	@param[in]	evId		Event ID to which to "attach" the handler.
  *
  *	@return Address of the handler function, or NULL for failure.
  *
+ *	@note This works at the level of the Event Handler Association table, not at the EvQX level.
  *	@ingroup tEvQ_QueueCtrlEx
  */
 pEvQ_EvHandlerFunc
-Cwsw_EvQX__GetEvHandler(ptEvQ_EvHndlrAssocTable pHndlrTbl,	tEvQ_EventID evId)
+Cwsw_EvHA__GetEvHandler(ptEvQ_EvHndlrAssocTable pHndlrTbl,	tEvQ_EventID evId)
 {
 	tEvQ_EvtHandle hnd = GetTableHandle(pHndlrTbl, evId);	// validates both association table as well as event id
 	if(hnd < 1)	return NULL;

@@ -1,5 +1,5 @@
 /** @file
- *	@brief	Definitions for the Event Queue Extended component.
+ *	@brief	Definitions for the Event Handler component.
  *
  *	Copyright (c) 2020 Kevin L. Becker. All rights reserved.
  *
@@ -18,8 +18,8 @@
 // ----	System Headers --------------------------
 
 // ----	Project Headers -------------------------
-#include "projcfg.h"
-#include "cwsw_evqueue.h"		/* tEvQ_Event, et. al. */
+//#include "projcfg.h"
+//#include "cwsw_evqueue.h"		/* tEvQ_Event, et. al. */
 #include "cwsw_eventtable.h"
 
 // ----	Module Headers --------------------------
@@ -37,10 +37,6 @@ extern "C" {
 // ============================================================================
 // ----	Type Definitions ------------------------------------------------------
 // ============================================================================
-
-/** @defgroup tEvQ_QueueCtrlEx	tEvQ_QueueCtrlEx: Event Queue Extended object
- *	@brief Builds upon an Event Queue, adding handlers for each type of event.
- */
 
 /** Event handler, implemented as a function pointer.
  * 	To accommodate the possibility that a common handler could be used for multiple events, pass
@@ -77,7 +73,7 @@ typedef tEvQ_EvHandlerAssoc * pEvQ_EvHandlerAssoc;
 // ----	Public API ------------------------------------------------------------
 // ============================================================================
 
-tEvQ_ErrorCode 		Cwsw_EvQ__RegisterHandler(pEvQ_EvHandlerAssoc pEvHndlrTbl, size_t evtblsz, tEvQ_EventID ev, pEvQ_EvHandlerFunc pf);
+tErrorCodes_EvQ		Cwsw_EvQ__RegisterHandler(pEvQ_EvHandlerAssoc pEvHndlrTbl, size_t evtblsz, tEvQ_EventID ev, pEvQ_EvHandlerFunc pf);
 pEvQ_EvHandlerFunc	Cwsw_EvQ__GetHandler(pEvQ_EvHandlerAssoc pEvHndlr, size_t evtblsz, tEvQ_EventID ev);
 
 

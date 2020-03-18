@@ -3,13 +3,14 @@
 #   a customization of it specifically for this component.
 
 PROJECT_NAME		= "CWSW Event Services"
+PROJECT_NUMBER		= 
 PROJECT_BRIEF		= "Core event services for the CWSW family of components for embedded software."
+PROJECT_LOGO		= 
+
 
 DOT_PATH         	= 
 # override default values for graph generation (to address Doxy warning in logfile)
 DOT_GRAPH_MAX_NODES	= 150
-
-PLANTUML_JAR_PATH	=	D:\_Programs\PlantUML\
 
 
 # pick one of the supported IDEs to enable the appropriate code macros
@@ -22,6 +23,11 @@ PREDEFINED		+=  XPRJ_NB_Debug=1
 # =====	Overrides provided by this doxyfile alone ======================
 # include the core (base, foundational) Doxy project settings
 @INCLUDE		 = doc_core/cwsw.doxyfile
+
+HTML_EXTRA_STYLESHEET  = doc_core/cwswnavtree.css \
+                         doc_core/cwswstylesheet.css \
+                         doc_core/cwswtabs.css
+
 
 # configuration inputs
 #	Note this is for the dev project, not the package 
@@ -46,6 +52,7 @@ EXCLUDE			+= ../../test/app/cwsw_lib_prj
 # event input files
 INPUT			+= ../cwsw_event
 EXCLUDE 		+= ../cwsw_event/README.md
+EXCLUDE 		+= ../cwsw_event/doc/README.md
 INCLUDE_PATH	+= ../cwsw_event
 
 # event queue input files
@@ -58,12 +65,12 @@ INPUT			+= ../cwsw_evqueue_ex
 EXCLUDE 		+= ../cwsw_evqueue_ex/README.md
 INCLUDE_PATH	+= ../cwsw_evqueue_ex
 
-# event queue documentation inputs
-#INPUT			+= ../../doc
-#EXCLUDE 		+= ../../doc/README.md
-
 # library + other component inputs
-INPUT			+= ../../test/libs/cwsw_lib/src
-INCLUDE_PATH	+= ../../test/libs/cwsw_lib/inc
-INPUT			+= ../../test/libs/cwsw_lib/doc
+INPUT			+= ../../test/libs/cwsw_lib
+INCLUDE_PATH	+= ../../test/libs/cwsw_lib
+EXCLUDE			+= ../../test/libs/cwsw_lib/README.md
+EXCLUDE			+= ../../test/libs/cwsw_lib/doc/README.md
 EXCLUDE			+= ../../test/libs/cwsw_lib/doc/doc_core/README.md
+EXCLUDE			+= ../../test/libs/cwsw_lib/doc/SM_Engine_Zimminess
+EXCLUDE			+= ../../test/libs/cwsw_lib/test
+

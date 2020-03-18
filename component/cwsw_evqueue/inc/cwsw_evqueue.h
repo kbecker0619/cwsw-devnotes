@@ -8,25 +8,20 @@
  *	Author: kbecker
  */
 
-#ifndef CWSW_EVQUEUE_H_
-#define CWSW_EVQUEUE_H_
+#ifndef CWSW_EVQUEUE_H
+#define CWSW_EVQUEUE_H
 
 // ============================================================================
 // ----	Include Files ---------------------------------------------------------
 // ============================================================================
 
 // ----	System Headers --------------------------
-//#include <stdint.h>				/* uint16_t */
-//#include <stdbool.h>			/* bool */
-//#include <stddef.h>				/* size_t */
 #include <limits.h>
 
 // ----	Project Headers -------------------------
-//#include "projcfg.h"
-//#include "cwsw_lib.h"
 
 // ----	Module Headers --------------------------
-//#include "cwsw_event.h"			/* tEvQ_Event */
+#include "cwsw_event.h"			/* tEvQ_Event, tErrorCodes_EvQ */
 #include "cwsw_eventtable.h"	/* ptEvQ_EvTable */
 
 
@@ -43,14 +38,10 @@ extern "C" {
 // ----	Type Definitions ------------------------------------------------------
 // ============================================================================
 
-/** @defgroup tEvQ_QueueCtrl	tEvQ_QueueCtrl: Event Queue component.
- *	@brief Takes a table of events and adds management routines to it.
+/** @defgroup	tEvQ_QueueCtrl	tEvQ_QueueCtrl: Event Queue component.
+ *	@brief		Takes a table of events and adds management routines to it.
+ * 	@ingroup	tEvQ_QueueCtrlEx
  */
-
-/** Error codes returned by Event Queue API.
- *	@ingroup tEvQ_QueueCtrl
- */
-typedef enum eErrorCodes_EvQ tEvQ_ErrorCode;
 
 /**	Event Queue control structure.
  *	@ingroup tEvQ_QueueCtrl
@@ -65,7 +56,7 @@ typedef struct sEvQueue {
 /** Reference to an Event Queue.
  *	@ingroup tEvQ_QueueCtrl
  */
-typedef tEvQ_QueueCtrl *pEvQ_QueueCtrl;
+typedef tEvQ_QueueCtrl *ptEvQ_QueueCtrl;
 
 
 // ============================================================================
@@ -79,11 +70,11 @@ typedef tEvQ_QueueCtrl *pEvQ_QueueCtrl;
 // ---- Discrete Functions -------------------------------------------------- {
 
 extern uint16_t			Cwsw_EvQ__Init(void);
-extern tEvQ_ErrorCode	Cwsw_EvQ__InitEvQ(pEvQ_QueueCtrl EvQueueCtrl, ptEvQ_EvTable pEvQueue);
+extern tErrorCodes_EvQ	Cwsw_EvQ__InitEvQ(ptEvQ_QueueCtrl EvQueueCtrl, ptEvQ_EvTable pEvQueue);
 extern bool 			Cwsw_EvQ__Get_Initialized(void);
-extern tEvQ_ErrorCode	Cwsw_EvQ__FlushEvents(pEvQ_QueueCtrl pEvQueueCtrl);
-extern tEvQ_ErrorCode	Cwsw_EvQ__PostEvent(pEvQ_QueueCtrl pEvQueueCtrl, tEvQ_Event ev);
-extern tEvQ_ErrorCode	Cwsw_EvQ__GetEvent(pEvQ_QueueCtrl pEvQ, pEvQ_Event pEv);
+extern tErrorCodes_EvQ	Cwsw_EvQ__FlushEvents(ptEvQ_QueueCtrl pEvQueueCtrl);
+extern tErrorCodes_EvQ	Cwsw_EvQ__PostEvent(ptEvQ_QueueCtrl pEvQueueCtrl, tEvQ_Event ev);
+extern tErrorCodes_EvQ	Cwsw_EvQ__GetEvent(ptEvQ_QueueCtrl pEvQ, pEvQ_Event pEv);
 
 // ---- /Discrete Functions ------------------------------------------------- }
 
@@ -110,4 +101,4 @@ enum { Cwsw_EvQ };		/* Component ID for Event Queue */
 }
 #endif
 
-#endif /* CWSW_EVQUEUE_H_ */
+#endif /* CWSW_EVQUEUE_H */

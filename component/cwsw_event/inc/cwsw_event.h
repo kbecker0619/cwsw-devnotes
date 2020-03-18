@@ -61,10 +61,14 @@ enum eErrorCodes_EvQ {
 // ----	Type Definitions ------------------------------------------------------
 // ============================================================================
 
-/** @defgroup tEvQ_Event	tEvQ_Event: Event component
- *	@brief	Base class for Event Queue component.
+/** @defgroup	tEvQ_Event	tEvQ_Event: Event component
+ *	@brief		Base class for Event Queue component.
+ *	@ingroup	tEvq_EvTable
  */
 
+/**
+ *	@ingroup tEvQ_Event
+ */
 typedef enum eErrorCodes_EvQ tErrorCodes_EvQ;
 
 /** Event object.

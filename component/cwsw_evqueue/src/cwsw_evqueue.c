@@ -130,8 +130,8 @@ Cwsw_EvQ__Get_Initialized(void)
  *
  *	@ingroup tEvQ_QueueCtrl
  */
-tEvQ_ErrorCode
-Cwsw_EvQ__InitEvQ(pEvQ_QueueCtrl pEvQ, ptEvQ_EvTable pEvTable)
+tErrorCodes_EvQ
+Cwsw_EvQ__InitEvQ(ptEvQ_QueueCtrl pEvQ, ptEvQ_EvTable pEvTable)
 {
 	// check preconditions, in order of priority
 	if(!initialized)			{ return kErr_EvQ_NotInitialized; }		// has component init happened?
@@ -161,8 +161,8 @@ Cwsw_EvQ__InitEvQ(pEvQ_QueueCtrl pEvQ, ptEvQ_EvTable pEvTable)
  *
  *	@ingroup tEvQ_QueueCtrl
  */
-tEvQ_ErrorCode
-Cwsw_EvQ__FlushEvents(pEvQ_QueueCtrl pEvQ)
+tErrorCodes_EvQ
+Cwsw_EvQ__FlushEvents(ptEvQ_QueueCtrl pEvQ)
 {
 	// check preconditions, in order of priority
 	if(!initialized)					{ return kErr_EvQ_NotInitialized; }
@@ -188,10 +188,10 @@ Cwsw_EvQ__FlushEvents(pEvQ_QueueCtrl pEvQ)
  *
  *	@ingroup tEvQ_QueueCtrl
  */
-tEvQ_ErrorCode
-Cwsw_EvQ__PostEvent(pEvQ_QueueCtrl pEvQ, tEvQ_Event ev)
+tErrorCodes_EvQ
+Cwsw_EvQ__PostEvent(ptEvQ_QueueCtrl pEvQ, tEvQ_Event ev)
 {
-	tEvQ_ErrorCode rc = kErr_EvQ_NoError;
+	tErrorCodes_EvQ rc = kErr_EvQ_NoError;
 	bool isthereroom;
 
 	// check preconditions, in order of priority
@@ -245,10 +245,10 @@ Cwsw_EvQ__PostEvent(pEvQ_QueueCtrl pEvQ, tEvQ_Event ev)
  *
  *	@ingroup tEvQ_QueueCtrl
  */
-tEvQ_ErrorCode
-Cwsw_EvQ__GetEvent(pEvQ_QueueCtrl pEvQ, pEvQ_Event pEv)
+tErrorCodes_EvQ
+Cwsw_EvQ__GetEvent(ptEvQ_QueueCtrl pEvQ, pEvQ_Event pEv)
 {
-	tEvQ_ErrorCode rc = kEvQ_Ev_None;
+	tErrorCodes_EvQ rc = kEvQ_Ev_None;
 	tEvQ_EvtHandle idx = 0;
 	int crit = 0;
 

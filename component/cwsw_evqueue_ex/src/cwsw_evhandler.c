@@ -97,7 +97,7 @@ get_ev_handle(pEvQ_EvHandlerAssoc pEvHndlrTbl, size_t evtblsz, tEvQ_EventID evId
  *			registration at run time; you can set up a table of type tEvQ_EvHandlerAssoc[] and pre-fill
  *			it out to create compile-time registrations.
  */
-tEvQ_ErrorCode
+tErrorCodes_EvQ
 Cwsw_EvQ__RegisterHandler(
 	pEvQ_EvHandlerAssoc pEvHndlrTbl,
 	size_t evtblsz,

@@ -39,8 +39,9 @@ extern "C" {
 // ----	Type Definitions ------------------------------------------------------
 // ============================================================================
 
-/** @defgroup tEvq_EvTable	tEvq_EvTable: Table of events for Event Queue usage
- *	@brief In order to have a queue, you must have a storage container for those items; this is the storage for the events in the event queue.
+/** @defgroup	tEvq_EvTable	tEvq_EvTable: Table of events for Event Queue usage
+ *	@brief		In order to have a queue, you must have a storage container for those items; this is the storage for the events in the event queue.
+ *	@ingroup	tEvQ_QueueCtrl
  */
 
 /**	Table of Events for projects that use the CWSW Event Queue.

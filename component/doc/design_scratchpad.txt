@@ -117,7 +117,8 @@ Associates an Event ID with a handler.
 | evId: tEvQ_EventID				|	ID of the event with which to associate a handler callback.
 | pEvHandler: pEvQ_EvHandlerFunc	|	reference of the event handler callback
 +-----------------------------------+
-| 									|
+| SetEvHandler()					|	Make an association between an Event ID and its handler.
+| GetEvHandler()					|	Retrieve the association between Event ID and handler.
 +===================================+
 
 pEvQ_EvHandlerAssoc: tEvQ_EvHandlerAssoc *
@@ -135,15 +136,19 @@ The table _**must be**_ at least as large as the number of defined for the speci
 +-----------------------------------+
 | InitEventHandlerTable()			|	initialize the Event Handler Association table
 | GetAssocAddr()					|
+| SetEvHandler()					|	Make an association between an Event ID and its handler.
+| GetEvHandler()					|	Retrieve the association between Event ID and handler.
 +===================================+
 
+ptEvQ_EvHndlrAssocTable: tEvQ_EvHndlrAssocTable *
 }
 
 
 event queue (extended)													{
 extends tEvQ_QueueCtrl
-+== tEvQ_QueueCtrlEx ===========+
-| pEvQ_Ctrl:	pEvQ_QueueCtrl	|	reference to Event Queue
++== tEvQ_QueueCtrlEx ===================+
+| pEvQ_Ctrl:	ptEvQ_QueueCtrl			|	reference to Event Queue
+| pHandlers:	ptEvQ_EvHndlrAssocTable	|
 
 | Queue_Size:	uint8_t			|	queue size. this determines the maximum number of events that can be posted at one time.
 | Queue_Count:	uint8_t			|	number of items in the queue.

@@ -21,7 +21,7 @@
 //#include "projcfg.h"
 #include "cwsw_eventsim.h"
 /* component headers used here */
-#include "cwsw_evqueue.h"
+#include "cwsw_evqueue_ex.h"
 #include "cwsw_evthndlrassoc.h"		/* tEvQ_EvHandlerAssoc */
 //#include "cwsw_eventtable.h"
 #include "tedlosevents.h"			/* OS events for this demo */
@@ -212,14 +212,24 @@ main(void)
 		tEvQ_EvHndlrAssocTable tblMyHandlers = {0};
 		pEvQ_EvHandlerFunc myfunc;
 
-		(void)Cwsw_EvQX__InitEventHandlerTable(&tblMyHandlers, mytbl, TABLE_SIZE(mytbl));
-		Cwsw_EvQX__SetEvHandler(&tblMyHandlers, 1, MyEvHandler);
-		myfunc = Cwsw_EvQX__GetEvHandler(&tblMyHandlers, 1);
+		(void)Cwsw_EvHA__InitEventHandlerTable(&tblMyHandlers, mytbl, TABLE_SIZE(mytbl));
+		Cwsw_EvHA__SetEvHandler(&tblMyHandlers, 1, MyEvHandler);
+		myfunc = Cwsw_EvHA__GetEvHandler(&tblMyHandlers, 1);
 		if(myfunc)
 		{
 			tEvQ_Event ev = {13, 137};
 			myfunc(ev, __LINE__);
 		}
+	} while(0);
+
+	do {	/* extended event queue */
+		tEvQ_EvHandlerAssoc mytbl[kNumOsEvqEvents] = { {0} };
+		/* demonstrate compile-time table creation */
+		tEvQ_EvHndlrAssocTable tblMyHandlers = {mytbl, TABLE_SIZE(mytbl), kCT_TBL_VALID};
+
+		tEvQ_QueueCtrlEx MyQX = {0};
+
+	} while(0);
 //				(void)Cwsw_EvQ__RegisterHandler(evcbTedlos, TABLE_SIZE(evcbTedlos), evOsTmrHeartbeat, Os1msTic);
 
 				// set up the app-level timer tic task
@@ -227,7 +237,6 @@ main(void)
 		//		Cwsw_SwTmr__SetState(&tmrOsTic, kSwTimerEnabled);
 
 
-	} while(0);
 //	do_evdispatch();
 
 	PostEvent(evTerminateRequested, ev);
