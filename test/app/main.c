@@ -257,6 +257,22 @@ main(void)
 												TABLE_SIZE(tblxEvHndlr) );
 		UNUSED(rc);
 
+		// retrieve an event
+		tEvQ_Event myev = {0};
+		MyQX.pEvQ_Ctrl->Queue_Count = 10;
+		cwsw_assert(kErr_EvQ_NoError == Cwsw_EvQX__GetEvent(&MyQX, &myev), "Unexpected initialization problem.");
+			cwsw_assert(0 == myev.evId, "Unexpected event.");
+			cwsw_assert(100 == myev.evData, "Unexpected event data.");
+		cwsw_assert(kErr_EvQ_NoError == Cwsw_EvQ__GetEvent(&evq, &myev), "confirm happy path");
+			cwsw_assert(1 == myev.evId, "Unexpected event.");
+			cwsw_assert(101 == myev.evData, "Unexpected event data.");
+		cwsw_assert(kErr_EvQ_NoError == Cwsw_EvQX__FlushEvents(&MyQX), "unexpected problem during queue flush");
+//		cwsw_assert(kErr_EvQ_NoError == Cwsw_EvQ__PostEvent(&evq, myev), "confirm happy path");
+//		cwsw_assert(kErr_EvQ_NoError == Cwsw_EvQ__GetEvent(&evq, &myev), "confirm happy path");
+//			cwsw_assert(8 == myev.evId, "Unexpected event.");
+//			cwsw_assert(414 == myev.evData, "Unexpected event data.");
+//		cwsw_assert(kErr_EvQ_QueueEmpty == Cwsw_EvQ__GetEvent(&evq, &myev), "confirm happy path");
+
 	} while(0);
 //				(void)Cwsw_EvQ__RegisterHandler(evcbTedlos, TABLE_SIZE(evcbTedlos), evOsTmrHeartbeat, Os1msTic);
 

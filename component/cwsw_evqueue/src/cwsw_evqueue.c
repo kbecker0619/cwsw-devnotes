@@ -166,9 +166,9 @@ Cwsw_EvQ__InitEvQ(
  *  empty the current queue of all pending events, one important opportunity is
  *  at module initialization.
  *
- *  @param[in,out]	pEvQ	Pointer to the current event buffer control structure
+ *  @param[in,out]	pEvQ	Event Queue object.
  *
- *	@returns		Error code, enumeration of type tEvQ_ErrorCode.
+ *	@return Error code, where 0 (#kErr_EvQ_NoError) is no error.
  *
  *	@ingroup tEvQ_QueueCtrl
  */
@@ -249,10 +249,10 @@ Cwsw_EvQ__PostEvent(ptEvQ_QueueCtrl pEvQ, tEvQ_Event ev)
  * 	Destructive read from the event buffer.
  *	Always writes to the event parameter, except if queue is presently empty.
  *
- *	@param pEvQ	[in,out]	Event Queue. Control metadata is updated during this method's operation.
- *	@param pEv	[out]		Event retrieved. Cleared if event buffer is empty.
+ *	@param[in,out]	pEvQ	Event Queue. Control metadata is updated during this method's operation.
+ *	@param[out]		pEv		Event retrieved. Cleared if event buffer is empty.
  *
- *	@return	EvQ Error Code, where `0` is no problem observed.
+ *	@return Error code, where 0 (#kErr_EvQ_NoError) is no error.
  *
  *	@ingroup tEvQ_QueueCtrl
  */

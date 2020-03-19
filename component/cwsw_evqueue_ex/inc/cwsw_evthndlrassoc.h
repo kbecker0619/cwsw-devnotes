@@ -46,8 +46,8 @@ extern "C" {
  */
 typedef struct sEvQ_EvHndlrAssocTable {
 	ptEvQ_EvHandlerAssoc	pEvtHndlrTbl;		//!< Event Handler Association array.
-	int32_t				szEvtHandlerTbl;	//!< Number of entries in the Event Handler Association array.
-	uint32_t			validity;			//!< On the concern for validating the integrity of the table, provide for a validity signature of some sort.
+	int32_t					szEvtHandlerTbl;	//!< Number of entries in the Event Handler Association array.
+	uint32_t				validity;			//!< On the concern for validating the integrity of the table, provide for a validity signature of some sort.
 } tEvQ_EvHndlrAssocTable;
 
 typedef tEvQ_EvHndlrAssocTable * ptEvQ_EvHndlrAssocTable;

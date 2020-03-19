@@ -80,8 +80,8 @@ Cwsw_Evt__InitEventTable(
 
 /**	Return the address of a specified event in the event buffer.
  *
- *	@param [in]		pEvTbl	Event table control structure.
- *	@param [in]		hnd		base-0 handle, used as an index into the event buffer.
+ *	@param[in]		pEvTbl	Event table control structure.
+ *	@param[in]		hnd		base-0 handle, used as an index into the event buffer.
  *	@return	address of the specified event.
  */
 ptEvQ_Event
@@ -96,10 +96,12 @@ Cwsw_Evt__GetEventPtr(ptEvQ_EvTable pEvTbl, tEvQ_EvtHandle hnd)
 
 /**	Get a specified event from the event buffer.
  *
- *	@param pEv		[out]	destination.
- *	@param pEvTb	[in]	table of events.
- *	@param hnd		[in]	"handle" (index) into the event buffer of the event to retrieve.
+ *	@param[out]	pEv		destination.
+ *	@param[in]	pEvTb	table of events.
+ *	@param[in]	hnd		"handle" (index) into the event buffer of the event to retrieve.
+ *
  *	@return	Event Queue error code.
+ *
  *	@ingroup tEvq_EvTable
  */
 tErrorCodes_EvQ
