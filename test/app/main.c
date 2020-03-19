@@ -124,6 +124,7 @@ main(void)
 		cwsw_assert(
 			kErr_EvQ_NoError == Cwsw_Evt__InitEventTable(&evTbl, my_table_of_events, TABLE_SIZE(my_table_of_events)),
 			"Confirm good parms");
+		cwsw_assert(kRT_TBL_VALID == evTbl.validity, "Unexpected table validity");
 
 		cwsw_assert(
 			kErr_EvQ_NoError == Cwsw_Evt__InitEventTable(&evTbl, my_table_of_events, TABLE_SIZE(my_table_of_events)),
@@ -146,7 +147,7 @@ main(void)
 			{ 9, 415 }, { 8, 414 }, { 7, 207 }, { 6, 206 }, { 5, 205 },
 			{ 4, 204 }, { 3, 103 }, { 2, 102 }, { 1, 101 }, { 0, 100 },
 		};
-		tEvQ_EvTable evTbl = {0};
+		tEvQ_EvTable evTbl = {0};	// for this step, rely on init() function, not compile-time setup
 
 		// control structure for the OS event queue
 		static tEvQ_QueueCtrl evq = {0};
@@ -159,7 +160,7 @@ main(void)
 				tEvQ_Event myevent = {0};
 
 				// step 2: now that the Event Table is initialized, init the Event Queue
-				if(kErr_EvQ_NoError != Cwsw_EvQ__InitEvQ(&evq, &evTbl)) {break;}
+				if(kErr_EvQ_NoError != Cwsw_EvQ__InitEvQ(&evq, &evTbl, tblEventBuff, TABLE_SIZE(tblEventBuff))) {break;}
 				// for this test only, modify an internal queue attribute to account for the initialization
 				//	done in the event buffer above.
 				evq.Queue_Count = 10;
@@ -184,7 +185,7 @@ main(void)
 				tEvQ_Event myev = {0};
 
 				// step 2: now that the Event Table is initialized, init the Event Queue
-				if(kErr_EvQ_NoError != Cwsw_EvQ__InitEvQ(&evq, &evTbl)) {break;}
+				if(kErr_EvQ_NoError != Cwsw_EvQ__InitEvQ(&evq, &evTbl, tblEventBuf2, TABLE_SIZE(tblEventBuf2))) {break;}
 				// for this test only, modify an internal queue attribute to account for the initialization
 				//	done in the event buffer above.
 				evq.Queue_Count = 10;
@@ -223,11 +224,38 @@ main(void)
 	} while(0);
 
 	do {	/* extended event queue */
-		tEvQ_EvHandlerAssoc mytbl[kNumOsEvqEvents] = { {0} };
-		/* demonstrate compile-time table creation */
-		tEvQ_EvHndlrAssocTable tblMyHandlers = {mytbl, TABLE_SIZE(mytbl), kCT_TBL_VALID};
+		// set up the standard queue
+		//	1. event array
+		tEvQ_Event tblxEvtBuff[] = {
+			{ 0, 100 }, { 1, 101 }, { 2, 102 }, { 3, 103 }, { 4, 204 },
+			{ 5, 205 }, { 6, 206 }, { 7, 207 }, { 8, 414 }, { 9, 415 },
+		};
+		//	2. event table
+		tEvQ_EvTable tblxEv = {tblxEvtBuff, TABLE_SIZE(tblxEvtBuff), kCT_TBL_VALID};
+		//	3. event queue
+					//			evq		ct	w	r
+		tEvQ_QueueCtrl	evq = {&tblxEv, 0,	0,	0};
 
-		tEvQ_QueueCtrlEx MyQX = {0};
+		// now set up the event handler table
+		//	1. event association array
+		tEvQ_EvHandlerAssoc tblxEvHndlr[kNumOsEvqEvents] = { {0} };
+		//	2. event handler assocation table
+		tEvQ_EvHndlrAssocTable tblxMyHandlers = {tblxEvHndlr, TABLE_SIZE(tblxEvHndlr), kCT_TBL_VALID};
+
+		// finally, set up evqx
+		tEvQ_QueueCtrlEx MyQX = {&evq, &tblxMyHandlers};
+
+		// the above setup demonstrate compile-time setup.
+		// now do the same thing via the init function
+		tErrorCodes_EvQ rc = Cwsw_EvQX__InitEvQ(&MyQX,
+												&evq,
+												&tblxEv,
+												tblxEvtBuff,
+												TABLE_SIZE(tblxEvtBuff),
+												&tblxMyHandlers,
+												tblxEvHndlr,
+												TABLE_SIZE(tblxEvHndlr) );
+		UNUSED(rc);
 
 	} while(0);
 //				(void)Cwsw_EvQ__RegisterHandler(evcbTedlos, TABLE_SIZE(evcbTedlos), evOsTmrHeartbeat, Os1msTic);
@@ -237,7 +265,7 @@ main(void)
 		//		Cwsw_SwTmr__SetState(&tmrOsTic, kSwTimerEnabled);
 
 
-//	do_evdispatch();
+	do_evdispatch();
 
 	PostEvent(evTerminateRequested, ev);
     return (EXIT_SUCCESS);

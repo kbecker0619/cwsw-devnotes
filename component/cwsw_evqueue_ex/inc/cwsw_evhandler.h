@@ -49,7 +49,7 @@ extern "C" {
  */
 typedef void (*pEvQ_EvHandlerFunc)(tEvQ_Event evId, uint32_t extra);
 
-/**	Association of event handler to a specific event.
+/**	Association of event handler to a specific event ID.
  *	@note	This type defines _ONE ROW_ of a table of event-handler associations.
  *
  * 	@ingroup tEvQ_QueueCtrlEx
@@ -59,10 +59,10 @@ typedef struct sEvHandlerAssoc {
 	pEvQ_EvHandlerFunc	pEvHandler;
 } tEvQ_EvHandlerAssoc;
 
-/** Reference to one row of an Event Handler Association Table.
+/** Reference to an Event Handler Association Table.
  * 	@ingroup tEvQ_QueueCtrlEx
  */
-typedef tEvQ_EvHandlerAssoc * pEvQ_EvHandlerAssoc;
+typedef tEvQ_EvHandlerAssoc * ptEvQ_EvHandlerAssoc;
 
 
 // ============================================================================
@@ -73,8 +73,8 @@ typedef tEvQ_EvHandlerAssoc * pEvQ_EvHandlerAssoc;
 // ----	Public API ------------------------------------------------------------
 // ============================================================================
 
-tErrorCodes_EvQ		Cwsw_EvQ__RegisterHandler(pEvQ_EvHandlerAssoc pEvHndlrTbl, size_t evtblsz, tEvQ_EventID ev, pEvQ_EvHandlerFunc pf);
-pEvQ_EvHandlerFunc	Cwsw_EvQ__GetHandler(pEvQ_EvHandlerAssoc pEvHndlr, size_t evtblsz, tEvQ_EventID ev);
+tErrorCodes_EvQ		Cwsw_EvQ__RegisterHandler(ptEvQ_EvHandlerAssoc pEvHndlrTbl, size_t evtblsz, tEvQ_EventID ev, pEvQ_EvHandlerFunc pf);
+pEvQ_EvHandlerFunc	Cwsw_EvQ__GetHandler(ptEvQ_EvHandlerAssoc pEvHndlr, size_t evtblsz, tEvQ_EventID ev);
 
 
 #ifdef	__cplusplus

@@ -54,7 +54,7 @@
  * @return				Index in the table where event was found, or -1 if not found
  */
 static tEvQ_EvtHandle
-get_ev_handle(pEvQ_EvHandlerAssoc pEvHndlrTbl, size_t evtblsz, tEvQ_EventID evId)
+get_ev_handle(ptEvQ_EvHandlerAssoc pEvHndlrTbl, size_t evtblsz, tEvQ_EventID evId)
 {
 	tEvQ_EvtHandle		handle = 0;
 	if(!pEvHndlrTbl)	return -1;	// no table specified
@@ -99,7 +99,7 @@ get_ev_handle(pEvQ_EvHandlerAssoc pEvHndlrTbl, size_t evtblsz, tEvQ_EventID evId
  */
 tErrorCodes_EvQ
 Cwsw_EvQ__RegisterHandler(
-	pEvQ_EvHandlerAssoc pEvHndlrTbl,
+	ptEvQ_EvHandlerAssoc pEvHndlrTbl,
 	size_t evtblsz,
 	tEvQ_EventID evId,
 	pEvQ_EvHandlerFunc pf)
@@ -137,7 +137,7 @@ Cwsw_EvQ__RegisterHandler(
  * @todo: implement "enabled/disabled" status.
  */
 pEvQ_EvHandlerFunc
-Cwsw_EvQ__GetHandler(pEvQ_EvHandlerAssoc pEvHndlr, size_t evtblsz, tEvQ_EventID evId)
+Cwsw_EvQ__GetHandler(ptEvQ_EvHandlerAssoc pEvHndlr, size_t evtblsz, tEvQ_EventID evId)
 {
 	tEvQ_EvtHandle idx = 0;
 

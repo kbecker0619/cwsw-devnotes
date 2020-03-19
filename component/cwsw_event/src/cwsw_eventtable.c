@@ -63,7 +63,7 @@
 tErrorCodes_EvQ
 Cwsw_Evt__InitEventTable(
 	ptEvQ_EvTable pEvQTable,	// Event Queue table.
-	pEvQ_Event pTable,		// table of events.
+	ptEvQ_Event pTable,		// table of events.
 	size_t TableSize)		// size of the event table. the benefit of passing as unsigned, is that we don't have to worry about negative values.
 {
 	if(!pEvQTable)			return kErr_EvQ_BadParm;
@@ -72,6 +72,8 @@ Cwsw_Evt__InitEventTable(
 
 	pEvQTable->pEvBuffer	= pTable;
 	pEvQTable->szEvTbl		= (int32_t)TableSize;	// yes, we do accept a size of 0 elements
+	pEvQTable->validity		= kRT_TBL_VALID;		// indicate initialization by init function (as opposed to compile-time initialization)
+
 	return kErr_EvQ_NoError;
 }
 
@@ -82,7 +84,7 @@ Cwsw_Evt__InitEventTable(
  *	@param [in]		hnd		base-0 handle, used as an index into the event buffer.
  *	@return	address of the specified event.
  */
-pEvQ_Event
+ptEvQ_Event
 Cwsw_Evt__GetEventPtr(ptEvQ_EvTable pEvTbl, tEvQ_EvtHandle hnd)
 {
 	if(!pEvTbl)					return NULL;	// bad Event Table object.
@@ -101,9 +103,9 @@ Cwsw_Evt__GetEventPtr(ptEvQ_EvTable pEvTbl, tEvQ_EvtHandle hnd)
  *	@ingroup tEvq_EvTable
  */
 tErrorCodes_EvQ
-Cwsw_Evt__GetEvent(pEvQ_Event pEv, ptEvQ_EvTable pEvTb, tEvQ_EvtHandle hnd)
+Cwsw_Evt__GetEvent(ptEvQ_Event pEv, ptEvQ_EvTable pEvTb, tEvQ_EvtHandle hnd)
 {
-	pEvQ_Event pfound;
+	ptEvQ_Event pfound;
 
 	if(!pEv)					return kErr_EvQ_BadParm;
 	if(!pEvTb)					return kErr_EvQ_BadParm;
@@ -133,9 +135,9 @@ Cwsw_Evt__GetEvent(pEvQ_Event pEv, ptEvQ_EvTable pEvTb, tEvQ_EvtHandle hnd)
  *	@ingroup tEvq_EvTable
  */
 tErrorCodes_EvQ
-Cwsw_Evt__PutEvent(ptEvQ_EvTable pEvTb, tEvQ_EvtHandle hnd, pEvQ_Event pEv)
+Cwsw_Evt__PutEvent(ptEvQ_EvTable pEvTb, tEvQ_EvtHandle hnd, ptEvQ_Event pEv)
 {
-	pEvQ_Event pfound;
+	ptEvQ_Event pfound;
 
 	if(!pEv)					return kErr_EvQ_BadParm;
 	if(!pEvTb)					return kErr_EvQ_BadParm;

@@ -70,11 +70,11 @@ typedef tEvQ_QueueCtrl *ptEvQ_QueueCtrl;
 // ---- Discrete Functions -------------------------------------------------- {
 
 extern uint16_t			Cwsw_EvQ__Init(void);
-extern tErrorCodes_EvQ	Cwsw_EvQ__InitEvQ(ptEvQ_QueueCtrl EvQueueCtrl, ptEvQ_EvTable pEvQueue);
+extern tErrorCodes_EvQ	Cwsw_EvQ__InitEvQ(ptEvQ_QueueCtrl pEvQ, ptEvQ_EvTable pEvTable, ptEvQ_Event pEvBuff, size_t szEvBuf);
 extern bool 			Cwsw_EvQ__Get_Initialized(void);
 extern tErrorCodes_EvQ	Cwsw_EvQ__FlushEvents(ptEvQ_QueueCtrl pEvQueueCtrl);
 extern tErrorCodes_EvQ	Cwsw_EvQ__PostEvent(ptEvQ_QueueCtrl pEvQueueCtrl, tEvQ_Event ev);
-extern tErrorCodes_EvQ	Cwsw_EvQ__GetEvent(ptEvQ_QueueCtrl pEvQ, pEvQ_Event pEv);
+extern tErrorCodes_EvQ	Cwsw_EvQ__GetEvent(ptEvQ_QueueCtrl pEvQ, ptEvQ_Event pEv);
 
 // ---- /Discrete Functions ------------------------------------------------- }
 

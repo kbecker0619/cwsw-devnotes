@@ -120,10 +120,10 @@ Cwsw_EvQ__Get_Initialized(void)
  *	Each queue in your system needs initialization: The management functions
  *	need to know the size of this event buffer, and where the buffer is located.
  *
- * 	@param pEvQ		[out]	Reference to the Event Queue.
- *	@param pEvTable	[in]	Pointer to the event table object.
- *							This is an independent object, not embedded into the EvQ control structure.
- * @return					Error code, where 0 (#kErr_EvQ_NoError) is no error.
+ * 	@param[out]	pEvQ	Reference to the Event Queue.
+ *	@param[in] pEvTable	Pointer to the event table object.
+ *						This is an independent object, not embedded into the EvQ control structure.
+ * @return				Error code, where 0 (#kErr_EvQ_NoError) is no error.
  *
  *	It is the responsibility of the caller to ensure the validity of the buffer
  *	and control struct.
@@ -131,19 +131,30 @@ Cwsw_EvQ__Get_Initialized(void)
  *	@ingroup tEvQ_QueueCtrl
  */
 tErrorCodes_EvQ
-Cwsw_EvQ__InitEvQ(ptEvQ_QueueCtrl pEvQ, ptEvQ_EvTable pEvTable)
+Cwsw_EvQ__InitEvQ(
+		ptEvQ_QueueCtrl	pEvQ,		//!< Event Queue member of the EvQX object.
+		ptEvQ_EvTable	pEvTable,	//!< Event Table member of the EvQ object.
+		ptEvQ_Event		pEvBuff,	//!< Event Table buffer; actual storage for queued events.
+		size_t			szEvBuf		//!< Size of Event Table buffer, in number of elements.
+	)
 {
-	// check preconditions, in order of priority
-	if(!initialized)			{ return kErr_EvQ_NotInitialized; }		// has component init happened?
-	if(!pEvQ)					{ return kErr_EvQ_BadEvQ; }				// is evq control structure valid?
-	if(!pEvTable)				{ return kErr_EvQ_BadTable; }			// is event table valid?
-	if(!pEvTable->pEvBuffer)	{ return kErr_EvQ_BadEvBuffer; }		// is event buffer valid?
-	if(!pEvTable->szEvTbl)		{ return kErr_EvQ_BadEvBuffer; }		// is event buffer valid? (while the event component itself allows zero-size tables, we don't)
+	tErrorCodes_EvQ rc = kErr_EvQ_NotInitialized;
 
-	pEvQ->pEventTable	= pEvTable;
-	pEvQ->Queue_Count	= 0;
-	pEvQ->idxRead		= 0;
-	pEvQ->idxWrite		= 0;
+	// check preconditions, in order of priority
+	if(!initialized)	{ return kErr_EvQ_NotInitialized; }		// has component init happened?
+	if(!pEvQ)			{ return kErr_EvQ_BadEvQ; }				// is evq control structure valid?
+	if(!pEvTable)		{ return kErr_EvQ_BadTable; }			// is event table valid?
+	if(!pEvBuff)		{ return kErr_EvQ_BadEvBuffer; }		// is event buffer valid?
+	if(!szEvBuf)		{ return kErr_EvQ_BadEvBuffer; }		// is event buffer valid? (while the event component itself allows zero-size tables, we don't)
+
+	rc = Cwsw_Evt__InitEventTable(pEvTable, pEvBuff, szEvBuf);
+	if(!rc)
+	{
+		pEvQ->pEventTable	= pEvTable;
+		pEvQ->Queue_Count	= 0;
+		pEvQ->idxRead		= 0;
+		pEvQ->idxWrite		= 0;
+	}
 
 	return kErr_EvQ_NoError;
 }
@@ -246,7 +257,7 @@ Cwsw_EvQ__PostEvent(ptEvQ_QueueCtrl pEvQ, tEvQ_Event ev)
  *	@ingroup tEvQ_QueueCtrl
  */
 tErrorCodes_EvQ
-Cwsw_EvQ__GetEvent(ptEvQ_QueueCtrl pEvQ, pEvQ_Event pEv)
+Cwsw_EvQ__GetEvent(ptEvQ_QueueCtrl pEvQ, ptEvQ_Event pEv)
 {
 	tErrorCodes_EvQ rc = kEvQ_Ev_None;
 	tEvQ_EvtHandle idx = 0;

@@ -86,7 +86,7 @@ typedef struct sEvQ_Event {
  *
  *	@ingroup tEvQ_Event
  */
-typedef tEvQ_Event *pEvQ_Event;
+typedef tEvQ_Event *ptEvQ_Event;
 
 
 // ============================================================================

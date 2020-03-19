@@ -47,10 +47,14 @@ GetTableHandle(ptEvQ_EvHndlrAssocTable pHndlrTbl, tEvQ_EventID evId)
 {
 	// for this implementation, the event is used as an index into the LUT
 	if(!pHndlrTbl)							return -1;
-	// todo: check table validity
-	if(evId >= pHndlrTbl->szEvtHandlerTbl)	return -1;
-	if(evId < 1)							return -1;
-	return (tEvQ_EvtHandle)evId;
+	if( (pHndlrTbl->validity == kCT_TBL_VALID) ||
+		(pHndlrTbl->validity == kRT_TBL_VALID) )
+	{
+		if(evId >= pHndlrTbl->szEvtHandlerTbl)	return -1;
+		if(evId < 1)							return -1;
+		return (tEvQ_EvtHandle)evId;
+	}
+	return -1;
 }
 
 
@@ -72,21 +76,22 @@ GetTableHandle(ptEvQ_EvHndlrAssocTable pHndlrTbl, tEvQ_EventID evId)
 tErrorCodes_EvQ
 Cwsw_EvHA__InitEventHandlerTable(
 	ptEvQ_EvHndlrAssocTable pEvtHndlrTbl,
-	pEvQ_EvHandlerAssoc pHndlrArray,
-	int32_t szHndlrArray)
+	ptEvQ_EvHandlerAssoc pHndlrArray,
+	size_t szHndlrArray)
 {
 	if(!pEvtHndlrTbl)			return kErr_EvQ_BadParm;
 	if(!pHndlrArray)			return kErr_EvQ_BadParm;
 	if(szHndlrArray > INT_MAX)	return kErr_EvQ_BadParm;
 
 	pEvtHndlrTbl->pEvtHndlrTbl		= pHndlrArray;
-	pEvtHndlrTbl->szEvtHandlerTbl	= szHndlrArray;		// yes, we do accept a size of 0 elements
-	// todo: set validity
+	pEvtHndlrTbl->szEvtHandlerTbl	= (int32_t)szHndlrArray;	// yes, we do accept a size of 0 elements
+	pEvtHndlrTbl->validity			= kRT_TBL_VALID;			// indicate initialization by init function (as opposed to compile-time initialization)
+
 	return kErr_EvQ_NoError;
 }
 
 
-/** Set the association between an Event ID and a handler or that event.
+/** Set the association between an Event ID and a handler for that event.
  *
  *	@param[in,out]	pHndlrTbl	Event Handler Association object.
  *	@param[in]		evId		Event ID to which to "attach" the handler.

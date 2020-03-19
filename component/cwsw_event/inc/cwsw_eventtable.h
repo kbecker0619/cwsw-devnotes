@@ -35,6 +35,19 @@ extern "C" {
 // ----	Constants -------------------------------------------------------------
 // ============================================================================
 
+/**	Special nonsense values to give a (very small) measure of confidence that a Table object
+ *	was valid at one time.
+ *
+ *	@ingroup tEvq_EvTable
+ */
+enum eTblValidityMarkers {
+	/**
+	 */
+	kCT_TBL_VALID = 0xFE3D578,	//!< Compile-Time Table Valid marker. "Feed State". No meaning attached to this word or symbol.
+	kRT_TBL_VALID = 0xEA57052	//!< Run-Time Table Valid marker. "East OS/2". Again, no meaning assigned to this.
+};
+
+
 // ============================================================================
 // ----	Type Definitions ------------------------------------------------------
 // ============================================================================
@@ -51,8 +64,9 @@ extern "C" {
  *	@ingroup tEvq_EvTable
  */
 typedef struct sEvq_EvTable {
-	pEvQ_Event		pEvBuffer;	//!< Pointer to event table
+	ptEvQ_Event		pEvBuffer;	//!< Pointer to event table
 	int32_t			szEvTbl;	//!< Size of embedded table. Signed int to allow for `-1`.
+	uint32_t		validity;	//!< On the concern for validating the integrity of the table, provide for a validity signature of some sort.
 } tEvQ_EvTable;
 
 /** Reference to an Event Table.
@@ -89,10 +103,10 @@ typedef int32_t	tEvQ_EvtHandle;		/* would prefer to use `ssize_t`, but that's a 
  *	@param pEv	[out]	event to be initialized.
  */
 #define 				Cwsw_EvT__InitEvent(pEv)	(void)memset(pEv, 0, sizeof(tEvQ_Event))
-extern tErrorCodes_EvQ	Cwsw_Evt__InitEventTable(ptEvQ_EvTable pEvQTable, pEvQ_Event pTable, size_t TableSize);		/* initialize a table of events */
-extern pEvQ_Event		Cwsw_Evt__GetEventPtr(ptEvQ_EvTable pEvTbl, tEvQ_EvtHandle hnd);
-extern tErrorCodes_EvQ	Cwsw_Evt__GetEvent(pEvQ_Event pEv, ptEvQ_EvTable pEvTb, tEvQ_EvtHandle hnd);
-extern tErrorCodes_EvQ	Cwsw_Evt__PutEvent(ptEvQ_EvTable pEvTb, tEvQ_EvtHandle hnd, pEvQ_Event pEv);
+extern tErrorCodes_EvQ	Cwsw_Evt__InitEventTable(ptEvQ_EvTable pEvQTable, ptEvQ_Event pTable, size_t TableSize);		/* initialize a table of events */
+extern ptEvQ_Event		Cwsw_Evt__GetEventPtr(ptEvQ_EvTable pEvTbl, tEvQ_EvtHandle hnd);
+extern tErrorCodes_EvQ	Cwsw_Evt__GetEvent(ptEvQ_Event pEv, ptEvQ_EvTable pEvTb, tEvQ_EvtHandle hnd);
+extern tErrorCodes_EvQ	Cwsw_Evt__PutEvent(ptEvQ_EvTable pEvTb, tEvQ_EvtHandle hnd, ptEvQ_Event pEv);
 
 
 // ---- /Discrete Functions ------------------------------------------------- }
