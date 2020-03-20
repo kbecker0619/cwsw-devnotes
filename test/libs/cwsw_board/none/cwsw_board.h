@@ -1,28 +1,19 @@
 /** @file
  *	@brief	Board Support Package Header File for "none" board - Windows or Linux desktop.
  *
- *	Description:
- *
  *	Copyright (c) 2020 Kevin L. Becker. All rights reserved.
  *
  *	Original:
  *	Created on: Dec 21, 2017
  *	Author: kbecker
- *
- *	Current:
- *	$Revision: $
- *	$Date: $
  */
 
 #ifndef CWSW_BOARD_H
 #define CWSW_BOARD_H
 
-
 // ============================================================================
 // ----	Include Files ---------------------------------------------------------
 // ============================================================================
-
-#include "projcfg.h"
 
 // ----	System Headers --------------------------
 #include <stdio.h>
@@ -31,6 +22,7 @@
 #include <stdbool.h>
 
 // ----	Project Headers -------------------------
+#include "projcfg.h"
 #include "cwsw_arch.h"
 /* note: while i myself strongly agree with the coding guideline that says,
  * "no path statements in include statements", i am doing that here in my

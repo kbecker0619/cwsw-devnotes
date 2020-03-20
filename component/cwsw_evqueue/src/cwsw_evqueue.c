@@ -168,7 +168,7 @@ Cwsw_EvQ__InitEvQ(
  *
  *  @param[in,out]	pEvQ	Event Queue object.
  *
- *	@return Error code, where 0 (#kErr_EvQ_NoError) is no error.
+ *	@returns Error code, where 0 (#kErr_EvQ_NoError) is no error.
  *
  *	@ingroup tEvQ_QueueCtrl
  */
@@ -195,7 +195,7 @@ Cwsw_EvQ__FlushEvents(ptEvQ_QueueCtrl pEvQ)
  *	@param[in,out]	pEvQ	Pointer to the current control structure.
  *	@param[in]		ev		Event to add to the queue.
  *
- *	@returns Error code, enumeration of type tEvQ_ErrorCode.
+ *	@returns Error code, where 0 (#kErr_EvQ_NoError) is no error.
  *
  *	@ingroup tEvQ_QueueCtrl
  */
@@ -252,7 +252,7 @@ Cwsw_EvQ__PostEvent(ptEvQ_QueueCtrl pEvQ, tEvQ_Event ev)
  *	@param[in,out]	pEvQ	Event Queue. Control metadata is updated during this method's operation.
  *	@param[out]		pEv		Event retrieved. Cleared if event buffer is empty.
  *
- *	@return Error code, where 0 (#kErr_EvQ_NoError) is no error.
+ *	@returns Error code, where 0 (#kErr_EvQ_NoError) is no error.
  *
  *	@ingroup tEvQ_QueueCtrl
  */

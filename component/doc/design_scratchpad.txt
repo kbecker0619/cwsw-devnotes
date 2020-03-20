@@ -146,22 +146,28 @@ ptEvQ_EvHndlrAssocTable: tEvQ_EvHndlrAssocTable *
 
 event queue (extended)													{
 extends tEvQ_QueueCtrl
+
+WARNING: CURRENTLY, PASSING AN EVQ STRUCT TO AN EVQX METHOD, OR VICE VERSA, WOULD BE CATASTROPHIC
+TODO: MAKE THE EVQX OBJECT TO BE A SUPERSET OF AN EVQ OBJECT.
+*	this would make passing an evqx object to an evq method benign
+*	for a subset of use cases, this would make passing an evq object to an evqx method, benign.
+
 +== tEvQ_QueueCtrlEx ===================+
 | pEvQ_Ctrl:	ptEvQ_QueueCtrl			|	reference to Event Queue
 | pHandlers:	ptEvQ_EvHndlrAssocTable	|
++---------------------------------------+
+| InitEvQ()								|	initializes an instance of an extended event queue. does NOT clear (or otherwise initialize) the table of queued events, or the Event Handler Association lookup table.
+| FlushEvents()							|	clears the current event queue, not by touching the buffer itself, but by resetting the count and read/write pointers.
+| GetEvent()							|	pulls the oldest event (FIFO) from the queue. destructive read. returns success/failure indication.
+| PostEvent()							|	add a new event to the event queue. returns success/failure indication.
 
 | Queue_Size:	uint8_t			|	queue size. this determines the maximum number of events that can be posted at one time.
 | Queue_Count:	uint8_t			|	number of items in the queue.
 | pWrite:		pEvQ_Event		|	queue write pointer; the address to which the next event posted will be written. Defined as a pointer-to-event, rather than an index, to ease reading/writing API, letting complexity fall into queue management code.
 | pRead:		pEvQ_Event		|	queue read pointer; the address that will be read at the next GetEvent() call. Defined as a pointer-to-event, rather than an index, to ease reading/writing API, letting complexity fall into queue management code.
 | 
-+-------------------------------+
 | Init()						|	initializes the COMPONENT "event queue", not any specific instance of an event queue.
 | Get_Initialized()				|	return the component's initialization status.
-| InitEvQ()						|	initializes an instance of an event queue. does NOT clear (or otherwise initialize) the table of queued events; only the metadata in the control structure.
-| FlushEvents()					|	clears the current event queue, not by touching the buffer itself, but by resetting the count and read/write pointers.
-| PostEvent()					|	add a new event to the event queue. returns success/failure indication.
-| GetEvent()					|	pulls the oldest event (FIFO) from the queue. destructive read. returns success/failure indication.
 +===============================+
 
 intentionally designed to be a superset of the core control structure.

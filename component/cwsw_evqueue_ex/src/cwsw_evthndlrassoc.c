@@ -96,7 +96,8 @@ Cwsw_EvHA__InitEventHandlerTable(
  *	@param[in,out]	pHndlrTbl	Event Handler Association object.
  *	@param[in]		evId		Event ID to which to "attach" the handler.
  *	@param[in]		pHndlrFunc	Event handler.
- *	@return Error code, where 0 is success.
+ *
+ *	@returns Error code, where 0 (#kErr_EvQ_NoError) is no error.
  *
  *	@note This works at the level of the Event Handler Association table, not at the EvQX level.
  *	@ingroup tEvQ_QueueCtrlEx

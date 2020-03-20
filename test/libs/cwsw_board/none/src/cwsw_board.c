@@ -79,10 +79,11 @@ Cwsw_Board__UsbVbusSwitchStateSet(tDO_LogicalValues state)
 // ============================================================================
 
 /** Initialize the board.
- * This function "connects" the board to the CPU.
- * It knows nothing about the application; sitting just above this file, would be the "bsp" (to
- * slightly abuse that term), which connects the application [framework] to the board.
- * @return error code, where 0 means no problem.
+ *	This function "connects" the board to the CPU.
+ *	It knows nothing about the application; sitting just above this file, would be the "bsp" (to
+ *		slightly abuse that term), which connects the application [framework] to the board.
+ *
+ *	@returns error code, where 0 (#kErr_Lib_NoError) means no problem.
  */
 uint16_t
 Cwsw_Board__Init(void)
