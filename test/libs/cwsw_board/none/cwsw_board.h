@@ -1,6 +1,7 @@
 /** @file
  *	@brief	Board Support Package Header File for "none" board - Windows or Linux desktop.
  *
+ *	\copyright
  *	Copyright (c) 2020 Kevin L. Becker. All rights reserved.
  *
  *	Original:

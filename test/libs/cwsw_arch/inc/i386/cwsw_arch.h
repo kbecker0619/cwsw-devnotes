@@ -1,6 +1,7 @@
 /** @file
  *	@brief	API for CWSW Arch component (MCU architecture).
  *
+ *	\copyright
  *	Copyright (c) 2020 Kevin L. Becker. All rights reserved.
  *
  *	Created on: Jan 3, 2018

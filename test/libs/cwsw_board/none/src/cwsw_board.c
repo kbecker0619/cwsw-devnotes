@@ -2,18 +2,12 @@
  *	@brief	Board Support Package implementation for the "none" board (i.e., desktop computer
  *	running Windows or Linux).
  *
- *	Description:
- *
- *
+ *	\copyright
  *	Copyright (c) 2020 Kevin L. Becker. All rights reserved.
  *
  *	Original:
  *	Created on: Dec 27, 2017
  *	Author: kbecker
- *
- *	Current:
- *	$Revision: $
- *	$Date: $
  */
 
 // ============================================================================

@@ -1,5 +1,6 @@
 /** @file
  *
+ *	\copyright
  *	Copyright (c) 2020 Kevin L. Becker. All rights reserved.
  *
  *	Created on: Jan 27, 2018

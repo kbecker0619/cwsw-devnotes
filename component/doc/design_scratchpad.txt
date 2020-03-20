@@ -153,8 +153,8 @@ TODO: MAKE THE EVQX OBJECT TO BE A SUPERSET OF AN EVQ OBJECT.
 *	for a subset of use cases, this would make passing an evq object to an evqx method, benign.
 
 +== tEvQ_QueueCtrlEx ===================+
-| pEvQ_Ctrl:	ptEvQ_QueueCtrl			|	reference to Event Queue
-| pHandlers:	ptEvQ_EvHndlrAssocTable	|
+| EvQ_Ctrl:		tEvQ_QueueCtrl			|	embedded Event Queue object.
+| pHandlers:	ptEvQ_EvHndlrAssocTable	|	reference to Event Handler Association Table object.
 +---------------------------------------+
 | InitEvQ()								|	initializes an instance of an extended event queue. does NOT clear (or otherwise initialize) the table of queued events, or the Event Handler Association lookup table.
 | FlushEvents()							|	clears the current event queue, not by touching the buffer itself, but by resetting the count and read/write pointers.

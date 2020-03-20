@@ -1,6 +1,7 @@
 /** @file
  *	@brief	Methods for the Event Queue Extended component.
  *
+ *	\copyright
  *	Copyright (c) 2020 Kevin L. Becker. All rights reserved.
  *
  *	Original:

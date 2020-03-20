@@ -1,6 +1,7 @@
 /** @file
  *	@brief	One-sentence short description of file.
  *
+ *	\copyright
  *	Copyright (c) 2020 Kevin L. Becker. All rights reserved.
  *
  *	Created on: Dec 9, 2018

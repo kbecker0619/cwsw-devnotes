@@ -1,6 +1,7 @@
 /** @file
  *	@brief	Primary Unit Test file for the CWSW Arch[itecture] component.
  *
+ *	\copyright
  *	Copyright (c) 2020 Kevin L. Becker. All rights reserved.
  *
  *	Created on: Nov 11, 2018

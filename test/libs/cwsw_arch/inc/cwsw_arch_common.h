@@ -5,7 +5,7 @@
  *	Do not include this file directly; it is intended to be included by the architecture-specific
  *	API file in one of the supported architectures, located immediately below this file's location.
  *
- *
+ *	\copyright
  *	Copyright (c) 2020 Kevin L. Becker. All rights reserved.
  *
  *	Created on: Jan 3, 2018

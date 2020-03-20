@@ -1,6 +1,7 @@
 /** @file
  *	@brief	callbacks for simulated event handling.
  *
+ *	\copyright
  *	Copyright (c) 2020 Kevin L. Becker. All rights reserved.
  *
  *	Created on: May 2, 2019

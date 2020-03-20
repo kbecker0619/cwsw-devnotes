@@ -42,6 +42,12 @@
 // ----	Private Functions -----------------------------------------------------
 // ============================================================================
 
+/**	Return a handle to a specified event in the event-handler association table.
+ *	This instantiation uses the event ID as an index into the association table;
+ *	therefore, it is important that all event IDs be contiguous and non-negative.
+ *
+ *	@ingroup tEvQ_EvHndlrAssocTable
+ */
 static tEvQ_EvtHandle
 GetTableHandle(ptEvQ_EvHndlrAssocTable pHndlrTbl, tEvQ_EventID evId)
 {
@@ -71,7 +77,7 @@ GetTableHandle(ptEvQ_EvHndlrAssocTable pHndlrTbl, tEvQ_EventID evId)
  *	@param szHndlrArray
  *	@return	Error code, where `0` is success.
  *
- *	@ingroup tEvQ_QueueCtrlEx
+ *	@ingroup tEvQ_EvHndlrAssocTable
  */
 tErrorCodes_EvQ
 Cwsw_EvHA__InitEventHandlerTable(
@@ -100,13 +106,13 @@ Cwsw_EvHA__InitEventHandlerTable(
  *	@returns Error code, where 0 (#kErr_EvQ_NoError) is no error.
  *
  *	@note This works at the level of the Event Handler Association table, not at the EvQX level.
- *	@ingroup tEvQ_QueueCtrlEx
+ *	@ingroup tEvQ_EvHndlrAssocTable
  */
 tErrorCodes_EvQ
 Cwsw_EvHA__SetEvHandler(
-	ptEvQ_EvHndlrAssocTable pHndlrTbl,	//!< Event Handler Association table.
-	tEvQ_EventID evId, 					//!< Event ID to associate.
-	pEvQ_EvHandlerFunc pHndlrFunc)		//!< Handler for the identified event. NULL accepted to disassociate an event.
+	ptEvQ_EvHndlrAssocTable pHndlrTbl,
+	tEvQ_EventID evId,
+	pEvQ_EvHandlerFunc pHndlrFunc)
 {
 	tEvQ_EvtHandle hnd = GetTableHandle(pHndlrTbl, evId);	// validates both association table as well as event id
 	if(hnd < 1)	return kErr_EvQ_BadParm;					// not completely accurate, but MVP for now. could return more precise error codes if we did our own examination of the parameters.
@@ -127,7 +133,7 @@ Cwsw_EvHA__SetEvHandler(
  *	@return Address of the handler function, or NULL for failure.
  *
  *	@note This works at the level of the Event Handler Association table, not at the EvQX level.
- *	@ingroup tEvQ_QueueCtrlEx
+ *	@ingroup tEvQ_EvHndlrAssocTable
  */
 pEvQ_EvHandlerFunc
 Cwsw_EvHA__GetEvHandler(ptEvQ_EvHndlrAssocTable pHndlrTbl,	tEvQ_EventID evId)

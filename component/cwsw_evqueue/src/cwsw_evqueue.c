@@ -1,8 +1,7 @@
 /** @file
  *	@brief	Event Queue component definitions and methods.
  *
- *	Description:
- *
+ *	\copyright
  *	Copyright (c) 2020 Kevin L. Becker. All rights reserved.
  *
  *	Original:

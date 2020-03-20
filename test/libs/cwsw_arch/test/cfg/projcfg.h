@@ -1,6 +1,7 @@
 /** @file
  *	@brief	Project Configuration for CWSW Arch Unit test environment
  *
+ *	\copyright
  *	Copyright (c) 2020 Kevin L. Becker. All rights reserved.
  *
  *	Created on: Sep 4, 2016

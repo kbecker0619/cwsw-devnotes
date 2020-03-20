@@ -18,12 +18,10 @@
 
 // ----	Project Headers -------------------------
 /* configuration items */
-//#include "projcfg.h"
 #include "cwsw_eventsim.h"
 /* component headers used here */
 #include "cwsw_evqueue_ex.h"
 #include "cwsw_evthndlrassoc.h"		/* tEvQ_EvHandlerAssoc */
-//#include "cwsw_eventtable.h"
 #include "tedlosevents.h"			/* OS events for this demo */
 #include "cwsw_svc.h"
 
@@ -247,9 +245,6 @@ basic_evqx_api(void)
 	};
 	//	2. event table
 	tEvQ_EvTable tblxEv = {tblxEvtBuff, TABLE_SIZE(tblxEvtBuff), kCT_TBL_VALID};
-	//	3. event queue
-				//			evq		ct	w	r
-	tEvQ_QueueCtrl	evq = {&tblxEv, 0,	0,	0};
 
 	// now set up the event handler table
 	//	1. event association array
@@ -258,35 +253,49 @@ basic_evqx_api(void)
 	tEvQ_EvHndlrAssocTable tblxMyHandlers = {tblxEvHndlr, TABLE_SIZE(tblxEvHndlr), kCT_TBL_VALID};
 
 	// finally, set up evqx
-	tEvQ_QueueCtrlEx MyQX = {&evq, &tblxMyHandlers};
+	//							evq		ct	w	r
+	tEvQ_QueueCtrlEx MyQX = {{&tblxEv, 0,	0,	0}, &tblxMyHandlers};
 
-	// the above setup demonstrate compile-time setup.
-	// now do the same thing via the init function
-	tErrorCodes_EvQ rc = Cwsw_EvQX__InitEvQ(&MyQX,
-											&evq,
-											&tblxEv,
-											tblxEvtBuff,
-											TABLE_SIZE(tblxEvtBuff),
-											&tblxMyHandlers,
-											tblxEvHndlr,
-											TABLE_SIZE(tblxEvHndlr) );
-	UNUSED(rc);
+	do {	/* EvQ API */
+		// the above setup demonstrate compile-time setup.
+		// now do the same thing via the init function
+		tErrorCodes_EvQ rc = Cwsw_EvQX__InitEvQ(&MyQX,
+												&tblxEv,
+												tblxEvtBuff,
+												TABLE_SIZE(tblxEvtBuff),
+												&tblxMyHandlers,
+												tblxEvHndlr,
+												TABLE_SIZE(tblxEvHndlr) );
+		UNUSED(rc);
 
-	// retrieve an event
-	tEvQ_Event myev = {0};
-	MyQX.pEvQ_Ctrl->Queue_Count = 10;
-	cwsw_assert(kErr_EvQ_NoError == Cwsw_EvQX__GetEvent(&MyQX, &myev), "Unexpected initialization problem.");
-		cwsw_assert(0 == myev.evId, "Unexpected event.");
-		cwsw_assert(100 == myev.evData, "Unexpected event data.");
-	cwsw_assert(kErr_EvQ_NoError == Cwsw_EvQX__GetEvent(&MyQX, &myev), "confirm happy path");
-		cwsw_assert(1 == myev.evId, "Unexpected event.");
-		cwsw_assert(101 == myev.evData, "Unexpected event data.");
-	cwsw_assert(kErr_EvQ_NoError == Cwsw_EvQX__FlushEvents(&MyQX), "unexpected problem during queue flush");
-	cwsw_assert(kErr_EvQ_NoError == Cwsw_EvQX__PostEvent(&MyQX, myev), "confirm happy path");
-	cwsw_assert(kErr_EvQ_NoError == Cwsw_EvQX__GetEvent(&MyQX, &myev), "confirm happy path");
-		cwsw_assert(1 == myev.evId, "Unexpected event.");
-		cwsw_assert(101 == myev.evData, "Unexpected event data.");
-	cwsw_assert(kErr_EvQ_QueueEmpty == Cwsw_EvQX__GetEvent(&MyQX, &myev), "confirm happy path");
+		// retrieve an event
+		tEvQ_Event myev = {0};
+		MyQX.EvQ_Ctrl.Queue_Count = 10;
+		cwsw_assert(kErr_EvQ_NoError == Cwsw_EvQX__GetEvent(&MyQX, &myev), "Unexpected initialization problem.");
+			cwsw_assert(0 == myev.evId, "Unexpected event.");
+			cwsw_assert(100 == myev.evData, "Unexpected event data.");
+		cwsw_assert(kErr_EvQ_NoError == Cwsw_EvQX__GetEvent(&MyQX, &myev), "confirm happy path");
+			cwsw_assert(1 == myev.evId, "Unexpected event.");
+			cwsw_assert(101 == myev.evData, "Unexpected event data.");
+		cwsw_assert(kErr_EvQ_NoError == Cwsw_EvQX__FlushEvents(&MyQX), "unexpected problem during queue flush");
+		cwsw_assert(kErr_EvQ_NoError == Cwsw_EvQX__PostEvent(&MyQX, myev), "confirm happy path");
+		cwsw_assert(kErr_EvQ_NoError == Cwsw_EvQX__GetEvent(&MyQX, &myev), "confirm happy path");
+			cwsw_assert(1 == myev.evId, "Unexpected event.");
+			cwsw_assert(101 == myev.evData, "Unexpected event data.");
+		cwsw_assert(kErr_EvQ_QueueEmpty == Cwsw_EvQX__GetEvent(&MyQX, &myev), "confirm happy path");
+	} while(0);
+
+	do {	/* Event Handler API */
+		pEvQ_EvHandlerFunc myfunc;
+		Cwsw_EvQX__SetEvHandler(&MyQX, evQuitRqst, MyEvHandler);
+//		myfunc = Cwsw_EvQX__GetEvHandler(&tblMyHandlers, 1);
+//		if(myfunc)
+//		{
+//			tEvQ_Event ev = {13, 137};
+//			myfunc(ev, __LINE__);
+//		}
+	} while(0);
+
 }
 
 

@@ -4,6 +4,7 @@
  *	Description:
  *	Requires support of a hardware time module.
  *
+ *	\copyright
  *	Copyright (c) 2020 Kevin L. Becker. All rights reserved.
  *
  *	Original:

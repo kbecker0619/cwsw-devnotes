@@ -1,6 +1,7 @@
 /** @file
  *	@brief	Definitions for the Event Handler component.
  *
+ *	\copyright
  *	Copyright (c) 2020 Kevin L. Becker. All rights reserved.
  *
  *	Original:

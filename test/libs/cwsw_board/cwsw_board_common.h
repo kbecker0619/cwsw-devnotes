@@ -1,17 +1,12 @@
 /** @file
  *	@brief	API common to all instances of the cwsw_board reusable component.
  *
- *	Description:
- *
- *	Copyright (c) 2018 Kevin L. Becker. All rights reserved.
+ *	\copyright
+ *	Copyright (c) 2020 Kevin L. Becker. All rights reserved.
  *
  *	Original:
  *	Created on: Feb 14, 2018
  *	Author: KBECKE35
- *
- *	Current:
- *	$Revision: $
- *	$Date: $
  */
 
 #ifndef CWSW_BOARD_CWSW_BOARD_COMMON_H_
