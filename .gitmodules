@@ -6,3 +6,7 @@
 	path = component/doc/doc_core
 	url = git@github.com:kbecker0619/cwsw_doc_core.git
 	branch = development
+[submodule "test/libs/cwsw_arch"]
+	path = test/libs/cwsw_arch
+	url = git@github.com:kbecker0619/cwsw_arch.git
+	branch = development

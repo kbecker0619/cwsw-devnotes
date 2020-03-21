@@ -73,8 +73,18 @@
 							</tool>
 						</toolChain>
 					</folderInfo>
+					<folderInfo id="cdt.managedbuild.config.gnu.mingw.exe.debug.1736302436.830880274" name="/" resourcePath="libs/cwsw_arch_old">
+						<toolChain id="cdt.managedbuild.toolchain.gnu.mingw.exe.debug.1215332507" name="MinGW GCC" superClass="cdt.managedbuild.toolchain.gnu.mingw.exe.debug" unusedChildren="">
+							<tool id="cdt.managedbuild.tool.gnu.assembler.mingw.exe.debug.1530310104" name="GCC Assembler" superClass="cdt.managedbuild.tool.gnu.assembler.mingw.exe.debug.955745680"/>
+							<tool id="cdt.managedbuild.tool.gnu.archiver.mingw.base.802618850" name="GCC Archiver" superClass="cdt.managedbuild.tool.gnu.archiver.mingw.base.1004530742"/>
+							<tool id="cdt.managedbuild.tool.gnu.cpp.compiler.mingw.exe.debug.920420348" name="GCC C++ Compiler" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.mingw.exe.debug.1050297134"/>
+							<tool id="cdt.managedbuild.tool.gnu.c.compiler.mingw.exe.debug.569089721" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.mingw.exe.debug.1489450762"/>
+							<tool id="cdt.managedbuild.tool.gnu.c.linker.mingw.exe.debug.1173327812" name="MinGW C Linker" superClass="cdt.managedbuild.tool.gnu.c.linker.mingw.exe.debug.1268148108"/>
+							<tool id="cdt.managedbuild.tool.gnu.cpp.linker.mingw.exe.debug.1076018516" name="MinGW C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.mingw.exe.debug.1051958027"/>
+						</toolChain>
+					</folderInfo>
 					<sourceEntries>
-						<entry excluding="component/test|component/cwsw_event/test|libs/cwsw_arch/test|bsw/svc/cwsw_event/test/ecproject|bsw/svc/cwsw_swtimer/src/cwsw_swtimer.c|component/cwsw_event/test/cwsw_lib/test|bsw/svc/cwsw_event/test/cwsw_lib/test/ut|bsw/svc/cwsw_clock/src/cwsw_clock_svc.c|src|bsw/ecu/cwsw_arch/test|libs/cwsw_clock|bsw/svc/cwsw_event/test|libs/cwsw_swtimer|bsw/svc/cwsw_evq/test|libs/cwsw_lib/test|bsw/svc/cwsw_event/test/nbproject|bsw/evq/src/cwsw_evhandler.c|app/tedlos.c|bsw/svc/cwsw_event/test/app|bsw/svc/cwsw_event/test/vsproject|bsw/svc/cwsw_lib/test" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+						<entry excluding="libs/cwsw_arch_old|component/test|component/cwsw_event/test|libs/cwsw_arch/test|bsw/svc/cwsw_event/test/ecproject|bsw/svc/cwsw_swtimer/src/cwsw_swtimer.c|component/cwsw_event/test/cwsw_lib/test|bsw/svc/cwsw_event/test/cwsw_lib/test/ut|bsw/svc/cwsw_clock/src/cwsw_clock_svc.c|src|bsw/ecu/cwsw_arch/test|libs/cwsw_clock|bsw/svc/cwsw_event/test|libs/cwsw_swtimer|bsw/svc/cwsw_evq/test|libs/cwsw_lib/test|bsw/svc/cwsw_event/test/nbproject|bsw/evq/src/cwsw_evhandler.c|app/tedlos.c|bsw/svc/cwsw_event/test/app|bsw/svc/cwsw_event/test/vsproject|bsw/svc/cwsw_lib/test" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
