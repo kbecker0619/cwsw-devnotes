@@ -58,6 +58,9 @@
     <ClCompile Include="..\..\component\cwsw_evqueue_ex\src\cwsw_evthndlrassoc.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\component\cwsw_evqueue_ex\src\cwsw_evqueue_ex.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\app\tedlos.h">
@@ -109,6 +112,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\libs\cwsw_arch\inc\i386\peripheral\ports\ports_api.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\component\cwsw_evqueue_ex\inc\cwsw_evqueue_ex.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

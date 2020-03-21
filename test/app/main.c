@@ -256,6 +256,7 @@ basic_evqx_api(void)
 	tEvQ_QueueCtrlEx MyQX = {{&tblxEv, 0,	0,	0}, &tblxMyHandlers};
 
 	do {	/* EvQ API */
+		tEvQ_Event myev = {0};
 		// the above setup demonstrate compile-time setup.
 		// now do the same thing via the init function
 		tErrorCodes_EvQ rc = Cwsw_EvQX__InitEvQ(&MyQX,
@@ -268,7 +269,6 @@ basic_evqx_api(void)
 		UNUSED(rc);
 
 		// retrieve an event
-		tEvQ_Event myev = {0};
 		MyQX.EvQ_Ctrl.Queue_Count = 10;
 		cwsw_assert(kErr_EvQ_NoError == Cwsw_EvQX__GetEvent(&MyQX, &myev), "Unexpected initialization problem.");
 			cwsw_assert(0 == myev.evId, "Unexpected event.");

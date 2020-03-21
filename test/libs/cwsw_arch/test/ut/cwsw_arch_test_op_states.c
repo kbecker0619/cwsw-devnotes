@@ -19,8 +19,8 @@
 //#include "cwsw_eventsim.h"
 
 // ----	Module Headers --------------------------
+#include "cwsw_arch.h"
 #include "cwsw_arch_test_op_states.h"
-#include "../../inc/i386/cwsw_arch.h"
 
 
 // ============================================================================

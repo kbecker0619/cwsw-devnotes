@@ -3,8 +3,8 @@
  *	\copyright
  *	Copyright (c) 2020 Kevin L. Becker. All rights reserved.
  *
- *	Created on: Jan 27, 2018
- *	@author	kbecker
+ *	Created on: Nov 11, 2018
+ *	@author kbecker
  */
 
 // ============================================================================
@@ -55,6 +55,11 @@ EventHandler__evTerminateRequested(tEventPayload EventData)
 }
 
 
+/** Entry for demonstration app for core part of CWSW Arch component.
+ *	This is extremely limited in functionality by design, and is not intended
+ *	to demonstrate the features and capabilities of the library. That task is
+ *	left to the Architecture Integration project.
+ */
 int
 main(void)
 {

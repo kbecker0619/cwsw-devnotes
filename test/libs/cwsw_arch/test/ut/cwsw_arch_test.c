@@ -13,7 +13,6 @@
 // ============================================================================
 
 // ----	System Headers --------------------------
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <limits.h>         // INT_MAX, INT_MIN
@@ -22,7 +21,7 @@
 #include <CUnit/Basic.h>
 
 // ----	Module Headers --------------------------
-#include "../../inc/i386/cwsw_arch.h"
+#include "cwsw_arch.h"
 #include "cwsw_arch_test_op_states.h"
 
 

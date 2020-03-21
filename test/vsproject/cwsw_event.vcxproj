@@ -89,6 +89,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\component\cwsw_event\src\cwsw_eventtable.c" />
     <ClCompile Include="..\..\component\cwsw_evqueue_ex\src\cwsw_evhandler.c" />
+    <ClCompile Include="..\..\component\cwsw_evqueue_ex\src\cwsw_evqueue_ex.c" />
     <ClCompile Include="..\..\component\cwsw_evqueue_ex\src\cwsw_evthndlrassoc.c" />
     <ClCompile Include="..\app\cwsw_lib_prj\CritSect.c" />
     <ClCompile Include="..\app\main.c" />
@@ -101,6 +102,7 @@
     <ClCompile Include="..\..\bsw\svc\src\cwsw_svc.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\component\cwsw_evqueue_ex\inc\cwsw_evqueue_ex.h" />
     <ClInclude Include="..\app\cfg\cwsw_event_proj.h" />
     <ClInclude Include="..\app\cfg\projcfg.h" />
     <ClInclude Include="..\app\cfg\projevtnames.h" />
