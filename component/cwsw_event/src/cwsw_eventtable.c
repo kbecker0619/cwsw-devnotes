@@ -56,7 +56,8 @@
  *	@param [in]		pTable		Table of events.
  *	@param [in]		TableSize	Size of the event table, in number of elements (not bytes).
  *								Rejection occurs if > INT_MAX.
- *	@return	Event Queue error code, where value `0` is success.
+ *
+ *	@returns Error code, where 0 (#kErr_EvQ_NoError) is no error.
  *
  *	@ingroup tEvq_EvTable
  */
@@ -80,9 +81,12 @@ Cwsw_Evt__InitEventTable(
 
 /**	Return the address of a specified event in the event buffer.
  *
- *	@param[in]		pEvTbl	Event table control structure.
- *	@param[in]		hnd		base-0 handle, used as an index into the event buffer.
+ *	@param[in]	pEvTbl	Event table control structure.
+ *	@param[in]	hnd		base-0 handle, used as an index into the event buffer.
+ *
  *	@return	address of the specified event.
+ *
+ *	@ingroup tEvq_EvTable
  */
 ptEvQ_Event
 Cwsw_Evt__GetEventPtr(ptEvQ_EvTable pEvTbl, tEvQ_EvtHandle hnd)
@@ -100,7 +104,7 @@ Cwsw_Evt__GetEventPtr(ptEvQ_EvTable pEvTbl, tEvQ_EvtHandle hnd)
  *	@param[in]	pEvTb	table of events.
  *	@param[in]	hnd		"handle" (index) into the event buffer of the event to retrieve.
  *
- *	@return	Event Queue error code.
+ *	@returns Error code, where 0 (#kErr_EvQ_NoError) is no error.
  *
  *	@ingroup tEvq_EvTable
  */
@@ -128,11 +132,11 @@ Cwsw_Evt__GetEvent(ptEvQ_Event pEv, ptEvQ_EvTable pEvTb, tEvQ_EvtHandle hnd)
 /** Write an event into the Event Table.
  * 	This function is primarily meant for use by the Event Queue component.
  *
- *	@param pEvTb	[in,out]	Event Table into which to write the new Event.
- *	@param hnd		[in]		"Handle" for the slot in the Event Table to which the new event will be written.
- *	@param pEv		[in]		Event to be added to the table.
+ *	@param[in,out]	pEvTb	Event Table into which to write the new Event.
+ *	@param[in]		hnd		"Handle" for the slot in the Event Table to which the new event will be written.
+ *	@param[in]		pEv		Event to be added to the table.
  *
- *	@return	Error code, where 0 is success.
+ *	@returns Error code, where 0 (#kErr_EvQ_NoError) is no error.
  *
  *	@ingroup tEvq_EvTable
  */

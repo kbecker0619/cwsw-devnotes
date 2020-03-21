@@ -97,6 +97,8 @@ get_ev_handle(ptEvQ_EvHandlerAssoc pEvHndlrTbl, size_t evtblsz, tEvQ_EventID evI
  *	@note 	To accommodate compile-time configuration, it is not required to use this handler
  *			registration at run time; you can set up a table of type tEvQ_EvHandlerAssoc[] and pre-fill
  *			it out to create compile-time registrations.
+ *
+ *	@ingroup tEvQ_EvHndlrAssocTable
  */
 tErrorCodes_EvQ
 Cwsw_EvQ__RegisterHandler(
@@ -133,9 +135,11 @@ Cwsw_EvQ__RegisterHandler(
  *	@param pEvHndlr	[in]
  *	@param evtblsz	[in]
  *	@param evId		[in]
- * @return	address of handler; NULL if non or disabled.
+ *	@return	address of handler; NULL if non or disabled.
  *
- * @todo: implement "enabled/disabled" status.
+ *	@todo: implement "enabled/disabled" status.
+ *
+ *	@ingroup tEvQ_EvHndlrAssocTable
  */
 pEvQ_EvHandlerFunc
 Cwsw_EvQ__GetHandler(ptEvQ_EvHandlerAssoc pEvHndlr, size_t evtblsz, tEvQ_EventID evId)

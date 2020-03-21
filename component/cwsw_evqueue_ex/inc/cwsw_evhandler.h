@@ -43,17 +43,17 @@ extern "C" {
  * 	To accommodate the possibility that a common handler could be used for multiple events, pass
  * 	the event as the 1st parameter (so the handler can react accordingly).
  *
- * 	@param evId		Event to handle (typically from Event Queue).
+ * 	@param ev		Event to handle (typically from Event Queue).
  * 	@param extra	Supplemental information for the event handler.
  *
- * 	@ingroup tEvQ_QueueCtrlEx
+ * 	@ingroup tEvQ_EvHndlrAssocTable
  */
-typedef void (*pEvQ_EvHandlerFunc)(tEvQ_Event evId, uint32_t extra);
+typedef void (*pEvQ_EvHandlerFunc)(tEvQ_Event ev, uint32_t extra);
 
 /**	Association of event handler to a specific event ID.
  *	@note	This type defines _ONE ROW_ of a table of event-handler associations.
  *
- * 	@ingroup tEvQ_QueueCtrlEx
+ * 	@ingroup tEvQ_EvHndlrAssocTable
  */
 typedef struct sEvHandlerAssoc {
 	tEvQ_EventID		evId;
@@ -61,7 +61,7 @@ typedef struct sEvHandlerAssoc {
 } tEvQ_EvHandlerAssoc;
 
 /** Reference to an Event Handler Association Table.
- * 	@ingroup tEvQ_QueueCtrlEx
+ * 	@ingroup tEvQ_EvHndlrAssocTable
  */
 typedef tEvQ_EvHandlerAssoc * ptEvQ_EvHandlerAssoc;
 

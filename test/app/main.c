@@ -152,7 +152,6 @@ basic_evq_api(void)
 	};
 	tEvQ_EvTable evTbl = {0};	// for this step, rely on init() function, not compile-time setup
 
-	// control structure for the OS event queue
 	static tEvQ_QueueCtrl evq = {0};
 
 	if(!Init(Cwsw_EvQ))
@@ -286,16 +285,20 @@ basic_evqx_api(void)
 	} while(0);
 
 	do {	/* Event Handler API */
+		tEvQ_Event myev = {evQuitRqst, __LINE__};
 		pEvQ_EvHandlerFunc myfunc;
-		Cwsw_EvQX__SetEvHandler(&MyQX, evQuitRqst, MyEvHandler);
-//		myfunc = Cwsw_EvQX__GetEvHandler(&tblMyHandlers, 1);
-//		if(myfunc)
-//		{
-//			tEvQ_Event ev = {13, 137};
-//			myfunc(ev, __LINE__);
-//		}
+		cwsw_assert(kErr_EvQ_NoError == Cwsw_EvQX__SetEvHandler(&MyQX, evQuitRqst, MyEvHandler), "unexpected association failure");
+		cwsw_assert(kErr_EvQ_NoError == Cwsw_EvQX__PostEvent(&MyQX, myev), "unexpected event post problem");
+		cwsw_assert(kErr_EvQ_NoError == Cwsw_EvQX__PostEvent(&MyQX, myev), "unexpected event post problem");
+		myfunc = Cwsw_EvQX__GetEvHandler(&MyQX, evQuitRqst);
+		if(myfunc)
+		{
+			tEvQ_Event ev = {13, 137};
+			myfunc(ev, __LINE__);
+		}
 	} while(0);
 
+	(void)Cwsw_EvQX__HandleNextEvent(&MyQX, __LINE__);
 }
 
 
@@ -308,14 +311,6 @@ main(void)
 	basic_evq_api();
 	basic_evh_api();
 	basic_evqx_api();
-
-	do {} while(0);
-//				(void)Cwsw_EvQ__RegisterHandler(evcbTedlos, TABLE_SIZE(evcbTedlos), evOsTmrHeartbeat, Os1msTic);
-
-				// set up the app-level timer tic task
-		//		Cwsw_SwTmr__Init(&tmrOsTic, 10, 10, &evqcTedlos, 0);
-		//		Cwsw_SwTmr__SetState(&tmrOsTic, kSwTimerEnabled);
-
 
 	do_evdispatch();
 

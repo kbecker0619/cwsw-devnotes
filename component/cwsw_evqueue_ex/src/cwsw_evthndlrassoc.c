@@ -52,7 +52,7 @@ static tEvQ_EvtHandle
 GetTableHandle(ptEvQ_EvHndlrAssocTable pHndlrTbl, tEvQ_EventID evId)
 {
 	// for this implementation, the event is used as an index into the LUT
-	if(!pHndlrTbl)							return -1;
+	if(!pHndlrTbl)								return -1;
 	if( (pHndlrTbl->validity == kCT_TBL_VALID) ||
 		(pHndlrTbl->validity == kRT_TBL_VALID) )
 	{

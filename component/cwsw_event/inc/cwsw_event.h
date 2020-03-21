@@ -54,6 +54,7 @@ enum eErrorCodes_EvQ {
 	kErr_EvQ_BadEvent,			//!< Bad or invalid event.
 	kErr_EvQ_QueueEmpty,		//!< Queue empty, cannot get event from queue.
 	kErr_EvQ_QueueFull,			//!< Queue full, cannot add new event to queue.
+	kErr_EvQ_NoAssociation,		//!< No event handler associated with event.
 };
 
 
