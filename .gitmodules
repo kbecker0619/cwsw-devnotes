@@ -10,7 +10,3 @@
 	path = test/libs/cwsw_arch
 	url = git@github.com:kbecker0619/cwsw_arch.git
 	branch = development
-[submodule "test/libs/board"]
-	path = test/libs/board
-	url = git@github.com:kbecker0619/cwsw_board_code.git
-	branch = development
