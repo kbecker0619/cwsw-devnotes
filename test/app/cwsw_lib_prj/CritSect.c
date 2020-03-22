@@ -1,10 +1,10 @@
-/** @file cwsw_svc.c
- *	@brief	One-sentence short description of file.
+/** @file CritSect.c
+ *	@brief	Callbacks for Critical Section support
  *
  *	\copyright
  *	Copyright (c) 2020 Kevin L. Becker. All rights reserved.
  *
- *	Created on: Feb 19, 2020
+ *	Created on: Oct 15, 2019
  *	@author: kbecker
  */
 
@@ -13,13 +13,13 @@
 // ============================================================================
 
 // ----	System Headers --------------------------
-#include <stdbool.h>
+#include <stddef.h>		/* NULL */
+#include <limits.h>		/* INT_MAX */
 
 // ----	Project Headers -------------------------
-#include "cwsw_board.h"
+#include "projcfg.h"
 
 // ----	Module Headers --------------------------
-#include "cwsw_svc.h"
 
 
 // ============================================================================
@@ -38,51 +38,60 @@
 // ----	Module-level Variables ------------------------------------------------
 // ============================================================================
 
-static bool initialized = false;
+/** UT support for Enter Critical Section behavior.
+ *	@xreq{SR_LIB_0307}
+ */
+bool crit_section_seen = false;
+
+int crit_sec_prot_lvl = 0;
+
+/** UT support for Enter Critical Section behavior.
+ *	Note that here, we're relying on a compile-time constant string that
+ *	will "be there" when this variable is inspected (e.g., does not go out of
+ *	scope).
+ *	@xreq{SR_LIB_0307}
+ */
+char const *crit_sect_file = NULL;
+
+/** UT support for Enter Critical Section behavior.
+ *	@xreq{SR_LIB_0307}
+ */
+int crit_section_line = 0;
 
 
 // ============================================================================
-// ----	Private Functions -----------------------------------------------------
+// ----	Private Prototypes ----------------------------------------------------
 // ============================================================================
 
 // ============================================================================
 // ----	Public Functions ------------------------------------------------------
 // ============================================================================
 
-uint16_t
-Cwsw_Services__Init(void)
+/**	Project-specific configuration to engage Critical Section / Protected Region
+ *	behavior.
+ *
+ *	For the demo app + UT environment for the CWSW Library, we'll define this
+ *	as a macro that supplies information that might be useful to the UT enviro.
+ *
+ *	@xreq{SR_LIB_0307}
+ *
+ *	@ingroup cwsw_lib_crit_section_group
+ */
+void
+cb_lib_demo_cs_enter(int protlvl, char const * const filename, int const lineno)
 {
-	if(!Get(Cwsw_Lib, Initialized))
-	{
-		if(!Init(Cwsw_Lib))		{ return Cwsw_Lib; }
-	}
+	crit_section_seen = true;
+	crit_sec_prot_lvl = protlvl;
+	crit_sect_file = filename;
+	crit_section_line = lineno;
+}
 
-	// cwsw_board does not make assumptions about the MCU architecture; initialize it ourselves
-	if(!Get(Cwsw_Arch, Initialized))
-	{
-		if(!Init(Cwsw_Arch))	{return Cwsw_Arch; }
-	}
 
-	if(!Get(Cwsw_Board, Initialized))	// because some services may depend on the BSP, initialize it
-	{
-		if(!Init(Cwsw_Board))	{ return Cwsw_Board; }
-	}
-
-	#if defined(__GNUC__)	/* --- GNU Environment ------------------------------ */
-	#pragma GCC diagnostic push
-	#pragma GCC diagnostic ignored "-Wpedantic"
-	#endif
-
-	dbg_printf(
-			"\tModule ID %i\t%s\t\n"
-			"\tEntering %s()\n\n",
-			Cwsw_Services, __FILE__,
-			__FUNCTION__);
-
-	#if defined(__GNUC__)	/* --- GNU Environment ------------------------------ */
-	#pragma GCC diagnostic pop
-	#endif
-
-	initialized = true;
-	return 0;
+void
+cb_lib_demo_cs_leave(int protlvl, char const * const filename, int const lineno)
+{
+	crit_section_seen = true;
+	crit_sec_prot_lvl = (0 == protlvl) ? INT_MAX : -protlvl;
+	crit_sect_file = filename;
+	crit_section_line = lineno;
 }

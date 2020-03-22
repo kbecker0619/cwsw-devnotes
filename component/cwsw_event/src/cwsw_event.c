@@ -1,11 +1,13 @@
-/** @file cwsw_svc.c
- *	@brief	One-sentence short description of file.
+/** @file
+ *
+ *	Description:
  *
  *	\copyright
  *	Copyright (c) 2020 Kevin L. Becker. All rights reserved.
  *
- *	Created on: Feb 19, 2020
- *	@author: kbecker
+ *	Original:
+ *	Created on: Feb 24, 2020
+ *	Author: KBECKE35
  */
 
 // ============================================================================
@@ -16,10 +18,10 @@
 #include <stdbool.h>
 
 // ----	Project Headers -------------------------
-#include "cwsw_board.h"
+#include "cwsw_lib.h"
 
 // ----	Module Headers --------------------------
-#include "cwsw_svc.h"
+#include "cwsw_event.h"
 
 
 // ============================================================================
@@ -49,40 +51,34 @@ static bool initialized = false;
 // ----	Public Functions ------------------------------------------------------
 // ============================================================================
 
+/** Initialize the Event component.
+ *	This component doesn't really have any significant need for an initialize method; this function
+ *	is here mostly for consistency with other CWSW components.
+ *
+ *	@ingroup tEvq_EvTable
+ */
 uint16_t
-Cwsw_Services__Init(void)
+Cwsw_Evt__Init(void)
 {
-	if(!Get(Cwsw_Lib, Initialized))
-	{
-		if(!Init(Cwsw_Lib))		{ return Cwsw_Lib; }
-	}
-
-	// cwsw_board does not make assumptions about the MCU architecture; initialize it ourselves
-	if(!Get(Cwsw_Arch, Initialized))
-	{
-		if(!Init(Cwsw_Arch))	{return Cwsw_Arch; }
-	}
-
-	if(!Get(Cwsw_Board, Initialized))	// because some services may depend on the BSP, initialize it
-	{
-		if(!Init(Cwsw_Board))	{ return Cwsw_Board; }
-	}
-
-	#if defined(__GNUC__)	/* --- GNU Environment ------------------------------ */
-	#pragma GCC diagnostic push
-	#pragma GCC diagnostic ignored "-Wpedantic"
-	#endif
-
-	dbg_printf(
-			"\tModule ID %i\t%s\t\n"
-			"\tEntering %s()\n\n",
-			Cwsw_Services, __FILE__,
-			__FUNCTION__);
-
-	#if defined(__GNUC__)	/* --- GNU Environment ------------------------------ */
-	#pragma GCC diagnostic pop
-	#endif
-
 	initialized = true;
-	return 0;
+	return kErr_Lib_NoError;
+}
+
+
+void
+Cwsw_EvT__Deinit(void)
+{
+	initialized = false;
+}
+
+
+/**	Target for Get(Cwsw_EvT, Initialized) API.
+ *
+ *	@returns	true if component is initialized.
+ *	@returns	false if the component is not initialized.
+ */
+bool
+Cwsw_EvT__Get_Initialized(void)
+{
+	return initialized;
 }

@@ -1,11 +1,10 @@
-/** @file cwsw_svc.c
- *	@brief	One-sentence short description of file.
+/** @file
  *
  *	\copyright
  *	Copyright (c) 2020 Kevin L. Becker. All rights reserved.
  *
- *	Created on: Feb 19, 2020
- *	@author: kbecker
+ *	Created on: Nov 11, 2018
+ *	@author kbecker
  */
 
 // ============================================================================
@@ -13,13 +12,15 @@
 // ============================================================================
 
 // ----	System Headers --------------------------
-#include <stdbool.h>
+#include <stdlib.h>     	/* EXIT_SUCCESS */
 
 // ----	Project Headers -------------------------
-#include "cwsw_board.h"
+#include "projcfg.h"
+#include "cwsw_lib.h"
+#include "cwsw_eventsim.h"
 
 // ----	Module Headers --------------------------
-#include "cwsw_svc.h"
+#include "cwsw_arch.h"
 
 
 // ============================================================================
@@ -38,51 +39,34 @@
 // ----	Module-level Variables ------------------------------------------------
 // ============================================================================
 
-static bool initialized = false;
-
-
 // ============================================================================
-// ----	Private Functions -----------------------------------------------------
+// ----	Private Prototypes ----------------------------------------------------
 // ============================================================================
 
 // ============================================================================
 // ----	Public Functions ------------------------------------------------------
 // ============================================================================
 
-uint16_t
-Cwsw_Services__Init(void)
+void
+EventHandler__evTerminateRequested(tEventPayload EventData)
 {
-	if(!Get(Cwsw_Lib, Initialized))
-	{
-		if(!Init(Cwsw_Lib))		{ return Cwsw_Lib; }
-	}
+	UNUSED(EventData);
+	(void)puts("Goodbye Cruel World!");
+}
 
-	// cwsw_board does not make assumptions about the MCU architecture; initialize it ourselves
-	if(!Get(Cwsw_Arch, Initialized))
-	{
-		if(!Init(Cwsw_Arch))	{return Cwsw_Arch; }
-	}
 
-	if(!Get(Cwsw_Board, Initialized))	// because some services may depend on the BSP, initialize it
-	{
-		if(!Init(Cwsw_Board))	{ return Cwsw_Board; }
-	}
+/** Entry for demonstration app for core part of CWSW Arch component.
+ *	This is extremely limited in functionality by design, and is not intended
+ *	to demonstrate the features and capabilities of the library. That task is
+ *	left to the Architecture Integration project.
+ */
+int
+main(void)
+{
+	tEventPayload ev = {0};
+	(void)Init(Cwsw_Lib);		// Cwsw_Lib__Init()
+	(void)Init(Cwsw_Arch);		// Cwsw_Arch__Init()
 
-	#if defined(__GNUC__)	/* --- GNU Environment ------------------------------ */
-	#pragma GCC diagnostic push
-	#pragma GCC diagnostic ignored "-Wpedantic"
-	#endif
-
-	dbg_printf(
-			"\tModule ID %i\t%s\t\n"
-			"\tEntering %s()\n\n",
-			Cwsw_Services, __FILE__,
-			__FUNCTION__);
-
-	#if defined(__GNUC__)	/* --- GNU Environment ------------------------------ */
-	#pragma GCC diagnostic pop
-	#endif
-
-	initialized = true;
-	return 0;
+	PostEvent(evTerminateRequested, ev);
+	return EXIT_SUCCESS;
 }
