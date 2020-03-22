@@ -12,5 +12,5 @@
 	branch = development
 [submodule "test/libs/cwsw_board"]
 	path = test/libs/cwsw_board
-	url = git@github.com:kbecker0619/cwsw_board_code.git
+	url = git@github.com:kbecker0619/cwsw_board.git
 	branch = development
