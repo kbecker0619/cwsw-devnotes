@@ -53,7 +53,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <MultiProcessorCompilation>false</MultiProcessorCompilation>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <AdditionalIncludeDirectories>..\app\cfg;..\app\cfg\vs2010;..\libs\cwsw_lib\inc;..\..\bsw\svc\inc;..\..\component\cwsw_event\inc;..\..\component\cwsw_evqueue\inc;..\..\component\cwsw_evqueue_ex\inc;..\libs\cwsw_board\none;..\libs\cwsw_arch\inc\i386\;..\..\bsw\svc\cwsw_clock\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\app\cfg;..\app\cfg\vs2010;..\libs\cwsw_lib\inc;..\..\bsw\svc\inc;..\libs\cwsw_eventqueue\cwsw_event\inc;..\libs\cwsw_eventqueue\cwsw_evqueue\inc;..\libs\cwsw_eventqueue\cwsw_evqueue_ex\inc;..\libs\cwsw_board\none;..\libs\cwsw_arch\inc\i386\;..\..\bsw\svc\cwsw_clock\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <CompileAsManaged>false</CompileAsManaged>
       <ExceptionHandling>false</ExceptionHandling>
       <DisableSpecificWarnings>4127;4668</DisableSpecificWarnings>
@@ -82,27 +82,27 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\component\cwsw_evqueue\inc\readme.md" />
-    <None Include="..\..\component\cwsw_evqueue\src\readme.md" />
+    <None Include="..\libs\cwsw_eventqueue\cwsw_evqueue\inc\readme.md" />
+    <None Include="..\libs\cwsw_eventqueue\cwsw_evqueue\src\readme.md" />
     <None Include="..\libs\cwsw_lib\inc\README.md" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\component\cwsw_event\src\cwsw_eventtable.c" />
-    <ClCompile Include="..\..\component\cwsw_evqueue_ex\src\cwsw_evhandler.c" />
-    <ClCompile Include="..\..\component\cwsw_evqueue_ex\src\cwsw_evqueue_ex.c" />
-    <ClCompile Include="..\..\component\cwsw_evqueue_ex\src\cwsw_evthndlrassoc.c" />
+    <ClCompile Include="..\libs\cwsw_eventqueue\cwsw_event\src\cwsw_eventtable.c" />
+    <ClCompile Include="..\libs\cwsw_eventqueue\cwsw_evqueue_ex\src\cwsw_evhandler.c" />
+    <ClCompile Include="..\libs\cwsw_eventqueue\cwsw_evqueue_ex\src\cwsw_evqueue_ex.c" />
+    <ClCompile Include="..\libs\cwsw_eventqueue\cwsw_evqueue_ex\src\cwsw_evthndlrassoc.c" />
     <ClCompile Include="..\app\cwsw_lib_prj\CritSect.c" />
     <ClCompile Include="..\app\main.c" />
     <ClCompile Include="..\libs\cwsw_board\none\src\cwsw_board.c" />
     <ClCompile Include="..\libs\cwsw_arch\inc\i386\peripheral\ports\ports_api.c" />
     <ClCompile Include="..\libs\cwsw_arch\src\i386\cwsw_arch.c" />
-    <ClCompile Include="..\..\component\cwsw_event\src\cwsw_event.c" />
-    <ClCompile Include="..\..\component\cwsw_evqueue\src\cwsw_evqueue.c" />
+    <ClCompile Include="..\libs\cwsw_eventqueue\cwsw_event\src\cwsw_event.c" />
+    <ClCompile Include="..\libs\cwsw_eventqueue\cwsw_evqueue\src\cwsw_evqueue.c" />
     <ClCompile Include="..\libs\cwsw_lib\src\cwsw_lib.c" />
     <ClCompile Include="..\..\bsw\svc\src\cwsw_svc.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\component\cwsw_evqueue_ex\inc\cwsw_evqueue_ex.h" />
+    <ClInclude Include="..\libs\cwsw_eventqueue\cwsw_evqueue_ex\inc\cwsw_evqueue_ex.h" />
     <ClInclude Include="..\app\cfg\cwsw_event_proj.h" />
     <ClInclude Include="..\app\cfg\projcfg.h" />
     <ClInclude Include="..\app\cfg\projevtnames.h" />
@@ -113,8 +113,8 @@
     <ClInclude Include="..\libs\cwsw_arch\inc\i386\cwsw_arch.h" />
     <ClInclude Include="..\libs\cwsw_arch\inc\i386\peripheral\ports\ports_api.h" />
     <ClInclude Include="..\..\bsw\svc\cwsw_clock\inc\cwsw_clock.h" />
-    <ClInclude Include="..\..\component\cwsw_event\inc\cwsw_event.h" />
-    <ClInclude Include="..\..\component\cwsw_evqueue\inc\cwsw_evqueue.h" />
+    <ClInclude Include="..\libs\cwsw_eventqueue\cwsw_event\inc\cwsw_event.h" />
+    <ClInclude Include="..\libs\cwsw_eventqueue\cwsw_evqueue\inc\cwsw_evqueue.h" />
     <ClInclude Include="..\libs\cwsw_lib\inc\ctassert.h" />
     <ClInclude Include="..\libs\cwsw_lib\inc\cwsw_eventsim.h" />
     <ClInclude Include="..\libs\cwsw_lib\inc\cwsw_lib.h" />

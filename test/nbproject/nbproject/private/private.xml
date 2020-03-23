@@ -7,11 +7,8 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/_Projects/PersonalDev/cwsw_evq/test/app/main.c</file>
-            <file>file:/D:/_Projects/PersonalDev/cwsw_evq/test/libs/cwsw_lib/src/cwsw_lib.c</file>
-            <file>file:/D:/_Projects/PersonalDev/cwsw_evq/test/libs/cwsw_arch/src/i386/cwsw_arch.c</file>
-            <file>file:/D:/_Projects/PersonalDev/cwsw_evq/bsw/svc/src/cwsw_svc.c</file>
-            <file>file:/D:/_Projects/PersonalDev/cwsw_evq/component/cwsw_evqueue/src/cwsw_evqueue.c</file>
+            <file>file:/C:/_Projects/evq/test/app/main.c</file>
+            <file>file:/C:/_Projects/evq/test/libs/cwsw_eventqueue/cwsw_evqueue/readme.md</file>
         </group>
     </open-files>
 </project-private>

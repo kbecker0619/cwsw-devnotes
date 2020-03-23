@@ -54,6 +54,7 @@ Contributor(s):
                 <sourceRootElem>../libs/cwsw_board</sourceRootElem>
                 <sourceRootElem>../libs/cwsw_arch</sourceRootElem>
                 <sourceRootElem>../app/cwsw_lib_prj</sourceRootElem>
+                <sourceRootElem>../libs/cwsw_eventqueue/cwsw_evqueue_ex</sourceRootElem>
             </sourceRootList>
             <confList>
                 <confElem>

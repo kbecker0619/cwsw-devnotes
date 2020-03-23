@@ -86,8 +86,8 @@
     <ClInclude Include="..\app\cfg\vs2010\stdbool.h" />
     <ClInclude Include="..\libs\cwsw_arch\inc\cwsw_arch_common.h" />
     <ClInclude Include="..\libs\cwsw_arch\inc\i386\cwsw_arch.h" />
-    <ClInclude Include="..\..\component\evqcwsw_evqueue.h" />
-    <ClInclude Include="..\..\component\cwsw_evqueue_ex\cwsw_evq_proj.h" />
+    <ClInclude Include="..\libs\cwsw_eventqueue\\evqcwsw_evqueue.h" />
+    <ClInclude Include="..\libs\cwsw_eventqueue\\cwsw_evqueue_ex\cwsw_evq_proj.h" />
     <ClInclude Include="..\libs\cwsw_lib\inc\ctassert.h" />
     <ClInclude Include="..\libs\cwsw_lib\inc\cwsw_eventsim.h" />
     <ClInclude Include="..\libs\cwsw_lib\inc\cwsw_lib.h" />

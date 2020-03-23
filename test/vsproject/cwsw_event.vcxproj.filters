@@ -16,19 +16,19 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\libs\cwsw_lib\inc\README.md" />
-    <None Include="..\..\component\cwsw_evqueue\inc\readme.md">
+    <None Include="..\libs\cwsw_eventqueue\\cwsw_evqueue\inc\readme.md">
       <Filter>Source Files</Filter>
     </None>
-    <None Include="..\..\component\cwsw_evqueue\src\readme.md" />
+    <None Include="..\libs\cwsw_eventqueue\\cwsw_evqueue\src\readme.md" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\bsw\svc\src\cwsw_svc.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\component\cwsw_evqueue\src\cwsw_evqueue.c">
+    <ClCompile Include="..\libs\cwsw_eventqueue\\cwsw_evqueue\src\cwsw_evqueue.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\component\cwsw_event\src\cwsw_event.c">
+    <ClCompile Include="..\libs\cwsw_eventqueue\\cwsw_event\src\cwsw_event.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\libs\cwsw_board\none\src\cwsw_board.c">
@@ -49,16 +49,16 @@
     <ClCompile Include="..\app\main.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\component\cwsw_event\src\cwsw_eventtable.c">
+    <ClCompile Include="..\libs\cwsw_eventqueue\\cwsw_event\src\cwsw_eventtable.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\component\cwsw_evqueue_ex\src\cwsw_evhandler.c">
+    <ClCompile Include="..\libs\cwsw_eventqueue\\cwsw_evqueue_ex\src\cwsw_evhandler.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\component\cwsw_evqueue_ex\src\cwsw_evthndlrassoc.c">
+    <ClCompile Include="..\libs\cwsw_eventqueue\\cwsw_evqueue_ex\src\cwsw_evthndlrassoc.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\component\cwsw_evqueue_ex\src\cwsw_evqueue_ex.c">
+    <ClCompile Include="..\libs\cwsw_eventqueue\\cwsw_evqueue_ex\src\cwsw_evqueue_ex.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -96,10 +96,10 @@
     <ClInclude Include="..\..\bsw\svc\inc\cwsw_svc.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\component\cwsw_evqueue\inc\cwsw_evqueue.h">
+    <ClInclude Include="..\libs\cwsw_eventqueue\\cwsw_evqueue\inc\cwsw_evqueue.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\component\cwsw_event\inc\cwsw_event.h">
+    <ClInclude Include="..\libs\cwsw_eventqueue\\cwsw_event\inc\cwsw_event.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\libs\cwsw_board\none\cwsw_board.h">
@@ -114,7 +114,7 @@
     <ClInclude Include="..\libs\cwsw_arch\inc\i386\peripheral\ports\ports_api.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\component\cwsw_evqueue_ex\inc\cwsw_evqueue_ex.h">
+    <ClInclude Include="..\libs\cwsw_eventqueue\\cwsw_evqueue_ex\inc\cwsw_evqueue_ex.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
