@@ -1,1 +1,0 @@
-This folder is the home for the NetBeans (Windows) project.

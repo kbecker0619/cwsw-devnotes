@@ -1,6 +1,0 @@
-Makefile-Debug.mk
-Makefile-impl.mk
-Makefile-Release.mk
-Makefile-variables.mk
-Package-Debug.bash
-Package-Release.bash
